@@ -45,6 +45,7 @@ public class ActionBar extends BaseObservable {
 
     public void setBackButton(boolean backButtonVisible) {
         this.backButtonVisible = backButtonVisible;
+
         notifyPropertyChanged(BR.backButtonVisible);
     }
 }
