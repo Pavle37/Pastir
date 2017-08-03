@@ -15,7 +15,7 @@ import com.pastir.storage.DataSource;
 
 public abstract class BaseFragment extends Fragment{
 
-    private MainActivity mActivity;
+    public MainActivity mActivity;
 
     @Override
     public void onAttach(Context context) {

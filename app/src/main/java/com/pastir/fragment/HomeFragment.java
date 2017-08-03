@@ -71,6 +71,7 @@ public class HomeFragment extends BaseFragment {
     protected ActionBar setActionBar() {
         ActionBar ab =  super.setActionBar();
         ab.setTitle(getString(R.string.home));
+        ab.setBackButton(false);
         return ab;
     }
 

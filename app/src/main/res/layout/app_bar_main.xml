@@ -35,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_centerVertical="true"
                     android:onClick="@{()->presenter.onBackPressed()}"
-                    android:visibility="@{actionBar.hasBackButton ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{actionBar.backButtonVisible ? View.VISIBLE : View.GONE}"
                     android:layout_height="wrap_content">
                     <ImageView
                         android:id="@+id/ivBack"
