@@ -9,4 +9,16 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">Početna</string>
+    <string name="donate">Doniraj</string>
+    <string name="settings">Podešavanja</string>
+    <string name="ellen_white">Ellen White</string>
+    <string name="songbook">Pesmarica</string>
+    <string name="morning_verses">Jutarnji stihovi</string>
+    <string name="lesson">Pouka</string>
+    <string name="bible">Biblija</string>
+    <string name="motivational_messages">Motivacione Poruke</string>
+    <string name="see_all">Vidi sve</string>
+    <string name="events">Događaji</string>
+    <string name="not_implemented">Functionality not yet implemented</string>
+    <string name="back">Back</string>
 </resources>

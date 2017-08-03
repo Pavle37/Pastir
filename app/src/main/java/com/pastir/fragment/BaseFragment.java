@@ -33,11 +33,19 @@ public abstract class BaseFragment extends Fragment{
     protected ActionBar setActionBar(){
         ActionBar ab = DataSource.getInstance().getActionBar();
         ab.setTitle(null);
-        ab.setRightImage(R.drawable.logo1);
+        ab.setLeftImage(R.drawable.logo1);
         return ab;
     }
 
     public ActionBarPresenter getPresenter() {
         return null;
+    }
+
+    /**
+     * Calls the same name method from BaseActivity class
+     * @param fragmentToLoad fragment that's going to be loaded instead of current one
+     */
+    public void loadFragment(BaseFragment fragmentToLoad){
+        mActivity.loadFragment(fragmentToLoad);
     }
 }

@@ -3,7 +3,7 @@ package com.pastir.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MotivationalSticker implements ListItem{
+public class MotivationalSticker implements HomeListItem{
 
     @SerializedName("image_url")
     @Expose
@@ -14,6 +14,21 @@ public class MotivationalSticker implements ListItem{
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    @Override
+    public String getTitle() {
+        return null;
+    }
+
+    @Override
+    public String getPlace() {
+        return null;
+    }
+
+    @Override
+    public String getDate() {
+        return null;
     }
 
     public void setImageUrl(String imageUrl) {

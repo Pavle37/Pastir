@@ -14,7 +14,8 @@ import com.pastir.BR;
 public class ActionBar extends BaseObservable {
 
     private String mTitle;
-    private int mRightImage;
+    private int mLeftImage;
+    private boolean backButtonVisible;
 
 
     @Bindable
@@ -28,20 +29,22 @@ public class ActionBar extends BaseObservable {
     }
 
     @Bindable
-    public int getRightImage() {
-        return mRightImage;
+    public int getLeftImage() {
+        return mLeftImage;
     }
 
-    public void setRightImage(int rightImage) {
-        mRightImage = rightImage;
-        notifyPropertyChanged(BR.rightImage);
+    public void setLeftImage(int leftImage) {
+        mLeftImage = leftImage;
+        notifyPropertyChanged(BR.leftImage);
     }
 
-
-    @BindingAdapter("android:src")
-    public static void setImageResource(ImageView iv, int resId){
-        iv.setImageResource(resId);
+    @Bindable
+    public boolean isBackButtonVisible() {
+        return backButtonVisible;
     }
 
-
+    public void setBackButton(boolean backButtonVisible) {
+        this.backButtonVisible = backButtonVisible;
+        notifyPropertyChanged(BR.backButtonVisible);
+    }
 }

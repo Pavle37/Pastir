@@ -11,6 +11,7 @@
         <variable
             name="presenter"
             type="com.pastir.presenter.ActionBarPresenter"/>
+        <import type="android.view.View"/>
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -30,12 +31,34 @@
                 android:background="?attr/colorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
 
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:onClick="@{()->presenter.onBackPressed()}"
+                    android:visibility="@{actionBar.hasBackButton ? View.VISIBLE : View.GONE}"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/ivBack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_left"
+                        />
+                    <TextView
+                        android:layout_toRightOf="@+id/ivBack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_medium_large"
+                        android:layout_centerVertical="true"
+                        android:text="@string/back"/>
+
+                </RelativeLayout>
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:adjustViewBounds="true"
-                    android:src="@{actionBar.rightImage}"
+                    android:src="@{actionBar.leftImage}"
                     android:onClick="@{()->presenter.onBackPressed()}"
                     />
 

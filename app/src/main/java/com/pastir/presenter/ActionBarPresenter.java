@@ -1,5 +1,6 @@
 package com.pastir.presenter;
 
+import com.pastir.MainActivity;
 import com.pastir.fragment.BaseFragment;
 
 /**
@@ -12,6 +13,6 @@ public abstract class ActionBarPresenter<V> extends BasePresenter<V> {
     }
 
     public void onMenuPressed() {
-        ((BaseFragment) getView()).getActivity().openOptionsMenu();
+        ((MainActivity)((BaseFragment) getView()).getActivity()).openDrawerIfClosed();
     }
 }

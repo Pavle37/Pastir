@@ -21,4 +21,9 @@ public class BindingAdapters {
                 .fitCenter()
                 .into(iv);
     }
+
+    @BindingAdapter("android:src")
+    public static void setImageResource(ImageView iv, int resId){
+        iv.setImageResource(resId);
+    }
 }

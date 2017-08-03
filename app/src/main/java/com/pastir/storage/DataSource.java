@@ -1,6 +1,7 @@
 package com.pastir.storage;
 
 import com.pastir.model.ActionBar;
+import com.pastir.model.Event;
 import com.pastir.model.MotivationalSticker;
 
 import java.util.ArrayList;
@@ -20,22 +21,22 @@ public class DataSource {
      * @return Current action bar that's linked with the Activity's toolbar or initializes one if
      * there isn't a current action bar
      */
-    public ActionBar getActionBar(){
-        if(mActionBar == null)
+    public ActionBar getActionBar() {
+        if (mActionBar == null)
             mActionBar = new ActionBar();
         return mActionBar;
     }
 
 
-    public static DataSource getInstance(){
-        if(sInstance == null)
+    public static DataSource getInstance() {
+        if (sInstance == null)
             sInstance = new DataSource();
         return sInstance;
     }
 
     public List<MotivationalSticker> getMotivationalStickers() {
         List<MotivationalSticker> result = new ArrayList<>();
-        for(int i = 0; i < 7; i++) {
+        for (int i = 0; i < 7; i++) {
             MotivationalSticker sticker = new MotivationalSticker();
             sticker.setImageUrl("http://wallpapercanyon.com/wp-content/uploads/2016/01/Motivational-Wallpapers-6-800x600.jpg");
             result.add(sticker);
@@ -61,5 +62,68 @@ public class DataSource {
             result.add(sticker);
         }
         return result;
+    }
+
+    public List<Event> getEvents() {
+        List<Event> result = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            Event event = new Event();
+            event.setImageUrl("http://www.dreams.metroeve.com/wp-content/uploads/2017/04/dreams.metroeve_cathedral-dreams-meaning.jpg");
+            event.setTitle("Title 1");
+            event.setPlace("Beograd");
+            event.setTime("22:30");
+            event.setDate("13.07.2017");
+            event.setDescription("Lorem ispsujem \nLorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus convallis arcu vitae sem sagittis placerat. In vitae tristique elit. Nulla congue tempus diam, blandit venenatis erat.\n" +
+                    "\n" +
+                    "Generated 1 paragraph, 26 words, 185 bytes of Lorem Ipsum");
+            result.add(event);
+
+            event = new Event();
+            event.setImageUrl("http://www.wondermondo.com/Images/Europe/Italy/Tuscany/SienaCathedral1.jpg");
+            event.setTitle("Title 2");
+            event.setPlace("Beograd");
+            event.setTime("22:30");
+            event.setDate("13.07.2017");
+            event.setDescription("Lorem ispsujem \n");
+            result.add(event);
+
+            event = new Event();
+            event.setImageUrl("https://images6.alphacoders.com/338/338986.jpg");
+            event.setTitle("Title 3");
+            event.setPlace("Beograd");
+            event.setTime("22:30");
+            event.setDate("13.07.2017");
+            event.setDescription("Lorem ispsujem \n");
+            result.add(event);
+
+            event = new Event();
+            event.setImageUrl("http://cathedral.org/wp-content/uploads/2016/04/DSC0038.jpg");
+            event.setTitle("Title 4");
+            event.setPlace("Beograd");
+            event.setTime("22:30");
+            event.setDate("13.07.2017");
+            event.setDescription("Lorem ispsujem \n");
+            result.add(event);
+
+            event = new Event();
+            event.setImageUrl("http://www.koeln.de/bilder/data/pictures/2009-09-09_der_koelner_dom/normal/koelner-dom_hl-12.jpg");
+            event.setTitle("Title 14");
+            event.setPlace("Beograd");
+            event.setTime("22:30");
+            event.setDate("13.07.2017");
+            event.setDescription("Lorem ispsujem \n");
+            result.add(event);
+
+            event = new Event();
+            event.setImageUrl("http://cdn.images.express.co.uk/img/dynamic/1/590x/secondary/Gloucester-Cathedral-795898.jpg");
+            event.setTitle("Title 5");
+            event.setPlace("Beograd");
+            event.setTime("22:30");
+            event.setDate("13.07.2017");
+            event.setDescription("Lorem ispsujem \n");
+            result.add(event);
+        }
+        return result;
+
     }
 }
