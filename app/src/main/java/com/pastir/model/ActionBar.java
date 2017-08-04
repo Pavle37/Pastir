@@ -16,6 +16,7 @@ public class ActionBar extends BaseObservable {
     private String mTitle;
     private int mLeftImage;
     private boolean backButtonVisible;
+    private String backButtonText;
 
 
     @Bindable
@@ -46,5 +47,15 @@ public class ActionBar extends BaseObservable {
     public void setBackButton(boolean backButtonVisible) {
         this.backButtonVisible = backButtonVisible;
         notifyPropertyChanged(BR.backButtonVisible);
+    }
+
+    @Bindable
+    public String getBackButtonText() {
+        return backButtonText;
+    }
+
+    public void setBackButtonText(String backButtonText) {
+        this.backButtonText = backButtonText;
+        notifyPropertyChanged(BR.backButtonText);
     }
 }

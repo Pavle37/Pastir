@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="rvItem"
+            type="com.pastir.model.HomeListItem"/>
+
+        <variable
+            name="listener"
+            type="com.pastir.model.OnListItemClickListener"/>
+        <import type="android.view.View"/>
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/default_margin"
+        android:onClick="@{()->listener.onItemClicked(rvItem)}"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/image_list_item_fullscreen_size"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            bind:imageUrl="@{rvItem.imageUrl}"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="@{rvItem.title == null ? View.GONE : View.VISIBLE}"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{rvItem.title}"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_medium"
+                android:textAllCaps="true"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text='@{rvItem.place + " - " + rvItem.date}'
+                android:textSize="@dimen/text_small"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

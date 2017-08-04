@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import com.pastir.databinding.ActivityMainBinding;
 import com.pastir.fragment.BaseFragment;
 import com.pastir.fragment.HomeFragment;
+import com.pastir.fragment.MorningVersesFragment;
 import com.pastir.storage.DataSource;
 import com.pastir.util.Utils;
 
@@ -74,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if(id == R.id.nav_home){
             loadFragment(new HomeFragment());
+        }else if (id == R.id.nav_morning_verses){
+            loadFragment(new MorningVersesFragment());
         }
         else{
             Utils.SingleToast.show(this,getString(R.string.not_implemented));

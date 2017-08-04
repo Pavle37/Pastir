@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="rvItem"
+            type="com.pastir.model.MorningVerses" />
+
+        <variable
+            name="listener"
+            type="com.pastir.model.OnListItemClickListener" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="@{()->listener.onItemClicked(rvItem)}"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/default_margin">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/default_margin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:text="@{rvItem.title}"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_medium_large" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:text="@{rvItem.date}"
+                android:textAllCaps="true"
+                android:textSize="@dimen/text_small" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/default_padding"
+            android:text="@{rvItem.description}"
+            android:textSize="@dimen/text_medium" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorGrey" />
+
+    </LinearLayout>
+</layout>

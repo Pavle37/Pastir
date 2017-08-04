@@ -49,7 +49,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/text_medium_large"
                         android:layout_centerVertical="true"
-                        android:text="@string/back"/>
+                        android:text="@{actionBar.backButtonText}"/>
 
                 </RelativeLayout>
 

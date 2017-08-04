@@ -15,6 +15,7 @@ import com.pastir.storage.DataSource;
 
 public abstract class BaseFragment extends Fragment{
 
+    public static final String ARGS_KEY = "com.pastir.bundle";
     public MainActivity mActivity;
 
     @Override

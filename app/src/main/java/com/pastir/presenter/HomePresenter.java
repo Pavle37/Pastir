@@ -41,11 +41,11 @@ public class HomePresenter extends ActionBarPresenter<HomeFragment> implements O
 
 
     public void onSeeAllMotivationClicked(){
-        Utils.SingleToast.show(getContext(),"Motivational stickers");
+        getView().loadFragment(HomeListItemFragment.getInstance(HomeFragment.Slider.MOTIVATIONAL_STICKERS));
     }
 
     public void onSeeAllEventsClicked(){
-        getView().loadFragment(new HomeListItemFragment());
+        getView().loadFragment(HomeListItemFragment.getInstance(HomeFragment.Slider.EVENTS));
     }
 
 }

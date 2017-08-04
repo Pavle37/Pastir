@@ -2,6 +2,7 @@ package com.pastir.storage;
 
 import com.pastir.model.ActionBar;
 import com.pastir.model.Event;
+import com.pastir.model.MorningVerses;
 import com.pastir.model.MotivationalSticker;
 
 import java.util.ArrayList;
@@ -119,6 +120,51 @@ public class DataSource {
             event.setTitle("Title 5");
             event.setPlace("Beograd");
             event.setTime("22:30");
+            event.setDate("13.07.2017");
+            event.setDescription("Lorem ispsujem \n");
+            result.add(event);
+        }
+        return result;
+
+    }
+
+    public List<MorningVerses> getMorningVerses() {
+        List<MorningVerses> result = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            MorningVerses event = new MorningVerses();
+            event.setTitle("Title 1");
+            event.setDate("13.07.2017");
+            event.setDescription("Lorem ispsujem \nLorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus convallis arcu vitae sem sagittis placerat. In vitae tristique elit. Nulla congue tempus diam, blandit venenatis erat.\n" +
+                    "\n" +
+                    "Generated 1 paragraph, 26 words, 185 bytes of Lorem Ipsum");
+            result.add(event);
+
+            event = new MorningVerses();
+            event.setTitle("Title 2");
+            event.setDate("13.07.2017");
+            event.setDescription("Lorem ispsujem \n");
+            result.add(event);
+
+            event = new MorningVerses();
+            event.setTitle("Title 3");
+            event.setDate("13.07.2017");
+            event.setDescription("Lorem ispsujem \n");
+            result.add(event);
+
+            event = new MorningVerses();
+            event.setTitle("Title 4");
+            event.setDate("13.07.2017");
+            event.setDescription("Lorem ispsujem \n");
+            result.add(event);
+
+            event = new MorningVerses();
+            event.setTitle("Title 14");
+            event.setDate("13.07.2017");
+            event.setDescription("Lorem ispsujem \n");
+            result.add(event);
+
+            event = new MorningVerses();
+            event.setTitle("Title 5");
             event.setDate("13.07.2017");
             event.setDescription("Lorem ispsujem \n");
             result.add(event);
