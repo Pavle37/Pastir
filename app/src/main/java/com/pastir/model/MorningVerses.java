@@ -17,7 +17,9 @@ public class MorningVerses implements ListItem{
     @SerializedName("description")
     @Expose
     private String description;
-
+    @SerializedName("text")
+    @Expose
+    private String text;
     public Integer getId() {
         return id;
     }
@@ -48,5 +50,13 @@ public class MorningVerses implements ListItem{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }

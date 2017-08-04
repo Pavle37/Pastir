@@ -15,77 +15,7 @@
         android:orientation="vertical"
         tools:context="com.pastir.fragment.MorningVersesFragment">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/default_padding"
-            android:paddingTop="@dimen/default_padding"
-            android:weightSum="2">
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:onClick="@{()->presenter.openCalendar()}">
-
-                <TextView
-                    android:id="@+id/tvCalendar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/ivCalendar"
-                    android:layout_toRightOf="@+id/ivCalendar"
-                    android:text="@string/calendar"
-                    android:textAllCaps="true"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/text_small" />
-
-                <ImageView
-                    android:id="@+id/ivCalendar"
-                    android:layout_width="@dimen/icon_size"
-                    android:layout_height="@dimen/icon_size"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/default_padding"
-                    android:layout_marginRight="@dimen/default_padding"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/ic_calendar" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:onClick="@{()->presenter.openCloud()}">
-
-                <TextView
-                    android:id="@+id/tvCloud"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/ivCloud"
-                    android:layout_toRightOf="@+id/ivCloud"
-                    android:text="@string/cloud"
-                    android:textAllCaps="true"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/text_small" />
-
-                <ImageView
-                    android:id="@+id/ivCloud"
-                    android:layout_width="@dimen/icon_size"
-                    android:layout_height="@dimen/icon_size"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/default_padding"
-                    android:layout_marginRight="@dimen/default_padding"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/ic_cloud" />
-            </RelativeLayout>
-
-        </LinearLayout>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvMorningVerses"
             android:scrollbars="vertical"

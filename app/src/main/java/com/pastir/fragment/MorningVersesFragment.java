@@ -12,8 +12,10 @@ import android.view.ViewGroup;
 import com.pastir.R;
 import com.pastir.adapter.ListItemAdapter;
 import com.pastir.databinding.FragmentMorningVersesBinding;
+import com.pastir.model.ActionBar;
 import com.pastir.model.ListItem;
 import com.pastir.model.OnListItemClickListener;
+import com.pastir.presenter.ActionBarPresenter;
 import com.pastir.presenter.MorningVersesPresenter;
 
 import java.util.List;
@@ -21,7 +23,7 @@ import java.util.List;
 /**
  *
  */
-public class MorningVersesFragment extends Fragment {
+public class MorningVersesFragment extends BaseFragment {
 
     private MorningVersesPresenter mPresenter;
     private RecyclerView rvMorningVerses;
@@ -56,4 +58,18 @@ public class MorningVersesFragment extends Fragment {
         rvMorningVerses.setAdapter(adapter);
     }
 
+    @Override
+    protected ActionBar setActionBar() {
+        ActionBar ab =  super.setActionBar();
+        ab.setTitle(getString(R.string.morning_verses));
+        ab.setBackButton(false);
+        ab.setMorningVersesActionBar(true);
+        return ab;
+    }
+
+
+    @Override
+    public ActionBarPresenter getPresenter() {
+        return mPresenter;
+    }
 }

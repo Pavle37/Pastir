@@ -3,6 +3,7 @@ package com.pastir.presenter;
 import android.view.View;
 
 import com.pastir.R;
+import com.pastir.fragment.MorningVerseOverviewFragment;
 import com.pastir.fragment.MorningVersesFragment;
 import com.pastir.model.ListItem;
 import com.pastir.model.MorningVerses;
@@ -18,16 +19,10 @@ import java.util.List;
 public class MorningVersesPresenter extends ActionBarPresenter<MorningVersesFragment> implements OnListItemClickListener {
 
 
-    public void openCalendar(){
-        Utils.SingleToast.show(getContext(), R.string.not_implemented);
-    }
 
-    public void openCloud(){
-        Utils.SingleToast.show(getContext(), R.string.not_implemented);
-    }
     @Override
     public void onItemClicked(ListItem item) {
-        Utils.SingleToast.show(getContext(), R.string.not_implemented);
+        getView().loadFragment(MorningVerseOverviewFragment.getInstance(1));
     }
 
     public void loadData() {
@@ -38,5 +33,15 @@ public class MorningVersesPresenter extends ActionBarPresenter<MorningVersesFrag
 
     private void onMorningVersesLoaded(List<MorningVerses> morningVerses) {
         getView().setAdapter(morningVerses,this);
+    }
+
+    @Override
+    public void openCalendar() {
+        Utils.SingleToast.show(getContext(), R.string.not_implemented);
+    }
+
+    @Override
+    public void openCloud() {
+        Utils.SingleToast.show(getContext(), R.string.not_implemented);
     }
 }

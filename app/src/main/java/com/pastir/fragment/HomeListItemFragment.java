@@ -79,6 +79,7 @@ public class HomeListItemFragment extends BaseFragment {
         ab.setLeftImage(0);
         ab.setBackButton(true);
         ab.setBackButtonText(getString(R.string.home));
+        ab.setMorningVersesActionBar(false);
         return ab;
     }
 
