@@ -4,7 +4,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -75,13 +74,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         int id = item.getItemId();
 
-        if(id == R.id.nav_home){
+        if (id == R.id.nav_home) {
             loadFragment(new HomeFragment());
-        }else if (id == R.id.nav_morning_verses){
+        } else if (id == R.id.nav_morning_verses) {
             loadFragment(new MorningVersesFragment());
-        }
-        else{
-            Utils.SingleToast.show(this,getString(R.string.not_implemented));
+        } else {
+            Utils.SingleToast.show(this, getString(R.string.not_implemented));
         }
 
         closeDrawerIfOpened();
@@ -144,7 +142,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void setCurrentFragment(BaseFragment loadedFragment) {
         mCurrentFragment = loadedFragment;
-        if(loadedFragment.getPresenter() != null)
+        if (loadedFragment.getPresenter() != null)
             mBinding.setPresenter(loadedFragment.getPresenter());
     }
+
 }

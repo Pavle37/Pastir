@@ -10,12 +10,11 @@ import android.view.LayoutInflater;
 
 import com.pastir.R;
 import com.pastir.databinding.FragmentDialogMotivationalStickerBinding;
-import com.pastir.model.HomeListItem;
 import com.pastir.model.MotivationalSticker;
 import com.pastir.util.Utils;
 
 /**
- * Created by Uros on 8/5/2017.
+ * Shows single motivational sticker
  */
 
 public class MotivationalStickerDialog extends DialogFragment {

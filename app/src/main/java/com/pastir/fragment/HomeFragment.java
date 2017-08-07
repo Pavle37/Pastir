@@ -14,7 +14,6 @@ import com.pastir.adapter.ListItemAdapter;
 import com.pastir.databinding.FragmentHomeBinding;
 import com.pastir.model.ActionBar;
 import com.pastir.model.ListItem;
-import com.pastir.model.MotivationalSticker;
 import com.pastir.model.OnListItemClickListener;
 import com.pastir.presenter.HomePresenter;
 
@@ -39,7 +38,7 @@ public class HomeFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        FragmentHomeBinding binding = DataBindingUtil.inflate(inflater,R.layout.fragment_home, container, false);
+        FragmentHomeBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         View view = binding.getRoot();
 
         rvMotivationalStickers = (RecyclerView) view.findViewById(R.id.rvMotivationalStickers);
@@ -69,7 +68,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected ActionBar setActionBar() {
-        ActionBar ab =  super.setActionBar();
+        ActionBar ab = super.setActionBar();
         ab.setTitle(getString(R.string.home));
         ab.setBackButton(false);
         ab.setMorningVersesActionBar(false);
@@ -77,17 +76,16 @@ public class HomeFragment extends BaseFragment {
     }
 
     public void setAdapter(List<? extends ListItem> motivationalStickers, OnListItemClickListener listener, Slider slider) {
-        ListItemAdapter adapter = new ListItemAdapter(R.layout.image_list_item,motivationalStickers,listener);
-        if(slider.equals(Slider.MOTIVATIONAL_STICKERS)) {
+        ListItemAdapter adapter = new ListItemAdapter(R.layout.image_list_item, motivationalStickers, listener);
+        if (slider.equals(Slider.MOTIVATIONAL_STICKERS)) {
             rvMotivationalStickers.setAdapter(adapter);
-        }
-        else{
+        } else {
             rvEvents.setAdapter(adapter);
         }
     }
 
 
-    public enum Slider{
+    public enum Slider {
         MOTIVATIONAL_STICKERS,
         EVENTS
     }

@@ -12,15 +12,15 @@ import android.view.ViewGroup;
 
 import com.pastir.R;
 import com.pastir.databinding.FragmentMorningVerseOverviewBinding;
-import com.pastir.databinding.FragmentMorningVersesBinding;
 import com.pastir.databinding.FragmentPlaceholderMorningVerseBinding;
 import com.pastir.model.ActionBar;
+import com.pastir.model.MorningVerse;
 import com.pastir.presenter.ActionBarPresenter;
 import com.pastir.presenter.MorningVerseOverviewPresenter;
 import com.pastir.storage.DataSource;
 
 /**
- *
+ * Used to show morning verse view pager and to handle audio stream
  */
 public class MorningVerseOverviewFragment extends BaseFragment {
 
@@ -55,7 +55,7 @@ public class MorningVerseOverviewFragment extends BaseFragment {
 
     @Override
     protected ActionBar setActionBar() {
-        ActionBar ab =  super.setActionBar();
+        ActionBar ab = super.setActionBar();
         ab.setTitle(getString(R.string.morning_verses));
         ab.setLeftImage(0);
         ab.setBackButton(true);
@@ -72,17 +72,23 @@ public class MorningVerseOverviewFragment extends BaseFragment {
         return instance;
     }
 
-    public void scrollViewPagerRight(){
-        mViewPager.setCurrentItem(mViewPager.getCurrentItem()+1,true);
+    public void scrollViewPagerRight() {
+        mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1, true);
     }
-    public void scrollViewPagerLeft(){
-        mViewPager.setCurrentItem(mViewPager.getCurrentItem()-1,true);
+
+    public void scrollViewPagerLeft() {
+        mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1, true);
     }
 
     @Override
     public ActionBarPresenter getPresenter() {
         return mPresenter;
     }
+
+    public void setViewPagerItem(MorningVerse morningVerse) {
+        mViewPager.setCurrentItem(morningVerse.getId());
+    }
+
 
     /**
      * A placeholder fragment containing a simple view.

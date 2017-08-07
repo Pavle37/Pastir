@@ -151,7 +151,7 @@ public class DataSource {
         event = new MorningVerse();
         event.setId(1);
         event.setTitle("Title 2");
-        event.setDate("13.07.2017");
+        event.setDate("14.07.2017");
         event.setText(loremIpsum);
         event.setDescription("Morning verse description");
         result.add(event);
@@ -159,7 +159,7 @@ public class DataSource {
         event = new MorningVerse();
         event.setId(2);
         event.setTitle("Title 3");
-        event.setDate("13.07.2017");
+        event.setDate("15.07.2017");
         event.setText(loremIpsum);
         event.setDescription("Morning verse description");
         result.add(event);
@@ -167,7 +167,7 @@ public class DataSource {
         event = new MorningVerse();
         event.setId(3);
         event.setTitle("Title 4");
-        event.setDate("13.07.2017");
+        event.setDate("16.07.2017");
         event.setText(loremIpsum);
         event.setDescription("Morning verse description");
         result.add(event);
@@ -175,7 +175,7 @@ public class DataSource {
         event = new MorningVerse();
         event.setId(4);
         event.setTitle("Title 5");
-        event.setDate("13.07.2017");
+        event.setDate("17.07.2017");
         event.setText(loremIpsum);
         event.setDescription("Morning verse description");
         result.add(event);
@@ -183,7 +183,7 @@ public class DataSource {
         event = new MorningVerse();
         event.setId(5);
         event.setTitle("Title 6");
-        event.setDate("13.07.2017");
+        event.setDate("15.01.2015");
         event.setText(loremIpsum);
         event.setDescription("Morning verse description");
         result.add(event);

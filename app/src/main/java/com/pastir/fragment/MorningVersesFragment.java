@@ -2,7 +2,6 @@ package com.pastir.fragment;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,7 +20,7 @@ import com.pastir.presenter.MorningVersesPresenter;
 import java.util.List;
 
 /**
- *
+ * Fragment that shows list of morning verses
  */
 public class MorningVersesFragment extends BaseFragment {
 
@@ -60,7 +59,7 @@ public class MorningVersesFragment extends BaseFragment {
 
     @Override
     protected ActionBar setActionBar() {
-        ActionBar ab =  super.setActionBar();
+        ActionBar ab = super.setActionBar();
         ab.setTitle(getString(R.string.morning_verses));
         ab.setBackButton(false);
         ab.setMorningVersesActionBar(true);
@@ -72,4 +71,5 @@ public class MorningVersesFragment extends BaseFragment {
     public ActionBarPresenter getPresenter() {
         return mPresenter;
     }
+
 }

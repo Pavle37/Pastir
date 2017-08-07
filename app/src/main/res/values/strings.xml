@@ -24,4 +24,5 @@
     <string name="not_implemented">Functionality not yet implemented</string>
     <string name="back">Back</string>
     <string name="close">Zatvori</string>
+    <string name="no_morning_verse">Za izabrani datum ne postoji jutarnji stih.</string>
 </resources>
