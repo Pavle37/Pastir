@@ -5,7 +5,7 @@
 
         <variable
             name="rvItem"
-            type="com.pastir.model.MorningVerses" />
+            type="com.pastir.model.MorningVerse" />
 
         <variable
             name="listener"
@@ -19,7 +19,11 @@
         android:layout_height="wrap_content"
         android:onClick="@{()->listener.onItemClicked(rvItem)}"
         android:orientation="vertical"
-        android:paddingTop="@dimen/default_margin">
+        android:paddingTop="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginLeft="@dimen/default_margin">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -33,7 +37,8 @@
                 android:layout_alignParentStart="true"
                 android:text="@{rvItem.title}"
                 android:textColor="@color/colorBlack"
-                android:textSize="@dimen/text_medium_large" />
+                android:textSize="@dimen/text_medium_large"
+                android:textStyle="bold"/>
 
             <TextView
                 android:layout_width="wrap_content"

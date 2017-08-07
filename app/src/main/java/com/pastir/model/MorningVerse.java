@@ -3,7 +3,7 @@ package com.pastir.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MorningVerses implements ListItem{
+public class MorningVerse implements ListItem{
 
     @SerializedName("id")
     @Expose

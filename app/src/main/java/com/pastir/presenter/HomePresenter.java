@@ -1,9 +1,12 @@
 package com.pastir.presenter;
 
 import com.pastir.MainActivity;
+import com.pastir.R;
 import com.pastir.fragment.BaseFragment;
+import com.pastir.fragment.EventOverviewFragment;
 import com.pastir.fragment.HomeFragment;
 import com.pastir.fragment.HomeListItemFragment;
+import com.pastir.fragment.MotivationalStickerDialog;
 import com.pastir.model.Event;
 import com.pastir.model.ListItem;
 import com.pastir.model.MotivationalSticker;
@@ -17,6 +20,8 @@ import java.util.List;
  */
 
 public class HomePresenter extends ActionBarPresenter<HomeFragment> implements OnListItemClickListener {
+
+    private static final String TAG = "motivational_sticker";
 
     public void loadData() {
         if(mDataSource.getMotivationalStickers() != null)
@@ -36,7 +41,12 @@ public class HomePresenter extends ActionBarPresenter<HomeFragment> implements O
 
     @Override
     public void onItemClicked(ListItem item) {
-        Utils.SingleToast.show(getContext(),"Yayy :D");
+        if (item instanceof Event){
+            getView().loadFragment(EventOverviewFragment.getInstance((Event) item));
+        }else {
+            MotivationalStickerDialog fragment = MotivationalStickerDialog.getInstance((MotivationalSticker) item);
+            fragment.show(getView().getFragmentManager(), TAG);
+        }
     }
 
 

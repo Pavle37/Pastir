@@ -1,12 +1,10 @@
 package com.pastir.presenter;
 
-import android.view.View;
-
 import com.pastir.R;
 import com.pastir.fragment.MorningVerseOverviewFragment;
 import com.pastir.fragment.MorningVersesFragment;
 import com.pastir.model.ListItem;
-import com.pastir.model.MorningVerses;
+import com.pastir.model.MorningVerse;
 import com.pastir.model.OnListItemClickListener;
 import com.pastir.util.Utils;
 
@@ -22,7 +20,7 @@ public class MorningVersesPresenter extends ActionBarPresenter<MorningVersesFrag
 
     @Override
     public void onItemClicked(ListItem item) {
-        getView().loadFragment(MorningVerseOverviewFragment.getInstance(1));
+        getView().loadFragment(MorningVerseOverviewFragment.getInstance(((MorningVerse)item).getId()));
     }
 
     public void loadData() {
@@ -31,7 +29,7 @@ public class MorningVersesPresenter extends ActionBarPresenter<MorningVersesFrag
         //TODO: Create call to WebController to fetch the data
     }
 
-    private void onMorningVersesLoaded(List<MorningVerses> morningVerses) {
+    private void onMorningVersesLoaded(List<MorningVerse> morningVerses) {
         getView().setAdapter(morningVerses,this);
     }
 

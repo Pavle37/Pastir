@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 import com.pastir.R;
 import com.pastir.databinding.FragmentMorningVerseOverviewBinding;
 import com.pastir.databinding.FragmentMorningVersesBinding;
+import com.pastir.databinding.FragmentPlaceholderMorningVerseBinding;
 import com.pastir.model.ActionBar;
+import com.pastir.presenter.ActionBarPresenter;
 import com.pastir.presenter.MorningVerseOverviewPresenter;
 import com.pastir.storage.DataSource;
 
@@ -36,7 +38,7 @@ public class MorningVerseOverviewFragment extends BaseFragment {
         // Inflate the layout for this fragment
         FragmentMorningVerseOverviewBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_morning_verse_overview, container, false);
 
-//        int currentIndex = getArguments().getInt(ARGS_KEY);
+        int currentIndex = getArguments().getInt(ARGS_KEY);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
 
         mPresenter = new MorningVerseOverviewPresenter();
@@ -46,7 +48,7 @@ public class MorningVerseOverviewFragment extends BaseFragment {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) binding.getRoot().findViewById(R.id.vpVerses);
         mViewPager.setAdapter(sectionsPagerAdapter);
-        //mViewPager.setCurrentItem(currentIndex);
+        mViewPager.setCurrentItem(currentIndex);
 
         return binding.getRoot();
     }
@@ -68,6 +70,18 @@ public class MorningVerseOverviewFragment extends BaseFragment {
         args.putInt(ARGS_KEY, position);
         instance.setArguments(args);
         return instance;
+    }
+
+    public void scrollViewPagerRight(){
+        mViewPager.setCurrentItem(mViewPager.getCurrentItem()+1,true);
+    }
+    public void scrollViewPagerLeft(){
+        mViewPager.setCurrentItem(mViewPager.getCurrentItem()-1,true);
+    }
+
+    @Override
+    public ActionBarPresenter getPresenter() {
+        return mPresenter;
     }
 
     /**
@@ -99,7 +113,12 @@ public class MorningVerseOverviewFragment extends BaseFragment {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
-            return inflater.inflate(R.layout.fragment_placeholder_morning_verse, container, false);
+            FragmentPlaceholderMorningVerseBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_placeholder_morning_verse, container, false);
+            int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
+
+            binding.setMorningVerse(DataSource.getInstance().getMorningVerses().get(sectionNumber));
+
+            return binding.getRoot();
         }
     }
 
@@ -117,7 +136,7 @@ public class MorningVerseOverviewFragment extends BaseFragment {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            return PlaceholderFragment.newInstance(position);
         }
 
         @Override

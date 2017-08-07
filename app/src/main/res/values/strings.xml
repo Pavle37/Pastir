@@ -23,4 +23,5 @@
     <string name="calendar">Kalendar</string>
     <string name="not_implemented">Functionality not yet implemented</string>
     <string name="back">Back</string>
+    <string name="close">Zatvori</string>
 </resources>
