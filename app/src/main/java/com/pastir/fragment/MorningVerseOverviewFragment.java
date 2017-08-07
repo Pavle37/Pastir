@@ -16,7 +16,7 @@ import com.pastir.databinding.FragmentPlaceholderMorningVerseBinding;
 import com.pastir.model.ActionBar;
 import com.pastir.model.MorningVerse;
 import com.pastir.presenter.ActionBarPresenter;
-import com.pastir.presenter.MorningVerseOverviewPresenter;
+import com.pastir.presenter.MorningVersesPresenter;
 import com.pastir.storage.DataSource;
 
 /**
@@ -25,7 +25,7 @@ import com.pastir.storage.DataSource;
 public class MorningVerseOverviewFragment extends BaseFragment {
 
     private ViewPager mViewPager;
-    private MorningVerseOverviewPresenter mPresenter;
+    private MorningVersesPresenter mPresenter;
 
     public MorningVerseOverviewFragment() {
         // Required empty public constructor
@@ -41,7 +41,7 @@ public class MorningVerseOverviewFragment extends BaseFragment {
         int currentIndex = getArguments().getInt(ARGS_KEY);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
 
-        mPresenter = new MorningVerseOverviewPresenter();
+        mPresenter = new MorningVersesPresenter();
         mPresenter.bindView(this);
         binding.setPresenter(mPresenter);
 

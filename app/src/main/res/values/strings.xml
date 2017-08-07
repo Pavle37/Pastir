@@ -25,4 +25,7 @@
     <string name="back">Back</string>
     <string name="close">Zatvori</string>
     <string name="no_morning_verse">Za izabrani datum ne postoji jutarnji stih.</string>
+    <string name="sunrise_sunset">Svitanje / Zalazak</string>
+    <string name="sunrise">Svitanje:</string>
+    <string name="sunset">Zalazak:</string>
 </resources>
