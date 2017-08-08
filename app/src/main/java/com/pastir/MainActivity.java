@@ -19,8 +19,10 @@ import com.pastir.util.Utils;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final int PREVIOUSLY_SELECTED = -1;
     private Fragment mCurrentFragment;
     private ActivityMainBinding mBinding;
+    private NavigationView mNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +31,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mBinding.setActionBar(DataSource.getInstance().getActionBar());
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
 
         loadFragment(new HomeFragment());
     }
@@ -144,6 +146,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mCurrentFragment = loadedFragment;
         if (loadedFragment.getPresenter() != null)
             mBinding.setPresenter(loadedFragment.getPresenter());
+        setNavigationItem(loadedFragment.getNavigationId());
+    }
+
+    public void setNavigationItem(int navId) {
+        mNavigationView.setCheckedItem(navId);
     }
 
 }

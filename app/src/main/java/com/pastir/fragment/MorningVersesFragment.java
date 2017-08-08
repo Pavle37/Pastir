@@ -72,4 +72,8 @@ public class MorningVersesFragment extends BaseFragment {
         return mPresenter;
     }
 
+    @Override
+    public int getNavigationId() {
+        return R.id.nav_morning_verses;
+    }
 }

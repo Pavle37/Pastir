@@ -96,6 +96,66 @@
                 android:layout_marginTop="@dimen/default_padding"
                 android:scrollbars="horizontal"
                 />
+            <TextView
+                android:layout_marginTop="@dimen/default_margin"
+                android:paddingLeft="@dimen/default_padding"
+                android:paddingStart="@dimen/default_padding"
+                android:paddingEnd="@dimen/default_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/radio"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_medium_large"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_margin="@dimen/default_padding"
+                android:weightSum="12">
+
+
+
+                <LinearLayout
+                    android:padding="@dimen/extra_small_padding"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:background="@color/colorLightGrey"
+                    android:layout_marginRight="@dimen/player_background_margin"
+                    android:layout_marginLeft="@dimen/player_background_margin"
+                    android:layout_height="@dimen/player_arrow_size"
+                    android:gravity="center"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAllCaps="true"
+                        android:text="Radio glas nade 101.am" />
+
+                    <ImageView
+                        android:layout_width="@dimen/player_arrow_size"
+                        android:layout_height="match_parent"
+                        android:onClick="@{()->presenter.onPlayClicked()}"
+                        android:src="@drawable/ic_play" />
+                </LinearLayout>
+
+
+
+                    <ImageView
+                        android:layout_width="@dimen/player_arrow_size"
+                        android:layout_height="@dimen/player_arrow_size"
+                        android:src="@drawable/ic_ellipse_gray" />
+                    <ImageView
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="@dimen/player_arrow_size"
+                        android:layout_height="@dimen/player_arrow_size"
+                        android:src="@drawable/ic_ellipse_gray"
+                        />
+
+
+            </RelativeLayout>
 
         </LinearLayout>
     </ScrollView>

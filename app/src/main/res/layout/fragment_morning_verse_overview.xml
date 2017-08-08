@@ -36,7 +36,7 @@
                 android:background="@color/colorLightGrey"
                 android:layout_marginTop="@dimen/extra_large_small_padding"
                 android:layout_marginRight="@dimen/player_background_margin"
-                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginLeft="@dimen/player_background_margin"
                 android:layout_height="@dimen/player_background_width"
                 android:gravity="center"
                 >
@@ -60,7 +60,7 @@
                 <ImageView
                     android:layout_width="@dimen/player_arrow_size"
                     android:layout_height="@dimen/player_arrow_size"
-                    android:background="@drawable/ic_ellipse_white"
+                    android:background="@drawable/ic_ellipse_selector"
                     android:onClick="@{()->presenter.onLeftArrowClicked()}"
 
                     android:src="@drawable/ic_left_arrow_circular" />
@@ -72,7 +72,7 @@
                     android:layout_width="@dimen/player_arrow_size"
                     android:layout_height="@dimen/player_arrow_size"
                     android:src="@drawable/ic_right_arrow_circular"
-                    android:background="@drawable/ic_ellipse_white"/>
+                    android:background="@drawable/ic_ellipse_selector"/>
             </RelativeLayout>
 
 

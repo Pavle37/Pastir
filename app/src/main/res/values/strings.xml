@@ -28,4 +28,7 @@
     <string name="sunrise_sunset">Svitanje / Zalazak</string>
     <string name="sunrise">Svitanje:</string>
     <string name="sunset">Zalazak:</string>
+    <string name="radio">Radio</string>
+
+    <!-- Accessibility strings-->
 </resources>

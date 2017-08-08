@@ -67,6 +67,11 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
+    public int getNavigationId() {
+        return R.id.nav_home;
+    }
+
+    @Override
     protected ActionBar setActionBar() {
         ActionBar ab = super.setActionBar();
         ab.setTitle(getString(R.string.home));

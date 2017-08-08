@@ -1,5 +1,6 @@
 package com.pastir.presenter;
 
+import com.pastir.R;
 import com.pastir.fragment.EventOverviewFragment;
 import com.pastir.fragment.HomeFragment;
 import com.pastir.fragment.HomeListItemFragment;
@@ -8,6 +9,7 @@ import com.pastir.model.Event;
 import com.pastir.model.ListItem;
 import com.pastir.model.MotivationalSticker;
 import com.pastir.model.OnListItemClickListener;
+import com.pastir.util.Utils;
 
 import java.util.List;
 
@@ -52,6 +54,10 @@ public class HomePresenter extends ActionBarPresenter<HomeFragment> implements O
 
     public void onSeeAllEventsClicked() {
         getView().loadFragment(HomeListItemFragment.getInstance(HomeFragment.Slider.EVENTS));
+    }
+
+    public void onPlayClicked(){
+        Utils.SingleToast.show(getContext(), R.string.not_implemented);
     }
 
 }

@@ -49,4 +49,12 @@ public abstract class BaseFragment extends Fragment{
     public void loadFragment(BaseFragment fragmentToLoad){
         mActivity.loadFragment(fragmentToLoad);
     }
+
+    /**
+     * Gets the navigation id for the right menu for the MainActivity
+     * @return id of the navigation item or PREVIOUSLY_SELECTED which doesn't change the selected item
+     */
+    public int getNavigationId(){
+        return MainActivity.PREVIOUSLY_SELECTED;
+    }
 }
