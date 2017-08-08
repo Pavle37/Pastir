@@ -1,7 +1,9 @@
 package com.pastir.fragment;
 
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -66,7 +68,6 @@ public class MorningVersesFragment extends BaseFragment {
         return ab;
     }
 
-
     @Override
     public ActionBarPresenter getPresenter() {
         return mPresenter;
@@ -76,4 +77,5 @@ public class MorningVersesFragment extends BaseFragment {
     public int getNavigationId() {
         return R.id.nav_morning_verses;
     }
+
 }

@@ -1,6 +1,7 @@
 package com.pastir.fragment;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
 import com.pastir.MainActivity;
@@ -8,6 +9,7 @@ import com.pastir.R;
 import com.pastir.model.ActionBar;
 import com.pastir.presenter.ActionBarPresenter;
 import com.pastir.storage.DataSource;
+import com.pastir.util.Utils;
 
 /**
  * Unites common functionality of all fragments
@@ -57,4 +59,5 @@ public abstract class BaseFragment extends Fragment{
     public int getNavigationId(){
         return MainActivity.PREVIOUSLY_SELECTED;
     }
+
 }

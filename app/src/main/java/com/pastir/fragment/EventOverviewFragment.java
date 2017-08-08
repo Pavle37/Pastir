@@ -10,6 +10,7 @@ import com.pastir.R;
 import com.pastir.databinding.FragmentEventOverviewBinding;
 import com.pastir.model.ActionBar;
 import com.pastir.model.Event;
+import com.pastir.presenter.ActionBarPresenter;
 import com.pastir.util.Utils;
 
 /**
@@ -18,6 +19,8 @@ import com.pastir.util.Utils;
 public class EventOverviewFragment extends BaseFragment {
 
     private Event mEvent;
+
+    private ActionBarPresenter<EventOverviewFragment> mPresenter;
 
     public EventOverviewFragment() {
         // Required empty public constructor
@@ -33,6 +36,14 @@ public class EventOverviewFragment extends BaseFragment {
 
         binding.setRvItem(mEvent);
 
+        mPresenter = new ActionBarPresenter<EventOverviewFragment>(){
+            @Override
+            public void onBackPressed() {
+                getView().mActivity.onBackPressed();
+            }
+        };
+        mPresenter.bindView(this);
+
         return binding.getRoot();
     }
 
@@ -42,6 +53,11 @@ public class EventOverviewFragment extends BaseFragment {
         BaseFragment instance = new EventOverviewFragment();
         instance.setArguments(args);
         return instance;
+    }
+
+    @Override
+    public ActionBarPresenter<EventOverviewFragment> getPresenter() {
+        return mPresenter;
     }
 
     @Override

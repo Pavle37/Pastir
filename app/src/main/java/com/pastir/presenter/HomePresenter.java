@@ -43,6 +43,8 @@ public class HomePresenter extends ActionBarPresenter<HomeFragment> implements O
             getView().loadFragment(EventOverviewFragment.getInstance((Event) item));
         } else {
             MotivationalStickerDialog fragment = MotivationalStickerDialog.getInstance((MotivationalSticker) item);
+            getView().setMotivationalStickerDialog(fragment);
+            fragment.setParent(getView());
             fragment.show(getView().getFragmentManager(), TAG);
         }
     }

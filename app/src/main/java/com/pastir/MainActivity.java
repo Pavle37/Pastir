@@ -1,21 +1,35 @@
 package com.pastir;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.pastir.databinding.ActivityMainBinding;
 import com.pastir.fragment.BaseFragment;
 import com.pastir.fragment.HomeFragment;
 import com.pastir.fragment.MorningVersesFragment;
+import com.pastir.model.MotivationalSticker;
 import com.pastir.storage.DataSource;
 import com.pastir.util.Utils;
+
+import java.io.File;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -150,7 +164,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void setNavigationItem(int navId) {
-        mNavigationView.setCheckedItem(navId);
+        if(navId != PREVIOUSLY_SELECTED)
+            mNavigationView.setCheckedItem(navId);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 }

@@ -35,6 +35,8 @@ public class HomeListItemPresenter extends ActionBarPresenter<HomeListItemFragme
             getView().loadFragment(EventOverviewFragment.getInstance((Event) item));
         } else {
             MotivationalStickerDialog fragment = MotivationalStickerDialog.getInstance((MotivationalSticker) item);
+            getView().setMotivationalStickerDialog(fragment);
+            fragment.setParent(getView());
             fragment.show(getView().getFragmentManager(), TAG);
         }
     }

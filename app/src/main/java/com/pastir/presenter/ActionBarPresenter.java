@@ -9,7 +9,7 @@ import com.pastir.util.Utils;
  * Base class for handling actionbar events like back pressed, etc...
  */
 
-public abstract class ActionBarPresenter<V> extends BasePresenter<V> {
+public class ActionBarPresenter<V> extends BasePresenter<V> {
     public void onBackPressed() {
         //Ignore
     }
