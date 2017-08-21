@@ -90,6 +90,7 @@ public class MotivationalStickerDialog extends DialogFragment {
                     Bitmap bm = BitmapFactory.decodeFile(file.getPath());
                     String url = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), bm, "title", "description");
                     intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(url));
+                    intent.setAction(Intent.ACTION_SEND);
                     intent.setType("image/*");
                     startActivity(Intent.createChooser(intent, "Share Image"));
                 } catch (InterruptedException e) {
