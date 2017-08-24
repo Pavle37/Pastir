@@ -3,6 +3,7 @@ package com.pastir.fragment;
 
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.pastir.R;
 import com.pastir.adapter.ListItemAdapter;
@@ -18,7 +20,9 @@ import com.pastir.model.ActionBar;
 import com.pastir.model.ListItem;
 import com.pastir.model.OnListItemClickListener;
 import com.pastir.presenter.HomePresenter;
+import com.pastir.util.Utils;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -33,6 +37,9 @@ public class HomeFragment extends BaseFragment {
 
     private MotivationalStickerDialog mMotivationalStickerDialog;
 
+    private MediaPlayer mPlayer;
+    private ImageView ivPlay;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -45,6 +52,8 @@ public class HomeFragment extends BaseFragment {
         FragmentHomeBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         View view = binding.getRoot();
 
+        ivPlay = (ImageView) view.findViewById(R.id.ivPlay);
+
         rvMotivationalStickers = (RecyclerView) view.findViewById(R.id.rvMotivationalStickers);
         rvEvents = (RecyclerView) view.findViewById(R.id.rvEvents);
 
@@ -56,13 +65,49 @@ public class HomeFragment extends BaseFragment {
         rvEvents.setLayoutManager(lm);
         rvEvents.setHasFixedSize(true);
 
-        mPresenter = new HomePresenter();
-        mPresenter.bindView(this);
-        mPresenter.loadData();
+        if (mPresenter == null) {
+            mPresenter = new HomePresenter();
+            mPresenter.bindView(this);
+            mPresenter.loadData();
+            initializeMediaPlayer();
+        }
 
         binding.setPresenter(mPresenter);
 
         return view;
+    }
+
+    /*////////////////////////////////////
+     * Playing radio
+     *////////////////////////////////////
+    private void initializeMediaPlayer() {
+        mPlayer = new MediaPlayer();
+        try {
+            mPlayer.setDataSource("http://streaming.tdiradio.com:8000/tdiradio.mp3");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void startPlaying() {
+        mPlayer.prepareAsync();
+        ivPlay.setEnabled(false);
+                mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mPlayer.start();
+                        ivPlay.setEnabled(true);
+                    }
+                });
+        Utils.SingleToast.show(getContext(), R.string.buffering_content);
+    }
+
+    public void stopPlaying() {
+        if (mPlayer.isPlaying()) {
+            mPlayer.stop();
+            mPlayer.release();
+            initializeMediaPlayer();
+        }
     }
 
     @Override
@@ -100,9 +145,15 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             mMotivationalStickerDialog.onRequestPermissionsGranted();
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopPlaying();
     }
 
     public enum Slider {

@@ -33,5 +33,7 @@
     <!-- Accessibility strings-->
     <string name="share_accessibility">Share this picture</string>
     <string name="motivational_sticker_accessibility">Motivational sticker</string>
+    <string name="radio_voice_of_hope">Radio glas nade 101.am</string>
+    <string name="buffering_content">Učitavanje sadržaja</string>
 
 </resources>

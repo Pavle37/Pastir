@@ -1,5 +1,8 @@
 package com.pastir.presenter;
 
+import android.databinding.Bindable;
+
+import com.pastir.BR;
 import com.pastir.R;
 import com.pastir.fragment.EventOverviewFragment;
 import com.pastir.fragment.HomeFragment;
@@ -20,6 +23,8 @@ import java.util.List;
 public class HomePresenter extends ActionBarPresenter<HomeFragment> implements OnListItemClickListener {
 
     private static final String TAG = "motivational_sticker";
+
+    private boolean isPlaying = false;
 
     public void loadData() {
         if (mDataSource.getMotivationalStickers() != null)
@@ -59,7 +64,20 @@ public class HomePresenter extends ActionBarPresenter<HomeFragment> implements O
     }
 
     public void onPlayClicked(){
-        Utils.SingleToast.show(getContext(), R.string.not_implemented);
+        setPlaying(!isPlaying);
+
+        if(isPlaying) getView().startPlaying();
+        else getView().stopPlaying();
+
     }
 
+    @Bindable
+    public boolean getIsPlaying() {
+        return isPlaying;
+    }
+
+    public void setPlaying(boolean playing) {
+        isPlaying = playing;
+        notifyPropertyChanged(BR.isPlaying);
+    }
 }
