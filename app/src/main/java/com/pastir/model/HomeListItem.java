@@ -5,7 +5,8 @@ package com.pastir.model;
  */
 
 public interface HomeListItem extends ListItem {
-    String getImageUrl();
+    String getImageMain();
+    String getImageThumbnail();
     String getTitle();
     String getPlace();
     String getDate();

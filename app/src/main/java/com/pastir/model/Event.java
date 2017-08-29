@@ -1,9 +1,12 @@
 package com.pastir.model;
 
+import com.google.firebase.database.DataSnapshot;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Event implements HomeListItem{
+import java.util.List;
+
+public class Event implements HomeListItem {
 
     @SerializedName("id")
     @Expose
@@ -20,9 +23,12 @@ public class Event implements HomeListItem{
     @SerializedName("description")
     @Expose
     private String description;
-    @SerializedName("image_url")
+    @SerializedName("main_image_path")
     @Expose
-    private String imageUrl;
+    private String imageMain;
+    @SerializedName("thumbnail_image_path")
+    @Expose
+    private String imageThumbnail;
     @SerializedName("date")
     @Expose
     private String date;
@@ -67,12 +73,20 @@ public class Event implements HomeListItem{
         this.description = description;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImageMain() {
+        return imageMain;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageMain(String imageMain) {
+        this.imageMain = imageMain;
+    }
+
+    public String getImageThumbnail() {
+        return imageThumbnail;
+    }
+
+    public void setImageThumbnail(String imageThumbnail) {
+        this.imageThumbnail = imageThumbnail;
     }
 
     public String getDate() {
@@ -81,5 +95,17 @@ public class Event implements HomeListItem{
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public static Event parse(DataSnapshot snapshot) {
+        Event event = new Event();
+        event.setTitle(snapshot.child("title").getValue(String.class));
+        event.setDescription(snapshot.child("description").getValue(String.class));
+        event.setDate(snapshot.child("date").getValue(String.class));
+        event.setTime(snapshot.child("time").getValue(String.class));
+        event.setPlace(snapshot.child("place").getValue(String.class));
+        event.setImageMain(snapshot.child("main_image_path").getValue(String.class));
+        event.setImageThumbnail(snapshot.child("thumbnail_image_path").getValue(String.class));
+        return event;
     }
 }

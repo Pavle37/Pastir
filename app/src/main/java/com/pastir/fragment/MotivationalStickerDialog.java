@@ -84,7 +84,7 @@ public class MotivationalStickerDialog extends DialogFragment {
                 try {
                     file = Glide
                             .with(getContext())
-                            .load(ms.getImageUrl())
+                            .load(ms.getImageMain())
                             .downloadOnly(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                             .get();
                     Bitmap bm = BitmapFactory.decodeFile(file.getPath());

@@ -68,9 +68,9 @@ public class HomeFragment extends BaseFragment {
         if (mPresenter == null) {
             mPresenter = new HomePresenter();
             mPresenter.bindView(this);
-            mPresenter.loadData();
             initializeMediaPlayer();
         }
+        mPresenter.loadData();
 
         binding.setPresenter(mPresenter);
 

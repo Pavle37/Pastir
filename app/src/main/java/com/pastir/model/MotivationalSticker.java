@@ -1,19 +1,31 @@
 package com.pastir.model;
 
+import com.google.firebase.database.DataSnapshot;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class MotivationalSticker implements HomeListItem{
 
-    @SerializedName("image_url")
+    @SerializedName("main_image_path")
     @Expose
-    private String imageUrl;
+    private String imageMain;
+    @SerializedName("thumbnail_image_path")
+    @Expose
+    private String imageThumbnail;
     @SerializedName("id")
     @Expose
     private Integer id;
 
-    public String getImageUrl() {
-        return imageUrl;
+    @Override
+    public String getImageMain() {
+        return imageMain;
+    }
+
+    @Override
+    public String getImageThumbnail() {
+        return imageThumbnail;
     }
 
     @Override
@@ -31,8 +43,12 @@ public class MotivationalSticker implements HomeListItem{
         return null;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageMain(String imageMain) {
+        this.imageMain = imageMain;
+    }
+
+    public void setImageThumbnail(String imageThumbnail) {
+        this.imageThumbnail = imageThumbnail;
     }
 
     public Integer getId() {
@@ -43,4 +59,10 @@ public class MotivationalSticker implements HomeListItem{
         this.id = id;
     }
 
+    public static MotivationalSticker parse(DataSnapshot snapshot) {
+        MotivationalSticker sticker = new MotivationalSticker();
+        sticker.setImageMain(snapshot.child("main_image_path").getValue(String.class));
+        sticker.setImageThumbnail(snapshot.child("thumbnail_image_path").getValue(String.class));
+        return sticker;
+    }
 }

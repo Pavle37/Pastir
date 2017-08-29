@@ -19,11 +19,12 @@
         android:orientation="vertical">
 
         <ImageView
-            android:contentDescription="@string/motivational_sticker_accessibility"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_padding"
+            android:contentDescription="@string/motivational_sticker_accessibility"
             android:scaleType="fitXY"
-            bind:imageUrl="@{motivationalSticker.imageUrl}"
+            bind:imageUrl="@{motivationalSticker.imageMain}"
             />
 
         <RelativeLayout
@@ -34,27 +35,27 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/ivShare"
+                android:layout_toStartOf="@+id/ivShare"
                 android:onClick="@{()->dialog.dismiss()}"
                 android:text="@string/close"
                 android:textAllCaps="true"
-                android:layout_toLeftOf="@+id/ivShare"
-                android:layout_toStartOf="@+id/ivShare"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_medium"/>
 
             <ImageView
-                android:paddingEnd="@dimen/default_padding"
-                android:paddingStart="@dimen/default_padding"
                 android:id="@+id/ivShare"
-                android:contentDescription="@string/share_accessibility"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
+                android:contentDescription="@string/share_accessibility"
                 android:onClick="@{()->dialog.onShareClicked(motivationalSticker)}"
+                android:paddingEnd="@dimen/default_padding"
+                android:paddingStart="@dimen/default_padding"
                 android:src="@drawable/ic_share"/>
 
         </RelativeLayout>

@@ -1,12 +1,20 @@
 package com.pastir.storage;
 
-import com.pastir.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.pastir.model.ActionBar;
 import com.pastir.model.Event;
+import com.pastir.model.HomeListItem;
 import com.pastir.model.MorningVerse;
 import com.pastir.model.MotivationalSticker;
+import com.pastir.model.OnHomeListItemsLoadedListener;
+import com.pastir.presenter.HomeListItemPresenter;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -18,6 +26,10 @@ public class DataSource {
 
     private static DataSource sInstance;
     private ActionBar mActionBar;
+    private DatabaseReference mDatabase;
+
+    private List<Event> mEvents;
+    private List<MotivationalSticker> mStickers;
 
     /**
      * @return Current action bar that's linked with the Activity's toolbar or initializes one if
@@ -29,6 +41,9 @@ public class DataSource {
         return mActionBar;
     }
 
+    private DataSource() {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+    }
 
     public static DataSource getInstance() {
         if (sInstance == null)
@@ -36,98 +51,55 @@ public class DataSource {
         return sInstance;
     }
 
-    public List<MotivationalSticker> getMotivationalStickers() {
-        List<MotivationalSticker> result = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            MotivationalSticker sticker = new MotivationalSticker();
-            sticker.setImageUrl("http://wallpapercanyon.com/wp-content/uploads/2016/01/Motivational-Wallpapers-6-800x600.jpg");
-            result.add(sticker);
 
-            sticker = new MotivationalSticker();
-            sticker.setImageUrl("http://andersabrahamsson.info/images/ordinary-weight-loss-motivational-quotes-2-25-best-weight-loss-motivation-quotes-on-pinterest-motivational-quotes-for-weight-loss-diet-motivation-weight-quotes-and-losing-weight-quotes-600-x-800.jpg");
-            result.add(sticker);
-
-            sticker = new MotivationalSticker();
-            sticker.setImageUrl("https://s-media-cache-ak0.pinimg.com/736x/77/df/3a/77df3afdddb1b2d9ffff920b24c4c3c6--american-football-football-players.jpg");
-            result.add(sticker);
-
-            sticker = new MotivationalSticker();
-            sticker.setImageUrl("https://s-media-cache-ak0.pinimg.com/originals/64/b7/1f/64b71fbc64d3b8ac91cef9c8d909e9fb.jpg");
-            result.add(sticker);
-
-            sticker = new MotivationalSticker();
-            sticker.setImageUrl("https://www.inspiredabundance.com/wp-content/gallery/success-wallpapers-with-quotes-gallery-11/037-Belief-800x600.jpg");
-            result.add(sticker);
-
-            sticker = new MotivationalSticker();
-            sticker.setImageUrl("https://s-media-cache-ak0.pinimg.com/736x/44/83/56/4483566a612ad3e420ecc84cd7727f9d--running-motivation-health-motivation.jpg");
-            result.add(sticker);
-        }
-        return result;
+    public void getMotivationalStickers(OnHomeListItemsLoadedListener listener) {
+        getItemsFromFirebase(listener, mStickers, "stickers", MotivationalSticker.class);
     }
 
-    public List<Event> getEvents() {
-        List<Event> result = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            Event event = new Event();
-            event.setImageUrl("http://www.dreams.metroeve.com/wp-content/uploads/2017/04/dreams.metroeve_cathedral-dreams-meaning.jpg");
-            event.setTitle("Title 1");
-            event.setPlace("Beograd");
-            event.setTime("22:30");
-            event.setDate("13.07.2017");
-            event.setDescription("Lorem ispsujem \nLorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus convallis arcu vitae sem sagittis placerat. In vitae tristique elit. Nulla congue tempus diam, blandit venenatis erat.\n" +
-                    "\n" +
-                    "Generated 1 paragraph, 26 words, 185 bytes of Lorem Ipsum");
-            result.add(event);
-
-            event = new Event();
-            event.setImageUrl("http://www.wondermondo.com/Images/Europe/Italy/Tuscany/SienaCathedral1.jpg");
-            event.setTitle("Title 2");
-            event.setPlace("Beograd");
-            event.setTime("22:30");
-            event.setDate("13.07.2017");
-            event.setDescription("Lorem ispsujem \n");
-            result.add(event);
-
-            event = new Event();
-            event.setImageUrl("https://images6.alphacoders.com/338/338986.jpg");
-            event.setTitle("Title 3");
-            event.setPlace("Beograd");
-            event.setTime("22:30");
-            event.setDate("13.07.2017");
-            event.setDescription("Lorem ispsujem \n");
-            result.add(event);
-
-            event = new Event();
-            event.setImageUrl("http://cathedral.org/wp-content/uploads/2016/04/DSC0038.jpg");
-            event.setTitle("Title 4");
-            event.setPlace("Beograd");
-            event.setTime("22:30");
-            event.setDate("13.07.2017");
-            event.setDescription("Lorem ispsujem \n");
-            result.add(event);
-
-            event = new Event();
-            event.setImageUrl("http://www.koeln.de/bilder/data/pictures/2009-09-09_der_koelner_dom/normal/koelner-dom_hl-12.jpg");
-            event.setTitle("Title 14");
-            event.setPlace("Beograd");
-            event.setTime("22:30");
-            event.setDate("13.07.2017");
-            event.setDescription("Lorem ispsujem \n");
-            result.add(event);
-
-            event = new Event();
-            event.setImageUrl("http://cdn.images.express.co.uk/img/dynamic/1/590x/secondary/Gloucester-Cathedral-795898.jpg");
-            event.setTitle("Title 5");
-            event.setPlace("Beograd");
-            event.setTime("22:30");
-            event.setDate("13.07.2017");
-            event.setDescription("Lorem ispsujem \n");
-            result.add(event);
-        }
-        return result;
-
+    public void getEvents(OnHomeListItemsLoadedListener listener) {
+        getItemsFromFirebase(listener, mEvents, "events", Event.class);
     }
+
+    private <T extends HomeListItem> void getItemsFromFirebase(final OnHomeListItemsLoadedListener listener, List<T> items, String path, final Class aClass) {
+        if (items != null && items.size() > 0) { //Exit case
+            listener.onHomeListItemsLoaded(items);
+            return;
+        }
+
+        mDatabase.child(path).addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) { //For every child
+                    if (aClass == Event.class) {
+                        getEventList().add(Event.parse(snapshot));//Parse that child into event and add it to the list
+                    } else {
+                        getStickerList().add(MotivationalSticker.parse(snapshot));
+                    }
+                }
+                listener.onHomeListItemsLoaded(aClass == Event.class ? mEvents : mStickers);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+    private List<Event> getEventList() {
+        if(mEvents == null)
+            mEvents = new ArrayList<>();
+        return mEvents;
+    }
+
+    private List<MotivationalSticker> getStickerList() {
+        if(mStickers == null)
+            mStickers = new ArrayList<>();
+        return mStickers;
+    }
+
 
     public List<MorningVerse> getMorningVerses() {
         String loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut molestie scelerisque commodo. Vivamus eget arcu aliquet turpis sodales pharetra non ac dui. Sed nec ultrices nisl, et hendrerit lectus. Pellentesque gravida neque vel quam efficitur posuere. Donec at vestibulum ligula, eu tempus dui. Nullam at lacinia dui. Praesent tincidunt fermentum est non hendrerit. Praesent ullamcorper enim mi, sit amet mollis diam accumsan non. Nulla turpis purus, consectetur nec felis a, consectetur interdum lectus. In eu augue vitae tellus suscipit lobortis.\n" +

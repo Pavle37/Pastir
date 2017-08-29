@@ -29,7 +29,7 @@
             android:layout_height="@dimen/image_list_item_fullscreen_size"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            bind:imageUrl="@{rvItem.imageUrl}"
+            bind:imageUrl="@{rvItem.imageMain}"
             />
 
         <LinearLayout
