@@ -154,7 +154,7 @@
                         android:layout_marginEnd="@dimen/default_padding"
                         android:layout_marginRight="@dimen/default_padding"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/ic_cloud" />
+                        android:src="@drawable/ic_sunset_sunrise" />
                 </RelativeLayout>
 
             </LinearLayout>

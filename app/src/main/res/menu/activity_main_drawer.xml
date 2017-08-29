@@ -16,7 +16,7 @@
             android:title="@string/lesson"/>
         <item
             android:id="@+id/nav_morning_verses"
-            android:icon="@drawable/ic_morning_songs"
+            android:icon="@drawable/ic_sun_white"
             android:title="@string/morning_verses"/>
         <item
             android:id="@+id/nav_songbook"

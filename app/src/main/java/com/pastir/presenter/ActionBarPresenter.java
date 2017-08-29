@@ -11,18 +11,18 @@ import com.pastir.util.Utils;
 
 public class ActionBarPresenter<V> extends BasePresenter<V> {
     public void onBackPressed() {
-        //Ignore
+        ((BaseFragment) getView()).getActivity().finish();
     }
 
     public void onMenuPressed() {
-        ((MainActivity)((BaseFragment) getView()).getActivity()).openDrawerIfClosed();
+        ((MainActivity) ((BaseFragment) getView()).getActivity()).openDrawerIfClosed();
     }
 
-    public void openCalendar(){
+    public void openCalendar() {
 
     }
 
-    public void openCloud(){
+    public void openCloud() {
 
     }
 }
