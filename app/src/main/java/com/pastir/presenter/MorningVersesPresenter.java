@@ -83,6 +83,8 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
     public void onBackPressed() {
         if(isInOverViewMode())
             getView().mActivity.onBackPressed();
+        else
+            super.onBackPressed();
     }
 
     public boolean isInOverViewMode(){

@@ -1,8 +1,14 @@
 package com.pastir.fragment;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.pastir.MainActivity;
 import com.pastir.R;
@@ -43,6 +49,33 @@ public abstract class BaseFragment extends Fragment{
     public ActionBarPresenter getPresenter() {
         return null;
     }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //Initialize all stuff
+        View view = init(inflater,container);
+
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if( keyCode == KeyEvent.KEYCODE_BACK)
+                {
+                    if(event.getAction() == KeyEvent.ACTION_DOWN && getPresenter() != null) {
+                        getPresenter().onBackPressed();
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        return view;
+    }
+
+    protected abstract View init(LayoutInflater inflater, ViewGroup container);
 
     /**
      * Calls the same name method from BaseActivity class

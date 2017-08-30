@@ -38,10 +38,8 @@ public class HomeListItemFragment extends BaseFragment {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    protected View init(LayoutInflater inflater, ViewGroup container) {
         FragmentHomeListItemBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home_list_item, container, false);
         View view = binding.getRoot();
 

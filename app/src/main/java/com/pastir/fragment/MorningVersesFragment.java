@@ -1,9 +1,6 @@
 package com.pastir.fragment;
 
-import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -35,8 +32,7 @@ public class MorningVersesFragment extends BaseFragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    protected View init(LayoutInflater inflater, ViewGroup container) {
         FragmentMorningVersesBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_morning_verses, container, false);
         View view = binding.getRoot();
 

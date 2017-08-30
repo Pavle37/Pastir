@@ -39,17 +39,25 @@
                     android:visibility="@{actionBar.backButtonVisible ? View.VISIBLE : View.GONE}"
                     android:layout_height="wrap_content">
                     <ImageView
+                        android:layout_centerVertical="true"
                         android:id="@+id/ivBack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_arrow_left"
+                        android:adjustViewBounds="true"
                         />
                     <TextView
+                        android:layout_marginLeft="@dimen/half_icon_size"
+                        android:layout_marginStart="@dimen/half_icon_size"
                         android:layout_toRightOf="@+id/ivBack"
+                        android:layout_toEndOf="@+id/ivBack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
                         android:textSize="@dimen/text_medium_large"
                         android:layout_centerVertical="true"
+                        android:ellipsize="end"
+                        android:maxWidth="@dimen/text_back_max_width"
                         android:text="@{actionBar.backButtonText}"/>
 
                 </RelativeLayout>
@@ -141,7 +149,7 @@
                         android:layout_centerVertical="true"
                         android:layout_toEndOf="@+id/ivCloud"
                         android:layout_toRightOf="@+id/ivCloud"
-                        android:text="@string/cloud"
+                        android:text="@string/sunrise_sunset"
                         android:textAllCaps="true"
                         android:textColor="@color/colorWhite"
                         android:textSize="@dimen/text_small" />

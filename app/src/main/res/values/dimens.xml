@@ -19,4 +19,6 @@
     <dimen name="player_arrow_size">50dp</dimen>
     <dimen name="player_background_margin">25dp</dimen>
     <dimen name="player_background_width">46dp</dimen>
+    <dimen name="half_icon_size">-10dp</dimen>
+    <dimen name="text_back_max_width">80dp</dimen>
 </resources>

@@ -27,8 +27,7 @@ public class EventOverviewFragment extends BaseFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    protected View init(LayoutInflater inflater, ViewGroup container) {
         // Inflate the layout for this fragment
         FragmentEventOverviewBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_overview, container, false);
 

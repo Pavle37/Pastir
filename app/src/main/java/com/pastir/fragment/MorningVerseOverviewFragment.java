@@ -31,10 +31,8 @@ public class MorningVerseOverviewFragment extends BaseFragment {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    protected View init(LayoutInflater inflater, ViewGroup container) {
         // Inflate the layout for this fragment
         FragmentMorningVerseOverviewBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_morning_verse_overview, container, false);
 

@@ -46,8 +46,7 @@ public class HomeFragment extends BaseFragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    protected View init(LayoutInflater inflater, ViewGroup container) {
         // Inflate the layout for this fragment
         FragmentHomeBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         View view = binding.getRoot();
@@ -76,7 +75,6 @@ public class HomeFragment extends BaseFragment {
 
         return view;
     }
-
     /*////////////////////////////////////
      * Playing radio
      *////////////////////////////////////
