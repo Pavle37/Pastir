@@ -1,8 +1,15 @@
 package com.pastir.presenter;
 
 
+import android.databinding.Bindable;
+import android.databinding.BindingAdapter;
+import android.media.MediaPlayer;
 import android.support.v4.content.res.ResourcesCompat;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ViewSwitcher;
 
+import com.pastir.BR;
 import com.pastir.R;
 import com.pastir.fragment.BaseFragment;
 import com.pastir.fragment.CloudDialog;
@@ -27,6 +34,10 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
     private static final String TAG_CALENDAR = "com.pastir.dialog_calendar";
     private static final String TAG_CLOUD = "com.pastir.dialog_cloud";
 
+    private MediaPlayer mPlayer;
+
+    private Player mPlayingMode = Player.STOPPED;
+
 
     @Override
     public void onItemClicked(ListItem item) {
@@ -40,7 +51,7 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
     }
 
     private void onMorningVersesLoaded(List<MorningVerse> morningVerses) {
-        ((MorningVersesFragment)getView()).setAdapter(morningVerses, this);
+        ((MorningVersesFragment) getView()).setAdapter(morningVerses, this);
     }
 
     public void openCalendar() {
@@ -69,10 +80,10 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
         String date = dayOfMonth + "." + (month < 10 ? "0" + month : "" + month) + "." + year;
         for (MorningVerse morningVerse : DataSource.getInstance().getMorningVerses()) {
             if (morningVerse.getDate().equals(date)) {
-                if(!isInOverViewMode())
+                if (!isInOverViewMode())
                     getView().loadFragment(MorningVerseOverviewFragment.getInstance(morningVerse.getId()));
                 else
-                    ((MorningVerseOverviewFragment)getView()).setViewPagerItem(morningVerse);
+                    ((MorningVerseOverviewFragment) getView()).setViewPagerItem(morningVerse);
                 return;
             }
         }
@@ -81,25 +92,105 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
 
     @Override
     public void onBackPressed() {
-        if(isInOverViewMode())
+        if (isInOverViewMode())
             getView().mActivity.onBackPressed();
         else
             super.onBackPressed();
     }
 
-    public boolean isInOverViewMode(){
+    public boolean isInOverViewMode() {
         return getView() instanceof MorningVerseOverviewFragment;
     }
 
-    public void onPlayClicked() {
-        Utils.SingleToast.show(getContext(), R.string.not_implemented);
+
+    public void onPlayClicked(MorningVerse verse) {
+        if (mPlayingMode == Player.STOPPED) {
+            mPlayer = MediaPlayer.create(getContext(), R.raw.genesis);
+            mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    setPlayingMode(Player.STOPPED);
+                    mPlayingMode = Player.PLAYING;
+                    ((MorningVerseOverviewFragment)getView()).scrollViewPagerRight();
+                }
+            });
+        }
+        startPlaying();
     }
 
     public void onLeftArrowClicked() {
-        ((MorningVerseOverviewFragment)getView()).scrollViewPagerLeft();
+        ((MorningVerseOverviewFragment) getView()).scrollViewPagerLeft();
     }
 
     public void onRightArrowClicked() {
-        ((MorningVerseOverviewFragment)getView()).scrollViewPagerRight();
+        ((MorningVerseOverviewFragment) getView()).scrollViewPagerRight();
+    }
+
+    public void stopPlaying() {
+        mPlayer.stop();
+        mPlayer.release();
+        mPlayer = null;
+        setPlayingMode(Player.STOPPED);
+    }
+
+    public void pausePlaying() {
+        mPlayer.pause();
+        setPlayingMode(Player.PAUSED);
+    }
+
+    private void startPlaying() {
+        mPlayer.start();
+        setPlayingMode(Player.PLAYING);
+    }
+
+    public void onPause() {
+        if (mPlayer != null && mPlayer.isPlaying()) {
+            pausePlaying();
+        }
+    }
+
+    public void onDestroy() {
+        if(mPlayer != null)
+            stopPlaying();
+    }
+
+
+    @Bindable
+    public Player getPlayingMode() {
+        return mPlayingMode;
+    }
+
+    public void setPlayingMode(Player playingMode) {
+        mPlayingMode = playingMode;
+        notifyPropertyChanged(BR.playingMode);
+    }
+
+    @BindingAdapter("android:play")
+    public static void onPlaying(ViewSwitcher switcher, Player playerMode) {
+        if (playerMode == Player.PLAYING && switcher.getCurrentView() instanceof ImageView){
+            switcher.showPrevious();
+        }
+        else if(switcher.getCurrentView() instanceof LinearLayout){
+            switcher.showNext();
+        }
+    }
+
+    /**
+     * Used only in case when we want to play the next verse
+     */
+    public void continuePlaying(final MorningVerse verse) {
+        mPlayingMode = Player.STOPPED; //Resets to stop so that we can load the audio file from next verse
+        ((MorningVerseOverviewFragment)getView()).getHandler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                onPlayClicked(verse);
+            }
+        },500);
+    }
+
+    public enum Player {
+        PLAYING,
+        PAUSED,
+        STOPPED
     }
 }

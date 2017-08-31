@@ -151,7 +151,7 @@ public class DataSource {
         result.add(event);
 
         event = new MorningVerse();
-        event.setId(5);
+        event.setId(6);
         event.setTitle("SEKCIJA 2");
         event.setDate("9.07.2017");
         event.setText("I onaj dan izišavši Isus iz kuće sjeđaše kraj mora. I sabraše se oko njega ljudi mnogi, i tako da mora ući u lađu i sjesti, a narod sav stajaše po brijegu.");
@@ -159,7 +159,7 @@ public class DataSource {
         result.add(event);
 
         event = new MorningVerse();
-        event.setId(5);
+        event.setId(7);
         event.setTitle("SEKCIJA 3");
         event.setDate("8.07.2017");
         event.setText("I onaj dan izišavši Isus iz kuće sjeđaše kraj mora. I sabraše se oko njega ljudi mnogi, i tako da mora ući u lađu i sjesti, a narod sav stajaše po brijegu.");

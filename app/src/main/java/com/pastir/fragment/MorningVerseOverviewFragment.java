@@ -2,6 +2,7 @@ package com.pastir.fragment;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -34,7 +35,7 @@ public class MorningVerseOverviewFragment extends BaseFragment {
     @Override
     protected View init(LayoutInflater inflater, ViewGroup container) {
         // Inflate the layout for this fragment
-        FragmentMorningVerseOverviewBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_morning_verse_overview, container, false);
+        final FragmentMorningVerseOverviewBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_morning_verse_overview, container, false);
 
         int currentIndex = getArguments().getInt(ARGS_KEY);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
@@ -42,11 +43,36 @@ public class MorningVerseOverviewFragment extends BaseFragment {
         mPresenter = new MorningVersesPresenter();
         mPresenter.bindView(this);
         binding.setPresenter(mPresenter);
+        binding.setVerse(DataSource.getInstance().getMorningVerses().get(currentIndex));
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) binding.getRoot().findViewById(R.id.vpVerses);
         mViewPager.setAdapter(sectionsPagerAdapter);
         mViewPager.setCurrentItem(currentIndex);
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                MorningVerse verse = DataSource.getInstance().getMorningVerses().get(position);
+                binding.setVerse(verse);
+                if(mPresenter.getPlayingMode() == MorningVersesPresenter.Player.PLAYING){
+                    mPresenter.continuePlaying(verse);
+                }
+                else{
+                    mPresenter.onDestroy();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         return binding.getRoot();
     }
@@ -57,7 +83,6 @@ public class MorningVerseOverviewFragment extends BaseFragment {
         ab.setTitle(getString(R.string.morning_verses));
         ab.setLeftImage(0);
         ab.setBackButton(true);
-        ab.setBackButtonText(getString(R.string.back));
         ab.setMorningVersesActionBar(true);
         return ab;
     }
@@ -85,6 +110,10 @@ public class MorningVerseOverviewFragment extends BaseFragment {
 
     public void setViewPagerItem(MorningVerse morningVerse) {
         mViewPager.setCurrentItem(morningVerse.getId());
+    }
+
+    public Handler getHandler() {
+        return new Handler();
     }
 
 
@@ -122,8 +151,21 @@ public class MorningVerseOverviewFragment extends BaseFragment {
 
             binding.setMorningVerse(DataSource.getInstance().getMorningVerses().get(sectionNumber));
 
+
             return binding.getRoot();
         }
+    }
+
+    @Override
+    public void onPause() {
+        mPresenter.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        mPresenter.onDestroy();
+        super.onDestroy();
     }
 
     /**
@@ -150,4 +192,6 @@ public class MorningVerseOverviewFragment extends BaseFragment {
         }
 
     }
+
+
 }

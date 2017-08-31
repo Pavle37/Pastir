@@ -8,16 +8,18 @@
         <variable
             name="actionBar"
             type="com.pastir.model.ActionBar"/>
+
         <variable
             name="presenter"
             type="com.pastir.presenter.ActionBarPresenter"/>
+
         <import type="android.view.View"/>
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context="com.pastir.MainActivity">
 
         <android.support.design.widget.AppBarLayout
@@ -32,35 +34,17 @@
                 android:background="?attr/colorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:onClick="@{()->presenter.onBackPressed()}"
-                    android:visibility="@{actionBar.backButtonVisible ? View.VISIBLE : View.GONE}"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_centerVertical="true"
-                        android:id="@+id/ivBack"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_arrow_left"
-                        android:adjustViewBounds="true"
-                        />
-                    <TextView
-                        android:layout_marginLeft="@dimen/half_icon_size"
-                        android:layout_marginStart="@dimen/half_icon_size"
-                        android:layout_toRightOf="@+id/ivBack"
-                        android:layout_toEndOf="@+id/ivBack"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:textSize="@dimen/text_medium_large"
-                        android:layout_centerVertical="true"
-                        android:ellipsize="end"
-                        android:maxWidth="@dimen/text_back_max_width"
-                        android:text="@{actionBar.backButtonText}"/>
 
-                </RelativeLayout>
+                <ImageView
+                    android:id="@+id/ivBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:adjustViewBounds="true"
+                    android:onClick="@{()->presenter.onBackPressed()}"
+                    android:src="@drawable/ic_arrow_left"
+                    android:visibility="@{actionBar.backButtonVisible ? View.VISIBLE : View.GONE}"
+                    />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -68,7 +52,6 @@
                     android:layout_centerVertical="true"
                     android:adjustViewBounds="true"
                     android:src="@{actionBar.leftImage}"
-                    android:onClick="@{()->presenter.onBackPressed()}"
                     />
 
                 <TextView
@@ -76,9 +59,9 @@
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
                     android:gravity="center"
+                    android:text="@{actionBar.title}"
                     android:textAppearance="@style/WhiteBoldText"
                     android:textSize="@dimen/text_medium_large"
-                    android:text="@{actionBar.title}"
                     tools:text="Title"
                     />
 
@@ -88,21 +71,22 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:adjustViewBounds="true"
+                    android:onClick="@{()->presenter.onMenuPressed()}"
                     android:padding="@dimen/small_padding"
                     android:src="@drawable/ic_menu"
-                    android:onClick="@{()->presenter.onMenuPressed()}"
                     />
 
             </RelativeLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
                 android:gravity="center"
-                android:visibility="@{actionBar.morningVersesActionBar ? View.VISIBLE : View.GONE}"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/default_padding"
                 android:paddingTop="@dimen/default_padding"
+                android:visibility="@{actionBar.morningVersesActionBar ? View.VISIBLE : View.GONE}"
                 android:weightSum="2">
 
                 <RelativeLayout
@@ -122,7 +106,7 @@
                         android:text="@string/calendar"
                         android:textAllCaps="true"
                         android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/text_small" />
+                        android:textSize="@dimen/text_small"/>
 
                     <ImageView
                         android:id="@+id/ivCalendar"
@@ -132,7 +116,7 @@
                         android:layout_marginEnd="@dimen/default_padding"
                         android:layout_marginRight="@dimen/default_padding"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/ic_calendar" />
+                        android:src="@drawable/ic_calendar"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -152,7 +136,7 @@
                         android:text="@string/sunrise_sunset"
                         android:textAllCaps="true"
                         android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/text_small" />
+                        android:textSize="@dimen/text_small"/>
 
                     <ImageView
                         android:id="@+id/ivCloud"
@@ -162,7 +146,7 @@
                         android:layout_marginEnd="@dimen/default_padding"
                         android:layout_marginRight="@dimen/default_padding"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/ic_sunset_sunrise" />
+                        android:src="@drawable/ic_sunset_sunrise"/>
                 </RelativeLayout>
 
             </LinearLayout>

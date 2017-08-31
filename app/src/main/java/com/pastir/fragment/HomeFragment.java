@@ -76,7 +76,7 @@ public class HomeFragment extends BaseFragment {
         return view;
     }
     /*////////////////////////////////////
-     * Playing radio
+     * Player radio
      *////////////////////////////////////
     private void initializeMediaPlayer() {
         mPlayer = new MediaPlayer();
