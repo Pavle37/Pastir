@@ -1,11 +1,8 @@
 package com.pastir.fragment;
 
 
-import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.media.MediaPlayer;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,6 +27,7 @@ import java.util.List;
  */
 public class HomeFragment extends BaseFragment {
 
+    private static final String RADIO_URL = "http://rvs.crestin.tv:8014/radioglasnade";
     private HomePresenter mPresenter;
 
     private RecyclerView rvMotivationalStickers;
@@ -79,7 +77,7 @@ public class HomeFragment extends BaseFragment {
     private void initializeMediaPlayer() {
         mPlayer = new MediaPlayer();
         try {
-            mPlayer.setDataSource("http://streaming.tdiradio.com:8000/tdiradio.mp3");
+            mPlayer.setDataSource(RADIO_URL);
         } catch (IOException e) {
             e.printStackTrace();
         }
