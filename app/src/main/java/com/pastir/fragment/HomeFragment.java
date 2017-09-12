@@ -35,8 +35,6 @@ public class HomeFragment extends BaseFragment {
     private RecyclerView rvMotivationalStickers;
     private RecyclerView rvEvents;
 
-    private MotivationalStickerDialog mMotivationalStickerDialog;
-
     private MediaPlayer mPlayer;
     private ImageView ivPlay;
 
@@ -133,18 +131,6 @@ public class HomeFragment extends BaseFragment {
             rvMotivationalStickers.setAdapter(adapter);
         } else {
             rvEvents.setAdapter(adapter);
-        }
-    }
-
-    public void setMotivationalStickerDialog(MotivationalStickerDialog motivationalStickerDialog) {
-        mMotivationalStickerDialog = motivationalStickerDialog;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            mMotivationalStickerDialog.onRequestPermissionsGranted();
         }
     }
 

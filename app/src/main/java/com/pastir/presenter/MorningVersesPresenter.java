@@ -62,7 +62,7 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
                 now.get(Calendar.DAY_OF_MONTH)
         );
         dpd.setAccentColor(ResourcesCompat.getColor(getView().getResources(), R.color.colorPrimary, null));
-        dpd.show(getView().mActivity.getFragmentManager(), TAG_CALENDAR);
+        dpd.show(getView().mActivity.getFragmentManager(),TAG_CALENDAR);
     }
 
     public void openCloud() {

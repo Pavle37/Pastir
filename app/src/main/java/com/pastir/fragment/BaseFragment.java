@@ -2,7 +2,6 @@ package com.pastir.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
@@ -10,12 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.pastir.MainActivity;
+import com.pastir.activity.MainActivity;
 import com.pastir.R;
 import com.pastir.model.ActionBar;
 import com.pastir.presenter.ActionBarPresenter;
 import com.pastir.storage.DataSource;
-import com.pastir.util.Utils;
 
 /**
  * Unites common functionality of all fragments

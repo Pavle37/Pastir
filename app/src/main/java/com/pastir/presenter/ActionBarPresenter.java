@@ -1,9 +1,7 @@
 package com.pastir.presenter;
 
-import com.pastir.MainActivity;
-import com.pastir.R;
+import com.pastir.activity.MainActivity;
 import com.pastir.fragment.BaseFragment;
-import com.pastir.util.Utils;
 
 /**
  * Base class for handling actionbar events like back pressed, etc...

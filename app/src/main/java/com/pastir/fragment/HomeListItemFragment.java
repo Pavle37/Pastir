@@ -1,9 +1,7 @@
 package com.pastir.fragment;
 
-import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,8 +29,6 @@ public class HomeListItemFragment extends BaseFragment {
     private HomeFragment.Slider mSlider;
     private RecyclerView rvHomeListItems;
     private HomeListItemPresenter mPresenter;
-
-    private MotivationalStickerDialog mMotivationalStickerDialog;
 
     public HomeListItemFragment() {
         // Required empty public constructor
@@ -80,18 +76,6 @@ public class HomeListItemFragment extends BaseFragment {
         ab.setBackButton(true);
         ab.setMorningVersesActionBar(false);
         return ab;
-    }
-
-    public void setMotivationalStickerDialog(MotivationalStickerDialog motivationalStickerDialog) {
-        mMotivationalStickerDialog = motivationalStickerDialog;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-          if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
-            mMotivationalStickerDialog.onRequestPermissionsGranted();
-        }
     }
 
     public static BaseFragment getInstance(HomeFragment.Slider slider) {

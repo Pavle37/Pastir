@@ -9,16 +9,19 @@
             type="com.pastir.model.MotivationalSticker"/>
 
         <variable
-            name="dialog"
-            type="com.pastir.fragment.MotivationalStickerDialog"/>
+            name="activity"
+            type="com.pastir.activity.MotivationalStickerDialogActivity"/>
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="@color/colorWhite"
+        >
 
         <ImageView
+            android:id="@+id/ivMotivationalSticker"
+            android:layout_alignParentTop="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_padding"
@@ -28,6 +31,7 @@
             />
 
         <RelativeLayout
+            android:layout_below="@+id/ivMotivationalSticker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/default_padding">
@@ -40,7 +44,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/ivShare"
                 android:layout_toStartOf="@+id/ivShare"
-                android:onClick="@{()->dialog.dismiss()}"
+                android:onClick="@{()->activity.dismiss()}"
                 android:text="@string/close"
                 android:textAllCaps="true"
                 android:textColor="@color/colorPrimary"
@@ -53,12 +57,12 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:contentDescription="@string/share_accessibility"
-                android:onClick="@{()->dialog.onShareClicked(motivationalSticker)}"
+                android:onClick="@{()->activity.onShareClicked(motivationalSticker)}"
                 android:paddingEnd="@dimen/default_padding"
                 android:paddingStart="@dimen/default_padding"
                 android:src="@drawable/ic_share"/>
 
         </RelativeLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

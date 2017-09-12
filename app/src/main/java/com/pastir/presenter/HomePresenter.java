@@ -3,10 +3,10 @@ package com.pastir.presenter;
 import android.databinding.Bindable;
 
 import com.pastir.BR;
+import com.pastir.activity.MotivationalStickerDialogActivity;
 import com.pastir.fragment.EventOverviewFragment;
 import com.pastir.fragment.HomeFragment;
 import com.pastir.fragment.HomeListItemFragment;
-import com.pastir.fragment.MotivationalStickerDialog;
 import com.pastir.model.Event;
 import com.pastir.model.HomeListItem;
 import com.pastir.model.ListItem;
@@ -36,10 +36,7 @@ public class HomePresenter extends ActionBarPresenter<HomeFragment> implements O
         if (item instanceof Event) {
             getView().loadFragment(EventOverviewFragment.getInstance((Event) item));
         } else {
-            MotivationalStickerDialog fragment = MotivationalStickerDialog.getInstance((MotivationalSticker) item);
-            getView().setMotivationalStickerDialog(fragment);
-            fragment.setParent(getView());
-            fragment.show(getView().getFragmentManager(), TAG);
+            MotivationalStickerDialogActivity.show(getView().mActivity,(MotivationalSticker)item);
         }
     }
 
