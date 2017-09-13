@@ -1,6 +1,8 @@
 package com.pastir.fragment;
 
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import com.pastir.model.OnListItemClickListener;
 import com.pastir.presenter.ActionBarPresenter;
 import com.pastir.presenter.MorningVersesPresenter;
 
+import java.security.Permission;
 import java.util.List;
 
 /**
@@ -74,4 +77,11 @@ public class MorningVersesFragment extends BaseFragment {
         return R.id.nav_morning_verses;
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            mPresenter.openCloud();
+        }
+    }
 }

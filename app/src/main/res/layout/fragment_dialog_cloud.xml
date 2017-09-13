@@ -5,7 +5,7 @@
 
         <variable
             name="cloud"
-            type="com.pastir.model.Cloud"/>
+            type="com.pastir.model.Results"/>
     </data>
 
     <LinearLayout
@@ -40,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/default_padding"
-                    android:text="@{@string/sunrise + ` ` + cloud.sunrize}"
+                    android:text="@{@string/sunrise + ` ` + cloud.getTimezonedSunrise()}"
                     android:textAppearance="@style/WhiteBoldText"
                     android:textSize="@dimen/text_medium"/>
 
@@ -48,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/default_padding"
-                    android:text="@{@string/sunset + ` ` + cloud.sunset}"
+                    android:text="@{@string/sunset + ` ` + cloud.getTimezonedSunset()}"
                     android:textAppearance="@style/WhiteBoldText"
                     android:textSize="@dimen/text_medium"/>
             </LinearLayout>

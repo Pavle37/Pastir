@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import com.pastir.R;
 import com.pastir.databinding.FragmentDialogCloudBinding;
 import com.pastir.model.Cloud;
+import com.pastir.model.Results;
+import com.pastir.model.SunriseSunset;
 import com.pastir.util.Utils;
 
 /**
@@ -32,9 +34,10 @@ public class CloudDialog extends DialogFragment{
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         FragmentDialogCloudBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dialog_cloud, null, true);
-        Cloud cloud = Utils.General.deserializeFromJson(getArguments().getString(ARGS_KEY), Cloud.class);
+        Results sunriseSunset = Utils.General.deserializeFromJson(getArguments().getString(ARGS_KEY), Results.class);
 
-        binding.setCloud(cloud);
+
+        binding.setCloud(sunriseSunset);
 
         builder.setView(binding.getRoot());
 
@@ -42,10 +45,10 @@ public class CloudDialog extends DialogFragment{
         return builder.create();
     }
 
-    public static CloudDialog getInstance(Cloud cloud) {
+    public static CloudDialog getInstance(Results sunriseSunset) {
         CloudDialog instance = new CloudDialog();
         Bundle args = new Bundle();
-        args.putString(ARGS_KEY, Utils.General.serializeToJson(cloud));
+        args.putString(ARGS_KEY, Utils.General.serializeToJson(sunriseSunset));
         instance.setArguments(args);
         return instance;
     }

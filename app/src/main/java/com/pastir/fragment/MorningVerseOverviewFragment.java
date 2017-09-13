@@ -1,8 +1,10 @@
 package com.pastir.fragment;
 
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -77,6 +79,7 @@ public class MorningVerseOverviewFragment extends BaseFragment {
         return binding.getRoot();
     }
 
+
     @Override
     protected ActionBar setActionBar() {
         ActionBar ab = super.setActionBar();
@@ -114,6 +117,14 @@ public class MorningVerseOverviewFragment extends BaseFragment {
 
     public Handler getHandler() {
         return new Handler();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            mPresenter.openCloud();
+        }
     }
 
 

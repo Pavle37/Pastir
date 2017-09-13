@@ -1,9 +1,15 @@
 package com.pastir.presenter;
 
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.databinding.Bindable;
 import android.databinding.BindingAdapter;
+import android.location.Location;
+import android.location.LocationManager;
 import android.media.MediaPlayer;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,6 +25,8 @@ import com.pastir.model.Cloud;
 import com.pastir.model.ListItem;
 import com.pastir.model.MorningVerse;
 import com.pastir.model.OnListItemClickListener;
+import com.pastir.model.Results;
+import com.pastir.network.WebController;
 import com.pastir.storage.DataSource;
 import com.pastir.util.Utils;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -62,17 +70,23 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
                 now.get(Calendar.DAY_OF_MONTH)
         );
         dpd.setAccentColor(ResourcesCompat.getColor(getView().getResources(), R.color.colorPrimary, null));
-        dpd.show(getView().mActivity.getFragmentManager(),TAG_CALENDAR);
+        dpd.show(getView().mActivity.getFragmentManager(), TAG_CALENDAR);
     }
 
     public void openCloud() {
-        Cloud cloud = new Cloud();
-        cloud.setSunrize("7:20");
-        cloud.setSunset("16:40");
-        CloudDialog fragment = CloudDialog.getInstance(cloud);
-        fragment.show(getView().getFragmentManager(), TAG_CLOUD);
-    }
+        if (ActivityCompat.checkSelfPermission(getView().mActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getView().mActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
+            getView().requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 37);
+
+            return;
+        }
+        //After we are sure we have the permissions, then execute this code
+        LocationManager lm = (LocationManager) getView().mActivity.getSystemService(Context.LOCATION_SERVICE);
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        WebController.loadSunriseSunset(this,location);
+
+    }
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int month, int dayOfMonth) {
@@ -111,7 +125,7 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
                 public void onCompletion(MediaPlayer mp) {
                     setPlayingMode(Player.STOPPED);
                     mPlayingMode = Player.PLAYING;
-                    ((MorningVerseOverviewFragment)getView()).scrollViewPagerRight();
+                    ((MorningVerseOverviewFragment) getView()).scrollViewPagerRight();
                 }
             });
         }
@@ -150,7 +164,7 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
     }
 
     public void onDestroy() {
-        if(mPlayer != null)
+        if (mPlayer != null)
             stopPlaying();
     }
 
@@ -167,10 +181,9 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
 
     @BindingAdapter("android:play")
     public static void onPlaying(ViewSwitcher switcher, Player playerMode) {
-        if (playerMode == Player.PLAYING && switcher.getCurrentView() instanceof ImageView){
+        if (playerMode == Player.PLAYING && switcher.getCurrentView() instanceof ImageView) {
             switcher.showPrevious();
-        }
-        else if(switcher.getCurrentView() instanceof LinearLayout){
+        } else if (switcher.getCurrentView() instanceof LinearLayout) {
             switcher.showNext();
         }
     }
@@ -180,12 +193,17 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
      */
     public void continuePlaying(final MorningVerse verse) {
         mPlayingMode = Player.STOPPED; //Resets to stop so that we can load the audio file from next verse
-        ((MorningVerseOverviewFragment)getView()).getHandler().postDelayed(new Runnable() {
+        ((MorningVerseOverviewFragment) getView()).getHandler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 onPlayClicked(verse);
             }
-        },500);
+        }, 500);
+    }
+
+    public void openCloudDialog(Results results) {
+        CloudDialog fragment = CloudDialog.getInstance(results);
+        fragment.show(getView().getFragmentManager(), TAG_CLOUD);
     }
 
     public enum Player {
