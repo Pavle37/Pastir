@@ -83,9 +83,9 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
         }
         //After we are sure we have the permissions, then execute this code
         LocationManager lm = (LocationManager) getView().mActivity.getSystemService(Context.LOCATION_SERVICE);
-        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         //If we did not catch that, try with network
-        if(location == null) location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        if(location == null) location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         //Nothing, release a toast
         if(location == null){
             Utils.SingleToast.show(getContext(),R.string.no_location);
@@ -98,7 +98,7 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
     @Override
     public void onDateSet(DatePickerDialog view, int year, int month, int dayOfMonth) {
         month++;
-        String date = dayOfMonth + "." + (month < 10 ? "0" + month : "" + month) + "." + year;
+        String date = (dayOfMonth < 10 ? "0" + dayOfMonth : "" + dayOfMonth)+ "." + (month < 10 ? "0" + month : "" + month) + "." + year;
         for (MorningVerse morningVerse : DataSource.getInstance().getMorningVerses()) {
             if (morningVerse.getDate().equals(date)) {
                 if (!isInOverViewMode())
