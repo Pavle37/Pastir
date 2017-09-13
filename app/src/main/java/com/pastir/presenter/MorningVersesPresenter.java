@@ -84,6 +84,13 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
         //After we are sure we have the permissions, then execute this code
         LocationManager lm = (LocationManager) getView().mActivity.getSystemService(Context.LOCATION_SERVICE);
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        //If we did not catch that, try with network
+        if(location == null) location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        //Nothing, release a toast
+        if(location == null){
+            Utils.SingleToast.show(getContext(),R.string.no_location);
+            return;
+        }
         WebController.loadSunriseSunset(this,location);
 
     }

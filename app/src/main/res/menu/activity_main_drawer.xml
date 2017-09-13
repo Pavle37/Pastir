@@ -11,13 +11,13 @@
             android:icon="@drawable/ic_sun_white"
             android:title="@string/morning_verses"/>
         <item
-            android:id="@+id/nav_bible"
-            android:icon="@drawable/ic_bible"
-            android:title="@string/bible"/>
-        <item
             android:id="@+id/nav_lesson"
             android:icon="@drawable/ic_lessons"
             android:title="@string/lesson"/>
+        <item
+            android:id="@+id/nav_bible"
+            android:icon="@drawable/ic_bible"
+            android:title="@string/bible"/>
         <item
             android:id="@+id/nav_songbook"
             android:icon="@drawable/ic_songbook"

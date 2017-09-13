@@ -32,10 +32,11 @@
     <!-- Accessibility strings-->
     <string name="share_accessibility">Share this picture</string>
     <string name="motivational_sticker_accessibility">Motivational sticker</string>
-    <string name="radio_voice_of_hope">Radio glas nade 101.am</string>
+    <string name="radio_voice_of_hope">Radio glas nade</string>
     <string name="buffering_content">Učitavanje sadržaja</string>
     <string name="error_reading_error">Error reading server\'s response</string>
     <string name="no_internet_connection">No Internet connection detected</string>
     <string name="error_cannot_parse">Error while parsing server\'s results</string>
+    <string name="no_location">Nije moguce dobiti vašu lokaciju.</string>
 
 </resources>
