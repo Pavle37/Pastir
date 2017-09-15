@@ -21,7 +21,6 @@ import com.pastir.fragment.BaseFragment;
 import com.pastir.fragment.CloudDialog;
 import com.pastir.fragment.MorningVerseOverviewFragment;
 import com.pastir.fragment.MorningVersesFragment;
-import com.pastir.model.Cloud;
 import com.pastir.model.ListItem;
 import com.pastir.model.MorningVerse;
 import com.pastir.model.OnListItemClickListener;
@@ -126,24 +125,23 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
 
     public void onPlayClicked(MorningVerse verse) {
         if (mPlayingMode == Player.STOPPED) {
-            mPlayer = MediaPlayer.create(getContext(), R.raw.genesis);
-            mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    setPlayingMode(Player.STOPPED);
-                    mPlayingMode = Player.PLAYING;
-                    ((MorningVerseOverviewFragment) getView()).scrollViewPagerRight();
-                }
+            mPlayer = MediaPlayer.create(getContext(), R.raw.sample);
+            mPlayer.setOnCompletionListener(mp -> {
+                setPlayingMode(Player.STOPPED);
+                mPlayingMode = Player.FINISHED;
+                ((MorningVerseOverviewFragment) getView()).scrollViewPagerRight();
             });
         }
         startPlaying();
     }
 
     public void onLeftArrowClicked() {
+        setPlayingMode(Player.STOPPED);
         ((MorningVerseOverviewFragment) getView()).scrollViewPagerLeft();
     }
 
     public void onRightArrowClicked() {
+        setPlayingMode(Player.STOPPED);
         ((MorningVerseOverviewFragment) getView()).scrollViewPagerRight();
     }
 
@@ -200,12 +198,7 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
      */
     public void continuePlaying(final MorningVerse verse) {
         mPlayingMode = Player.STOPPED; //Resets to stop so that we can load the audio file from next verse
-        ((MorningVerseOverviewFragment) getView()).getHandler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                onPlayClicked(verse);
-            }
-        }, 500);
+        ((MorningVerseOverviewFragment) getView()).getHandler().postDelayed(() -> onPlayClicked(verse), 500);
     }
 
     public void openCloudDialog(Results results) {
@@ -216,6 +209,7 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
     public enum Player {
         PLAYING,
         PAUSED,
-        STOPPED
+        STOPPED,
+        FINISHED
     }
 }

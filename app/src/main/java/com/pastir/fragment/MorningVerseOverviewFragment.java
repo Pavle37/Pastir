@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +63,7 @@ public class MorningVerseOverviewFragment extends BaseFragment {
             public void onPageSelected(int position) {
                 MorningVerse verse = DataSource.getInstance().getMorningVerses().get(position);
                 binding.setVerse(verse);
-                if(mPresenter.getPlayingMode() == MorningVersesPresenter.Player.PLAYING){
+                if(mPresenter.getPlayingMode() == MorningVersesPresenter.Player.FINISHED){
                     mPresenter.continuePlaying(verse);
                 }
                 else{
