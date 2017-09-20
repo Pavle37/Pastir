@@ -33,6 +33,11 @@ public class HomePresenter extends ActionBarPresenter<HomeFragment> implements O
     public void loadData() {
         mDataSource.getMotivationalStickers(this);
         mDataSource.getEvents(this);
+    }
+
+    @Override
+    public void bindView(HomeFragment view) {
+        super.bindView(view);
         initializeMediaPlayer();
     }
 
