@@ -22,9 +22,10 @@ import com.pastir.util.Utils;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final int PREVIOUSLY_SELECTED = -1;
-    private Fragment mCurrentFragment;
+    private BaseFragment mCurrentFragment;
     private ActivityMainBinding mBinding;
     private NavigationView mNavigationView;
+    private boolean loadingFromMenu = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-
+        loadingFromMenu = true;
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
@@ -120,14 +121,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //If we are trying to load the same fragment that is being currently displayed don't let it
         if (mCurrentFragment != null && Utils.General.compareClasses(mCurrentFragment, fragmentToLoad)) {
             closeDrawerIfOpened();
+            loadingFromMenu = false;
             return;
         }
+
+        if(mCurrentFragment != null && loadingFromMenu)
+            mCurrentFragment.onNextMenuFragmentLoaded();
 
         getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(animationInId, animationOutId, animationInIdOut, animationOutIdOut)
                 .replace(R.id.flContent, fragmentToLoad)
                 .addToBackStack(fragmentToLoad.getClass().getName())
                 .commit();
+        loadingFromMenu = false;
 
     }
 

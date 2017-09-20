@@ -91,4 +91,10 @@ public abstract class BaseFragment extends Fragment{
         return MainActivity.PREVIOUSLY_SELECTED;
     }
 
+    /**
+     * Method used by fragment to indicate when a new fragment is being loaded
+     */
+    public void onNextMenuFragmentLoaded() {
+        //Nothing in the base class, override extended classes
+    }
 }

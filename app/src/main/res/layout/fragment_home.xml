@@ -157,7 +157,8 @@
                         android:layout_width="@dimen/player_arrow_size"
                         android:layout_height="match_parent"
                         android:onClick="@{()->presenter.onPlayClicked()}"
-                        android:src="@{presenter.isPlaying ? @drawable/ic_stop : @drawable/ic_play}"/>
+                        android:src="@{presenter.isPlaying ? @drawable/ic_stop : @drawable/ic_play}"
+                        />
                 </LinearLayout>
 
 

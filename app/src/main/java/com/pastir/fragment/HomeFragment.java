@@ -27,14 +27,10 @@ import java.util.List;
  */
 public class HomeFragment extends BaseFragment {
 
-    private static final String RADIO_URL = "http://rvs.crestin.tv:8014/radioglasnade";
     private HomePresenter mPresenter;
 
     private RecyclerView rvMotivationalStickers;
     private RecyclerView rvEvents;
-
-    private MediaPlayer mPlayer;
-    private ImageView ivPlay;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -46,8 +42,6 @@ public class HomeFragment extends BaseFragment {
         // Inflate the layout for this fragment
         FragmentHomeBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         View view = binding.getRoot();
-
-        ivPlay = (ImageView) view.findViewById(R.id.ivPlay);
 
         rvMotivationalStickers = (RecyclerView) view.findViewById(R.id.rvMotivationalStickers);
         rvEvents = (RecyclerView) view.findViewById(R.id.rvEvents);
@@ -63,45 +57,12 @@ public class HomeFragment extends BaseFragment {
         if (mPresenter == null) {
             mPresenter = new HomePresenter();
             mPresenter.bindView(this);
-            initializeMediaPlayer();
         }
         mPresenter.loadData();
 
         binding.setPresenter(mPresenter);
 
         return view;
-    }
-    /*////////////////////////////////////
-     * Player radio
-     *////////////////////////////////////
-    private void initializeMediaPlayer() {
-        mPlayer = new MediaPlayer();
-        try {
-            mPlayer.setDataSource(RADIO_URL);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void startPlaying() {
-        mPlayer.prepareAsync();
-        ivPlay.setEnabled(false);
-                mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                    @Override
-                    public void onPrepared(MediaPlayer mp) {
-                        mPlayer.start();
-                        ivPlay.setEnabled(true);
-                    }
-                });
-        Utils.SingleToast.show(getContext(), R.string.buffering_content);
-    }
-
-    public void stopPlaying() {
-        if (mPlayer.isPlaying()) {
-            mPlayer.stop();
-            mPlayer.release();
-            initializeMediaPlayer();
-        }
     }
 
     @Override
@@ -133,9 +94,14 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        stopPlaying();
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.onDestroy();
+    }
+
+    @Override
+    public void onNextMenuFragmentLoaded() {
+        mPresenter.onDestroy();
     }
 
     public enum Slider {

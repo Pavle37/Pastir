@@ -15,6 +15,7 @@ import com.pastir.presenter.HomeListItemPresenter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -271,6 +272,7 @@ public class DataSource {
         event.setDescription("»И казах им како је добра рука Бога мојега нада мном... Тада рекоше: Устанимо и зидајмо. И укријепише им се руке на добро.« Немија 2,18.");
         result.add(event);
 
+        Collections.reverse(result);
         return result;
     }
 }

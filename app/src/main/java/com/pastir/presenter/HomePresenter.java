@@ -1,6 +1,7 @@
 package com.pastir.presenter;
 
 import android.databinding.Bindable;
+import android.media.MediaPlayer;
 
 import com.pastir.BR;
 import com.pastir.activity.MotivationalStickerDialogActivity;
@@ -14,6 +15,7 @@ import com.pastir.model.MotivationalSticker;
 import com.pastir.model.OnHomeListItemsLoadedListener;
 import com.pastir.model.OnListItemClickListener;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -22,13 +24,16 @@ import java.util.List;
 
 public class HomePresenter extends ActionBarPresenter<HomeFragment> implements OnListItemClickListener, OnHomeListItemsLoadedListener {
 
-    private static final String TAG = "motivational_sticker";
+    private static final String RADIO_URL = "http://rvs.crestin.tv:8014/radioglasnade";
 
     private boolean isPlaying = false;
+    private MediaPlayer mPlayer;
+    private boolean isReady = false;
 
     public void loadData() {
         mDataSource.getMotivationalStickers(this);
         mDataSource.getEvents(this);
+        initializeMediaPlayer();
     }
 
     @Override
@@ -50,10 +55,15 @@ public class HomePresenter extends ActionBarPresenter<HomeFragment> implements O
     }
 
     public void onPlayClicked() {
+        //Change the state
         setPlaying(!isPlaying);
-
-        if (isPlaying) getView().startPlaying();
-        else getView().stopPlaying();
+        //Check the state for according action
+        if (isPlaying){
+            startPlaying();
+        }
+        else {
+            stopPlaying();
+        }
 
     }
 
@@ -76,5 +86,48 @@ public class HomePresenter extends ActionBarPresenter<HomeFragment> implements O
             else
                 getView().setAdapter(items, this, HomeFragment.Slider.MOTIVATIONAL_STICKERS);
         }
+    }
+
+    /*////////////////////////////////////
+     * Player radio
+     *////////////////////////////////////
+    private void initializeMediaPlayer() {
+        //Create
+        mPlayer = new MediaPlayer();
+        //Set source
+        try {
+            mPlayer.setDataSource(RADIO_URL);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //Prepare
+        mPlayer.prepareAsync();
+        mPlayer.setOnPreparedListener(mp -> {
+            playerReady();
+            isReady = true;
+        });
+    }
+
+    private void playerReady() {
+        if(isReady){
+            mPlayer.start();
+        }
+    }
+
+    private void startPlaying() {
+        playerReady();
+        isReady = true;
+    }
+
+    private void stopPlaying() {
+        if (mPlayer.isPlaying()) {
+            mPlayer.pause();
+        }
+    }
+
+    public void onDestroy(){
+        if(mPlayer.isPlaying())
+            mPlayer.stop();
+        mPlayer.release();
     }
 }
