@@ -3,6 +3,8 @@ package com.pastir.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class MorningVerse implements ListItem {
 
     @SerializedName("id")
@@ -59,5 +61,19 @@ public class MorningVerse implements ListItem {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    /**
+     * Returns position of the item in the list
+     * @param morningVerses list of morning verses
+     * @param id id of the item that's being looked for
+     * @return
+     */
+    public static int getPositionForId(List<MorningVerse> morningVerses, int currentId) {
+        for(int i = 0 ; i < morningVerses.size(); i++){
+            if(morningVerses.get(i).getId().equals(currentId))
+                return i;
+        }
+        return -1;
     }
 }

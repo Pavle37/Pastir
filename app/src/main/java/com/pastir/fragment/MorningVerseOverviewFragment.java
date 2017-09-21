@@ -23,6 +23,8 @@ import com.pastir.presenter.ActionBarPresenter;
 import com.pastir.presenter.MorningVersesPresenter;
 import com.pastir.storage.DataSource;
 
+import java.util.List;
+
 /**
  * Used to show morning verse view pager and to handle audio stream
  */
@@ -40,18 +42,20 @@ public class MorningVerseOverviewFragment extends BaseFragment {
         // Inflate the layout for this fragment
         final FragmentMorningVerseOverviewBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_morning_verse_overview, container, false);
 
-        int currentIndex = getArguments().getInt(ARGS_KEY);
+        int currentId = getArguments().getInt(ARGS_KEY);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
 
         mPresenter = new MorningVersesPresenter();
         mPresenter.bindView(this);
         binding.setPresenter(mPresenter);
-        binding.setVerse(DataSource.getInstance().getMorningVerses().get(currentIndex));
+        List<MorningVerse> morningVerses = DataSource.getInstance().getMorningVerses();
+        int position = MorningVerse.getPositionForId(morningVerses,currentId);
+        binding.setVerse(morningVerses.get(position));
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) binding.getRoot().findViewById(R.id.vpVerses);
         mViewPager.setAdapter(sectionsPagerAdapter);
-        mViewPager.setCurrentItem(currentIndex);
+        mViewPager.setCurrentItem(position);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
