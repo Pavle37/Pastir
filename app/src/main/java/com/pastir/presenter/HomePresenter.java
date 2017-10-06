@@ -12,7 +12,7 @@ import com.pastir.model.Event;
 import com.pastir.model.HomeListItem;
 import com.pastir.model.ListItem;
 import com.pastir.model.MotivationalSticker;
-import com.pastir.model.OnHomeListItemsLoadedListener;
+import com.pastir.model.OnListItemsLoadedListener;
 import com.pastir.model.OnListItemClickListener;
 
 import java.io.IOException;
@@ -22,7 +22,7 @@ import java.util.List;
  * Used to handle interactions with the home fragment
  */
 
-public class HomePresenter extends ActionBarPresenter<HomeFragment> implements OnListItemClickListener, OnHomeListItemsLoadedListener {
+public class HomePresenter extends ActionBarPresenter<HomeFragment> implements OnListItemClickListener, OnListItemsLoadedListener {
 
     private static final String RADIO_URL = "http://rvs.crestin.tv:8014/radioglasnade";
 
@@ -83,7 +83,7 @@ public class HomePresenter extends ActionBarPresenter<HomeFragment> implements O
     }
 
     @Override
-    public void onHomeListItemsLoaded(List<? extends HomeListItem> items) {
+    public void onListItemsLoaded(List<? extends ListItem> items) {
         if (items != null && items.size() > 0) {
             if(items.get(0) instanceof Event)
                 getView().setAdapter(items, this, HomeFragment.Slider.EVENTS);
@@ -131,8 +131,15 @@ public class HomePresenter extends ActionBarPresenter<HomeFragment> implements O
     }
 
     public void onDestroy(){
-        if(mPlayer.isPlaying())
-            mPlayer.stop();
-        mPlayer.release();
+        try {
+            if (mPlayer.isPlaying())
+                mPlayer.stop();
+        }
+        catch (IllegalStateException e){
+            //skip
+        }
+        finally {
+            mPlayer.release();
+        }
     }
 }

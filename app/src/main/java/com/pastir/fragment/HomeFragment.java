@@ -2,13 +2,11 @@ package com.pastir.fragment;
 
 
 import android.databinding.DataBindingUtil;
-import android.media.MediaPlayer;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.pastir.R;
 import com.pastir.adapter.ListItemAdapter;
@@ -17,9 +15,7 @@ import com.pastir.model.ActionBar;
 import com.pastir.model.ListItem;
 import com.pastir.model.OnListItemClickListener;
 import com.pastir.presenter.HomePresenter;
-import com.pastir.util.Utils;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -27,7 +23,7 @@ import java.util.List;
  */
 public class HomeFragment extends BaseFragment {
 
-    private HomePresenter mPresenter;
+    private HomePresenter mHomePresenter;
 
     private RecyclerView rvMotivationalStickers;
     private RecyclerView rvEvents;
@@ -54,20 +50,19 @@ public class HomeFragment extends BaseFragment {
         rvEvents.setLayoutManager(lm);
         rvEvents.setHasFixedSize(true);
 
-        if (mPresenter == null) {
-            mPresenter = new HomePresenter();
-            mPresenter.bindView(this);
+        if (mHomePresenter == null) {
+            mHomePresenter = new HomePresenter();
+            mHomePresenter.bindView(this);
         }
-        mPresenter.loadData();
+        mHomePresenter.loadData();
 
-        binding.setPresenter(mPresenter);
+        binding.setPresenter(mHomePresenter);
 
         return view;
     }
 
-    @Override
-    public HomePresenter getPresenter() {
-        return mPresenter;
+    public HomePresenter getHomePresenter() {
+        return mHomePresenter;
     }
 
     @Override
@@ -96,12 +91,12 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mPresenter.onDestroy();
+        mHomePresenter.onDestroy();
     }
 
     @Override
     public void onNextMenuFragmentLoaded() {
-        mPresenter.onDestroy();
+        mHomePresenter.onDestroy();
     }
 
     public enum Slider {

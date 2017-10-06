@@ -42,18 +42,18 @@ public class MorningVerseOverviewFragment extends BaseFragment {
         // Inflate the layout for this fragment
         final FragmentMorningVerseOverviewBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_morning_verse_overview, container, false);
 
-        int currentId = getArguments().getInt(ARGS_KEY);
+        String currentDate = getArguments().getString(ARGS_KEY);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
 
         mPresenter = new MorningVersesPresenter();
         mPresenter.bindView(this);
         binding.setPresenter(mPresenter);
         List<MorningVerse> morningVerses = DataSource.getInstance().getMorningVerses();
-        int position = MorningVerse.getPositionForId(morningVerses,currentId);
+        int position = MorningVerse.getPositionForId(currentDate);
         binding.setVerse(morningVerses.get(position));
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) binding.getRoot().findViewById(R.id.vpVerses);
+        mViewPager = binding.getRoot().findViewById(R.id.vpVerses);
         mViewPager.setAdapter(sectionsPagerAdapter);
         mViewPager.setCurrentItem(position);
 
@@ -95,10 +95,10 @@ public class MorningVerseOverviewFragment extends BaseFragment {
         return ab;
     }
 
-    public static BaseFragment getInstance(int position) {
+    public static BaseFragment getInstance(String date) {
         BaseFragment instance = new MorningVerseOverviewFragment();
         Bundle args = new Bundle();
-        args.putInt(ARGS_KEY, position);
+        args.putString(ARGS_KEY, date);
         instance.setArguments(args);
         return instance;
     }
@@ -111,13 +111,12 @@ public class MorningVerseOverviewFragment extends BaseFragment {
         mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1, true);
     }
 
-    @Override
-    public ActionBarPresenter getPresenter() {
+    public ActionBarPresenter getHomePresenter() {
         return mPresenter;
     }
 
     public void setViewPagerItem(MorningVerse morningVerse) {
-        mViewPager.setCurrentItem(morningVerse.getId());
+        mViewPager.setCurrentItem(MorningVerse.getPositionForId(morningVerse.getDate()));
     }
 
     public Handler getHandler() {

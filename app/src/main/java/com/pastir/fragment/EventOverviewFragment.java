@@ -54,8 +54,7 @@ public class EventOverviewFragment extends BaseFragment {
         return instance;
     }
 
-    @Override
-    public ActionBarPresenter<EventOverviewFragment> getPresenter() {
+    public ActionBarPresenter<EventOverviewFragment> getHomePresenter() {
         return mPresenter;
     }
 

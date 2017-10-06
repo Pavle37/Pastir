@@ -8,7 +8,7 @@ import com.pastir.model.Event;
 import com.pastir.model.HomeListItem;
 import com.pastir.model.ListItem;
 import com.pastir.model.MotivationalSticker;
-import com.pastir.model.OnHomeListItemsLoadedListener;
+import com.pastir.model.OnListItemsLoadedListener;
 import com.pastir.model.OnListItemClickListener;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
  * Used to handle interactions with the home list item fragment
  */
 
-public class HomeListItemPresenter extends ActionBarPresenter<HomeListItemFragment> implements OnListItemClickListener, OnHomeListItemsLoadedListener{
+public class ListItemPresenter extends ActionBarPresenter<HomeListItemFragment> implements OnListItemClickListener, OnListItemsLoadedListener {
     private static final String TAG = "motivational_sticker";
 
     public void loadData(HomeFragment.Slider slider) {
@@ -43,7 +43,7 @@ public class HomeListItemPresenter extends ActionBarPresenter<HomeListItemFragme
     }
 
     @Override
-    public void onHomeListItemsLoaded(List<? extends HomeListItem> events) {
+    public void onListItemsLoaded(List<? extends ListItem> events) {
         getView().setAdapter(events, this);
     }
 }

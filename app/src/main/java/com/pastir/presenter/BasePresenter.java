@@ -19,7 +19,7 @@ public abstract class BasePresenter<V> extends BaseObservable {
     protected DataSource mDataSource;
 
     /**
-     * bindView binds View to Presenter
+     * bindView binds View to HomePresenter
      */
     public void bindView(V view) {
         if (view instanceof AppCompatActivity) {
@@ -32,14 +32,14 @@ public abstract class BasePresenter<V> extends BaseObservable {
     }
 
     /**
-     * unbindView unbinds View from Presenter
+     * unbindView unbinds View from HomePresenter
      */
     public void unbindView() {
         mView = null;
     }
 
     /**
-     * Presenter uses getView to get attached View
+     * HomePresenter uses getView to get attached View
      */
     public V getView() {
         if (mView == null) {

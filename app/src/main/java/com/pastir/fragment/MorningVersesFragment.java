@@ -39,7 +39,7 @@ public class MorningVersesFragment extends BaseFragment {
         FragmentMorningVersesBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_morning_verses, container, false);
         View view = binding.getRoot();
 
-        rvMorningVerses = (RecyclerView) view.findViewById(R.id.rvMorningVerses);
+        rvMorningVerses = view.findViewById(R.id.rvMorningVerses);
 
         LinearLayoutManager lm = new LinearLayoutManager(getContext());
         rvMorningVerses.setLayoutManager(lm);
@@ -67,8 +67,7 @@ public class MorningVersesFragment extends BaseFragment {
         return ab;
     }
 
-    @Override
-    public ActionBarPresenter getPresenter() {
+    public ActionBarPresenter getHomePresenter() {
         return mPresenter;
     }
 

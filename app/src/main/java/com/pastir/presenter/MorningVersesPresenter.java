@@ -19,11 +19,14 @@ import com.pastir.BR;
 import com.pastir.R;
 import com.pastir.fragment.BaseFragment;
 import com.pastir.fragment.CloudDialog;
+import com.pastir.fragment.HomeFragment;
 import com.pastir.fragment.MorningVerseOverviewFragment;
 import com.pastir.fragment.MorningVersesFragment;
+import com.pastir.model.Event;
 import com.pastir.model.ListItem;
 import com.pastir.model.MorningVerse;
 import com.pastir.model.OnListItemClickListener;
+import com.pastir.model.OnListItemsLoadedListener;
 import com.pastir.model.Results;
 import com.pastir.network.WebController;
 import com.pastir.storage.DataSource;
@@ -36,7 +39,7 @@ import java.util.List;
 /**
  * Used to handle interactions with the morning verses fragment
  */
-public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> implements OnListItemClickListener, com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener {
+public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> implements OnListItemClickListener, DatePickerDialog.OnDateSetListener, OnListItemsLoadedListener {
 
     private static final String TAG_CALENDAR = "com.pastir.dialog_calendar";
     private static final String TAG_CLOUD = "com.pastir.dialog_cloud";
@@ -48,17 +51,12 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
 
     @Override
     public void onItemClicked(ListItem item) {
-        getView().loadFragment(MorningVerseOverviewFragment.getInstance(((MorningVerse) item).getId()));
+        getView().loadFragment(MorningVerseOverviewFragment.getInstance(((MorningVerse) item).getDate()));
     }
 
     public void loadData() {
         if (mDataSource.getMorningVerses() != null)
-            onMorningVersesLoaded(mDataSource.getMorningVerses());
-        //TODO: Create call to WebController to fetch the data
-    }
-
-    private void onMorningVersesLoaded(List<MorningVerse> morningVerses) {
-        ((MorningVersesFragment) getView()).setAdapter(morningVerses, this);
+            mDataSource.getMorningVerses(this);
     }
 
     public void openCalendar() {
@@ -68,6 +66,7 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
                 now.get(Calendar.MONTH),
                 now.get(Calendar.DAY_OF_MONTH)
         );
+        dpd.setVersion(DatePickerDialog.Version.VERSION_1);
         dpd.setAccentColor(ResourcesCompat.getColor(getView().getResources(), R.color.colorPrimary, null));
         dpd.show(getView().mActivity.getFragmentManager(), TAG_CALENDAR);
     }
@@ -84,24 +83,24 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
         LocationManager lm = (LocationManager) getView().mActivity.getSystemService(Context.LOCATION_SERVICE);
         Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         //If we did not catch that, try with network
-        if(location == null) location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if (location == null) location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         //Nothing, release a toast
-        if(location == null){
-            Utils.SingleToast.show(getContext(),R.string.no_location);
+        if (location == null) {
+            Utils.SingleToast.show(getContext(), R.string.no_location);
             return;
         }
-        WebController.loadSunriseSunset(this,location);
+        WebController.loadSunriseSunset(this, location);
 
     }
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int month, int dayOfMonth) {
         month++;
-        String date = (dayOfMonth < 10 ? "0" + dayOfMonth : "" + dayOfMonth)+ "." + (month < 10 ? "0" + month : "" + month) + "." + year;
+        String date = (dayOfMonth < 10 ? "0" + dayOfMonth : "" + dayOfMonth) + "." + (month < 10 ? "0" + month : "" + month) + "." + year;
         for (MorningVerse morningVerse : DataSource.getInstance().getMorningVerses()) {
             if (morningVerse.getDate().equals(date)) {
                 if (!isInOverViewMode())
-                    getView().loadFragment(MorningVerseOverviewFragment.getInstance(morningVerse.getId()));
+                    getView().loadFragment(MorningVerseOverviewFragment.getInstance(morningVerse.getDate()));
                 else
                     ((MorningVerseOverviewFragment) getView()).setViewPagerItem(morningVerse);
                 return;
@@ -204,6 +203,12 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
     public void openCloudDialog(Results results) {
         CloudDialog fragment = CloudDialog.getInstance(results);
         fragment.show(getView().getFragmentManager(), TAG_CLOUD);
+    }
+
+    @Override
+    public void onListItemsLoaded(List<? extends ListItem> items) {
+        if (items != null && items.size() > 0)  //Check which fragment it is and set adapter on it
+            ((MorningVersesFragment)getView()).setAdapter(items, this);
     }
 
     public enum Player {

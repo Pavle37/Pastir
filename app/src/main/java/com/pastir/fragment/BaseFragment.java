@@ -12,8 +12,12 @@ import android.view.ViewGroup;
 import com.pastir.activity.MainActivity;
 import com.pastir.R;
 import com.pastir.model.ActionBar;
+import com.pastir.model.ListItem;
 import com.pastir.presenter.ActionBarPresenter;
+import com.pastir.presenter.MorningVersesPresenter;
 import com.pastir.storage.DataSource;
+
+import java.util.List;
 
 /**
  * Unites common functionality of all fragments
@@ -44,7 +48,7 @@ public abstract class BaseFragment extends Fragment{
         return ab;
     }
 
-    public ActionBarPresenter getPresenter() {
+    public ActionBarPresenter getHomePresenter() {
         return null;
     }
 
@@ -61,8 +65,8 @@ public abstract class BaseFragment extends Fragment{
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if( keyCode == KeyEvent.KEYCODE_BACK)
                 {
-                    if(event.getAction() == KeyEvent.ACTION_DOWN && getPresenter() != null) {
-                        getPresenter().onBackPressed();
+                    if(event.getAction() == KeyEvent.ACTION_DOWN && getHomePresenter() != null) {
+                        getHomePresenter().onBackPressed();
                     }
                     return true;
                 }

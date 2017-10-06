@@ -153,8 +153,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void setCurrentFragment(BaseFragment loadedFragment) {
         mCurrentFragment = loadedFragment;
-        if (loadedFragment.getPresenter() != null)
-            mBinding.setPresenter(loadedFragment.getPresenter());
+        if (loadedFragment.getHomePresenter() != null)
+            mBinding.setPresenter(loadedFragment.getHomePresenter());
         setNavigationItem(loadedFragment.getNavigationId());
     }
 

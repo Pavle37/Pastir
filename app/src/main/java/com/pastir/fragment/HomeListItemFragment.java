@@ -15,7 +15,7 @@ import com.pastir.model.ActionBar;
 import com.pastir.model.ListItem;
 import com.pastir.model.OnListItemClickListener;
 import com.pastir.presenter.ActionBarPresenter;
-import com.pastir.presenter.HomeListItemPresenter;
+import com.pastir.presenter.ListItemPresenter;
 import com.pastir.util.Utils;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class HomeListItemFragment extends BaseFragment {
 
     private HomeFragment.Slider mSlider;
     private RecyclerView rvHomeListItems;
-    private HomeListItemPresenter mPresenter;
+    private ListItemPresenter mPresenter;
 
     public HomeListItemFragment() {
         // Required empty public constructor
@@ -47,7 +47,7 @@ public class HomeListItemFragment extends BaseFragment {
         rvHomeListItems.setLayoutManager(lm);
 
 
-        mPresenter = new HomeListItemPresenter();
+        mPresenter = new ListItemPresenter();
         mPresenter.bindView(this);
 
         binding.setPresenter(mPresenter);
@@ -62,8 +62,7 @@ public class HomeListItemFragment extends BaseFragment {
         rvHomeListItems.setAdapter(adapter);
     }
 
-    @Override
-    public ActionBarPresenter getPresenter() {
+    public ActionBarPresenter getHomePresenter() {
         return mPresenter;
     }
 
