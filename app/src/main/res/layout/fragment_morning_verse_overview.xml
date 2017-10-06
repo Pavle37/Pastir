@@ -47,11 +47,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_small"
                     android:text="@{verse.title}"/>
 
                 <ViewSwitcher
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:play="@{presenter.playingMode}"
                     >
 
@@ -62,13 +63,13 @@
                         >
                         <ImageView
                             android:layout_width="@dimen/player_arrow_size"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:onClick="@{()->presenter.pausePlaying()}"
                             android:src="@drawable/ic_pause"
                             />
                         <ImageView
                             android:layout_width="@dimen/player_arrow_size"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:onClick="@{()->presenter.stopPlaying()}"
                             android:src="@drawable/ic_stop"
                             />

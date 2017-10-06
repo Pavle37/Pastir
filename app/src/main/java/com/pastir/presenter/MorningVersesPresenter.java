@@ -96,7 +96,7 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
     @Override
     public void onDateSet(DatePickerDialog view, int year, int month, int dayOfMonth) {
         month++;
-        String date = (dayOfMonth < 10 ? "0" + dayOfMonth : "" + dayOfMonth) + "." + (month < 10 ? "0" + month : "" + month) + "." + year;
+        String date = (dayOfMonth < 10 ? "0" + dayOfMonth : "" + dayOfMonth) + "." + (month < 10 ? "0" + month : "" + month) + "." + year + ".";
         for (MorningVerse morningVerse : DataSource.getInstance().getMorningVerses()) {
             if (morningVerse.getDate().equals(date)) {
                 if (!isInOverViewMode())
