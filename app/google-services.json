@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "784610160928",
+    "firebase_url": "https://pastir-fa3ba.firebaseio.com",
+    "project_id": "pastir-fa3ba",
+    "storage_bucket": "pastir-fa3ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784610160928:android:edafdf83031c3bfc",
+        "android_client_info": {
+          "package_name": "com.pastir"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "784610160928-4fa9u04sn0otei5eiuo86h8nhd1n70ha.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6OxWPorPp2DaQolfWpUA9-EneDNvX5QQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
