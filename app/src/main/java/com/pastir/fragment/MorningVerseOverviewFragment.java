@@ -48,9 +48,12 @@ public class MorningVerseOverviewFragment extends BaseFragment {
         mPresenter = new MorningVersesPresenter();
         mPresenter.bindView(this);
         binding.setPresenter(mPresenter);
+
         List<MorningVerse> morningVerses = DataSource.getInstance().getMorningVerses();
         int position = MorningVerse.getPositionForId(currentDate);
-        binding.setVerse(morningVerses.get(position));
+        MorningVerse currentVerse = morningVerses.get(position);
+        binding.setVerse(currentVerse);
+        mPresenter.loadVerseAudio(currentVerse);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = binding.getRoot().findViewById(R.id.vpVerses);
@@ -67,8 +70,9 @@ public class MorningVerseOverviewFragment extends BaseFragment {
             public void onPageSelected(int position) {
                 MorningVerse verse = DataSource.getInstance().getMorningVerses().get(position);
                 binding.setVerse(verse);
+                mPresenter.loadVerseAudio(verse);
                 if(mPresenter.getPlayingMode() == MorningVersesPresenter.Player.FINISHED){
-                    mPresenter.continuePlaying(verse);
+                    mPresenter.continuePlaying();
                 }
                 else{
                     mPresenter.onDestroy();

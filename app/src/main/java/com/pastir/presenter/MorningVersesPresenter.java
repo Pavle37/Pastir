@@ -33,11 +33,12 @@ import com.pastir.storage.DataSource;
 import com.pastir.util.Utils;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
 /**
- * Used to handle interactions with the morning verses fragment
+ * Used to handle interaction with the morning verses fragment
  */
 public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> implements OnListItemClickListener, DatePickerDialog.OnDateSetListener, OnListItemsLoadedListener {
 
@@ -47,6 +48,7 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
     private MediaPlayer mPlayer;
 
     private Player mPlayingMode = Player.STOPPED;
+    private boolean isReady = false;
 
 
     @Override
@@ -122,15 +124,7 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
     }
 
 
-    public void onPlayClicked(MorningVerse verse) {
-        if (mPlayingMode == Player.STOPPED) {
-            mPlayer = MediaPlayer.create(getContext(), R.raw.sample);
-            mPlayer.setOnCompletionListener(mp -> {
-                setPlayingMode(Player.STOPPED);
-                mPlayingMode = Player.FINISHED;
-                ((MorningVerseOverviewFragment) getView()).scrollViewPagerRight();
-            });
-        }
+    public void onPlayClicked() {
         startPlaying();
     }
 
@@ -145,9 +139,8 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
     }
 
     public void stopPlaying() {
-        mPlayer.stop();
-        mPlayer.release();
-        mPlayer = null;
+        mPlayer.pause();
+        mPlayer.seekTo(0);
         setPlayingMode(Player.STOPPED);
     }
 
@@ -157,8 +150,10 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
     }
 
     private void startPlaying() {
+        playerReady();
         mPlayer.start();
         setPlayingMode(Player.PLAYING);
+        isReady = true;
     }
 
     public void onPause() {
@@ -168,8 +163,41 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
     }
 
     public void onDestroy() {
-        if (mPlayer != null)
-            stopPlaying();
+        if (mPlayer != null) {
+            mPlayer.stop();
+            mPlayer.release();
+            mPlayer = null;
+        }
+    }
+
+    private void initializeMediaPlayer(String url) {
+        //Create
+        mPlayer = new MediaPlayer();
+        //Set source
+        try {
+            mPlayer.setDataSource(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //Prepare
+        mPlayer.prepareAsync();
+        mPlayer.setOnPreparedListener(mp -> {
+            playerReady();
+            isReady = true;
+        });
+        //When the playing is done
+        mPlayer.setOnCompletionListener(mp -> {
+            setPlayingMode(Player.STOPPED);
+            mPlayingMode = Player.FINISHED;
+            ((MorningVerseOverviewFragment) getView()).scrollViewPagerRight();
+        });
+    }
+
+    private void playerReady() {
+        if (isReady) {
+            mPlayer.start();
+            setPlayingMode(Player.PLAYING);
+        }
     }
 
 
@@ -195,9 +223,9 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
     /**
      * Used only in case when we want to play the next verse
      */
-    public void continuePlaying(final MorningVerse verse) {
+    public void continuePlaying() {
         mPlayingMode = Player.STOPPED; //Resets to stop so that we can load the audio file from next verse
-        ((MorningVerseOverviewFragment) getView()).getHandler().postDelayed(() -> onPlayClicked(verse), 500);
+        ((MorningVerseOverviewFragment) getView()).getHandler().postDelayed(this::onPlayClicked, 500);
     }
 
     public void openCloudDialog(Results results) {
@@ -208,7 +236,11 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
     @Override
     public void onListItemsLoaded(List<? extends ListItem> items) {
         if (items != null && items.size() > 0)  //Check which fragment it is and set adapter on it
-            ((MorningVersesFragment)getView()).setAdapter(items, this);
+            ((MorningVersesFragment) getView()).setAdapter(items, this);
+    }
+
+    public void loadVerseAudio(MorningVerse currentVerse) {
+        initializeMediaPlayer(currentVerse.getAudioPath());
     }
 
     public enum Player {

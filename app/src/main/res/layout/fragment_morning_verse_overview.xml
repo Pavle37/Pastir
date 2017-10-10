@@ -78,7 +78,7 @@
                     <ImageView
                         android:layout_width="@dimen/player_arrow_size"
                         android:layout_height="match_parent"
-                        android:onClick="@{()->presenter.onPlayClicked(verse)}"
+                        android:onClick="@{()->presenter.onPlayClicked()}"
                         android:src="@drawable/ic_play"
                         android:layout_gravity="center_horizontal"
                         />

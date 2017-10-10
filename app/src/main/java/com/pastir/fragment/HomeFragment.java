@@ -39,8 +39,8 @@ public class HomeFragment extends BaseFragment {
         FragmentHomeBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         View view = binding.getRoot();
 
-        rvMotivationalStickers = (RecyclerView) view.findViewById(R.id.rvMotivationalStickers);
-        rvEvents = (RecyclerView) view.findViewById(R.id.rvEvents);
+        rvMotivationalStickers = view.findViewById(R.id.rvMotivationalStickers);
+        rvEvents = view.findViewById(R.id.rvEvents);
 
         LinearLayoutManager lm = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvMotivationalStickers.setLayoutManager(lm);
