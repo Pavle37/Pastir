@@ -57,8 +57,7 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
     }
 
     public void loadData() {
-        if (mDataSource.getMorningVerses() != null)
-            mDataSource.getMorningVerses(this);
+        mDataSource.getMorningVerses(this);
     }
 
     public void openCalendar() {
@@ -149,10 +148,11 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
         setPlayingMode(Player.PAUSED);
     }
 
+    /**
+     * This method will start playing on the second run
+     */
     private void startPlaying() {
         playerReady();
-        mPlayer.start();
-        setPlayingMode(Player.PLAYING);
         isReady = true;
     }
 
@@ -171,6 +171,8 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
     }
 
     private void initializeMediaPlayer(String url) {
+        //Reset the isReady flag
+        isReady = false;
         //Create
         mPlayer = new MediaPlayer();
         //Set source
@@ -182,8 +184,7 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
         //Prepare
         mPlayer.prepareAsync();
         mPlayer.setOnPreparedListener(mp -> {
-            playerReady();
-            isReady = true;
+            startPlaying();
         });
         //When the playing is done
         mPlayer.setOnCompletionListener(mp -> {

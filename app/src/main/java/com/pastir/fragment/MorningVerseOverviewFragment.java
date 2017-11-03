@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,15 +67,10 @@ public class MorningVerseOverviewFragment extends BaseFragment {
 
             @Override
             public void onPageSelected(int position) {
+                mPresenter.onDestroy();//Clear the MediaPlayer
                 MorningVerse verse = DataSource.getInstance().getMorningVerses().get(position);
                 binding.setVerse(verse);
-                mPresenter.loadVerseAudio(verse);
-                if(mPresenter.getPlayingMode() == MorningVersesPresenter.Player.FINISHED){
-                    mPresenter.continuePlaying();
-                }
-                else{
-                    mPresenter.onDestroy();
-                }
+                mPresenter.loadVerseAudio(verse);//Reinitialize it
             }
 
             @Override
@@ -130,7 +124,7 @@ public class MorningVerseOverviewFragment extends BaseFragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             mPresenter.openCloud();
         }
     }
