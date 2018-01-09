@@ -56,7 +56,7 @@ public class LessonsFragment extends BaseFragment {
     }
 
     public void setAdapter(List<? extends ListItem> morningVerses, OnListItemClickListener listener) {
-        ListItemAdapter adapter = new ListItemAdapter(R.layout.morning_verses_list_item, morningVerses, listener);
+        ListItemAdapter adapter = new ListItemAdapter(R.layout.lessons_list_item, morningVerses, listener);
         rvLessons.setAdapter(adapter);
     }
 

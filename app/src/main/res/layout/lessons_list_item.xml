@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+
+        <variable
+            name="rvItem"
+            type="com.pastir.model.Lesson" />
+
+        <variable
+            name="listener"
+            type="com.pastir.model.OnListItemClickListener" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="@{()->listener.onItemClicked(rvItem)}"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/default_margin"
+        android:layout_marginRight="@dimen/default_margin"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginLeft="@dimen/default_margin">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:paddingBottom="@dimen/default_margin">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:text="@{rvItem.title}"
+                android:layout_toLeftOf="@+id/tvDate"
+                android:layout_toStartOf="@+id/tvDate"
+                android:textColor="@color/colorBlack"
+                tools:text="Some title of the content "
+                android:lines="1"
+                android:ellipsize="end"
+                android:textSize="@dimen/text_medium_large"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:text="@{rvItem.date}"
+                android:textAllCaps="true"
+                android:layout_alignBottom="@+id/tvTitle"
+                tools:text="01.02.2017"
+                android:textSize="@dimen/text_small" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/default_padding"
+            android:text="@{rvItem.description}"
+            android:textSize="@dimen/text_medium" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorGrey" />
+
+    </LinearLayout>
+</layout>

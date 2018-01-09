@@ -25,6 +25,7 @@ import com.pastir.fragment.MorningVersesFragment;
 import com.pastir.model.Event;
 import com.pastir.model.ListItem;
 import com.pastir.model.MorningVerse;
+import com.pastir.model.OnCloudClickListener;
 import com.pastir.model.OnListItemClickListener;
 import com.pastir.model.OnListItemsLoadedListener;
 import com.pastir.model.Results;
@@ -40,7 +41,7 @@ import java.util.List;
 /**
  * Used to handle interaction with the morning verses fragment
  */
-public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> implements OnListItemClickListener, DatePickerDialog.OnDateSetListener, OnListItemsLoadedListener {
+public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> implements OnListItemClickListener, DatePickerDialog.OnDateSetListener, OnListItemsLoadedListener, OnCloudClickListener {
 
     private static final String TAG_CALENDAR = "com.pastir.dialog_calendar";
     private static final String TAG_CLOUD = "com.pastir.dialog_cloud";
@@ -90,7 +91,7 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
             Utils.SingleToast.show(getContext(), R.string.no_location);
             return;
         }
-        WebController.loadSunriseSunset(this, location);
+        WebController.loadSunriseSunset(this, getContext(), location);
 
     }
 

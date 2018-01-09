@@ -1,0 +1,116 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.pastir.presenter.LessonsPresenter"/>
+
+        <variable
+            name="lesson"
+            type="com.pastir.model.Lesson"/>
+    </data>
+
+    <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.pastir.fragment.LessonOverviewFragment">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vpLessons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/llLessonBottom"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+        <RelativeLayout
+            android:id="@+id/llLessonBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/default_padding"
+            android:weightSum="12">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/player_background_width"
+                android:layout_marginLeft="@dimen/player_background_margin"
+                android:layout_marginRight="@dimen/player_background_margin"
+                android:layout_marginTop="@dimen/extra_large_small_padding"
+                android:background="@color/colorLightGrey"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_small"
+                    android:text="@{lesson.title}"/>
+
+                <ViewSwitcher
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:play="@{presenter.playingMode}"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        >
+                        <ImageView
+                            android:layout_width="@dimen/player_arrow_size"
+                            android:layout_height="match_parent"
+                            android:onClick="@{()->presenter.pausePlaying()}"
+                            android:src="@drawable/ic_pause"
+                            />
+                        <ImageView
+                            android:layout_width="@dimen/player_arrow_size"
+                            android:layout_height="match_parent"
+                            android:onClick="@{()->presenter.stopPlaying()}"
+                            android:src="@drawable/ic_stop"
+                            />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/player_arrow_size"
+                        android:layout_height="match_parent"
+                        android:onClick="@{()->presenter.onPlayClicked()}"
+                        android:src="@drawable/ic_play"
+                        android:layout_gravity="center_horizontal"
+                        />
+                </ViewSwitcher>
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="@dimen/player_arrow_size"
+                    android:layout_height="@dimen/player_arrow_size"
+                    android:background="@drawable/ic_ellipse_selector"
+                    android:onClick="@{()->presenter.onLeftArrowClicked()}"
+
+                    android:src="@drawable/ic_left_arrow_circular"/>
+
+                <ImageView
+                    android:layout_width="@dimen/player_arrow_size"
+                    android:layout_height="@dimen/player_arrow_size"
+                    android:layout_alignParentEnd="true"
+
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/ic_ellipse_selector"
+                    android:onClick="@{()->presenter.onRightArrowClicked()}"
+                    android:src="@drawable/ic_right_arrow_circular"/>
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</layout>

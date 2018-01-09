@@ -30,6 +30,7 @@ public class DataSource {
     private List<Event> mEvents;
     private List<MotivationalSticker> mStickers;
     private List<MorningVerse> mVerses;
+    private List<Lesson> mLessons;
 
     /**
      * @return Current action bar that's linked with the Activity's toolbar or initializes one if
@@ -66,7 +67,7 @@ public class DataSource {
 
     public void getLessons(OnListItemsLoadedListener listener) {
         //TODO: Because morning verses and lessons have almost the same structure(change when firebase database is updated)
-        getItemsFromFirebase(listener, mVerses, "morning_verse", Lesson.class);
+        getItemsFromFirebase(listener, mLessons, "morning_verse", Lesson.class);
     }
 
     private <T extends ListItem> void getItemsFromFirebase(final OnListItemsLoadedListener listener, List<T> items, String path, final Class aClass) {
@@ -86,6 +87,8 @@ public class DataSource {
                         getStickerList().add(MotivationalSticker.parse(snapshot));
                     } else if (aClass == MorningVerse.class) {
                         getMorningVerses().add(MorningVerse.parse(snapshot));
+                    } else if (aClass == Lesson.class) {
+                        getLessons().add(Lesson.parse(snapshot));
                     }
                 }
                 if (aClass == Event.class) {
@@ -94,6 +97,8 @@ public class DataSource {
                     listener.onListItemsLoaded(mStickers);
                 } else if (aClass == MorningVerse.class) {
                     listener.onListItemsLoaded(mVerses);
+                }else if (aClass == Lesson.class) {
+                    listener.onListItemsLoaded(mLessons);
                 }
 
             }
@@ -109,6 +114,12 @@ public class DataSource {
         if (mVerses == null)
             mVerses = new ArrayList<>();
         return mVerses;
+    }
+
+    public List<Lesson> getLessons() {
+        if (mLessons == null)
+            mLessons = new ArrayList<>();
+        return mLessons;
     }
 
 

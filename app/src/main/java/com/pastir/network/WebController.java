@@ -1,7 +1,9 @@
 package com.pastir.network;
 
+import android.content.Context;
 import android.location.Location;
 
+import com.pastir.model.OnCloudClickListener;
 import com.pastir.model.Results;
 import com.pastir.model.SunriseSunset;
 import com.pastir.presenter.MorningVersesPresenter;
@@ -23,17 +25,17 @@ public class WebController {
 
     private static final String NOT_FORMATTED = "0";
 
-    public static void loadSunriseSunset(final MorningVersesPresenter presenter, Location location) {
-        Map<String,String> params = new HashMap<>();
-        params.put("lat",String.valueOf(location.getLatitude()));
-        params.put("lng",String.valueOf(location.getLongitude()));
-        params.put("formatted",NOT_FORMATTED);
+    public static void loadSunriseSunset(final OnCloudClickListener presenter, Context context, Location location) {
+        Map<String, String> params = new HashMap<>();
+        params.put("lat", String.valueOf(location.getLatitude()));
+        params.put("lng", String.valueOf(location.getLongitude()));
+        params.put("formatted", NOT_FORMATTED);
         Observable<SunriseSunset> sunriseSunset = RestClient.getInstance().service.getSunriseSunset(params);
         sunriseSunset.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         success -> presenter.openCloudDialog(success.getResults()),
-                        error -> GenericErrorHandler.handleError(error,presenter.getContext())
+                        error -> GenericErrorHandler.handleError(error, context)
                 );
 
     }

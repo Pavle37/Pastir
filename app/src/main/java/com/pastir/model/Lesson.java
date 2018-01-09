@@ -3,6 +3,9 @@ package com.pastir.model;
 import com.google.firebase.database.DataSnapshot;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.pastir.storage.DataSource;
+
+import java.util.List;
 
 /**
  * Created by Creitive 31 on 25-Dec-17.
@@ -73,5 +76,19 @@ public class Lesson implements ListItem {
         verse.setAudioPath(snapshot.child("audio_path").getValue(String.class));
         verse.setDescription(snapshot.child("verse").getValue(String.class));
         return verse;
+    }
+
+    /**
+     * Returns position of the item in the list
+     * @param currentDate date for the lesson
+     * @return
+     */
+    public static int getPositionForId(String currentDate) {
+        List<Lesson> lessons = DataSource.getInstance().getLessons();
+        for(int i = 0 ; i < lessons.size(); i++){
+            if(lessons.get(i).getDate().equals(currentDate))
+                return i;
+        }
+        return -1;
     }
 }
