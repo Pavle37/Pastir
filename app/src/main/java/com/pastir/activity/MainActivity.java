@@ -15,6 +15,7 @@ import com.pastir.R;
 import com.pastir.databinding.ActivityMainBinding;
 import com.pastir.fragment.BaseFragment;
 import com.pastir.fragment.HomeFragment;
+import com.pastir.fragment.LessonsFragment;
 import com.pastir.fragment.MorningVersesFragment;
 import com.pastir.storage.DataSource;
 import com.pastir.util.Utils;
@@ -84,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             loadFragment(new HomeFragment());
         } else if (id == R.id.nav_morning_verses) {
             loadFragment(new MorningVersesFragment());
+        } else if (id == R.id.nav_lesson) {
+            loadFragment(new LessonsFragment());
         } else {
             Utils.SingleToast.show(this, getString(R.string.not_implemented));
         }
@@ -125,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return;
         }
 
-        if(mCurrentFragment != null && loadingFromMenu)
+        if (mCurrentFragment != null && loadingFromMenu)
             mCurrentFragment.onNextMenuFragmentLoaded();
 
         getSupportFragmentManager().beginTransaction()
@@ -159,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void setNavigationItem(int navId) {
-        if(navId != PREVIOUSLY_SELECTED)
+        if (navId != PREVIOUSLY_SELECTED)
             mNavigationView.setCheckedItem(navId);
     }
 

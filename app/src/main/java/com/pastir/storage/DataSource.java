@@ -7,6 +7,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.pastir.model.ActionBar;
 import com.pastir.model.Event;
+import com.pastir.model.Lesson;
 import com.pastir.model.ListItem;
 import com.pastir.model.MorningVerse;
 import com.pastir.model.MotivationalSticker;
@@ -59,8 +60,13 @@ public class DataSource {
         getItemsFromFirebase(listener, mEvents, "events", Event.class);
     }
 
-    public void getMorningVerses(OnListItemsLoadedListener listener){
-        getItemsFromFirebase(listener,mVerses,"morning_verse",MorningVerse.class);
+    public void getMorningVerses(OnListItemsLoadedListener listener) {
+        getItemsFromFirebase(listener, mVerses, "morning_verse", MorningVerse.class);
+    }
+
+    public void getLessons(OnListItemsLoadedListener listener) {
+        //TODO: Because morning verses and lessons have almost the same structure(change when firebase database is updated)
+        getItemsFromFirebase(listener, mVerses, "morning_verse", Lesson.class);
     }
 
     private <T extends ListItem> void getItemsFromFirebase(final OnListItemsLoadedListener listener, List<T> items, String path, final Class aClass) {
@@ -76,21 +82,17 @@ public class DataSource {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) { //For every child
                     if (aClass == Event.class) {
                         getEventList().add(Event.parse(snapshot));//Parse that child into event and add it to the list
-                    } else
-                    if(aClass == MotivationalSticker.class)    {
+                    } else if (aClass == MotivationalSticker.class) {
                         getStickerList().add(MotivationalSticker.parse(snapshot));
-                    } else
-                    if(aClass == MorningVerse.class){
+                    } else if (aClass == MorningVerse.class) {
                         getMorningVerses().add(MorningVerse.parse(snapshot));
                     }
                 }
-                if(aClass == Event.class){
+                if (aClass == Event.class) {
                     listener.onListItemsLoaded(mEvents);
-                } else
-                if(aClass == MotivationalSticker.class){
+                } else if (aClass == MotivationalSticker.class) {
                     listener.onListItemsLoaded(mStickers);
-                }else
-                if(aClass == MorningVerse.class){
+                } else if (aClass == MorningVerse.class) {
                     listener.onListItemsLoaded(mVerses);
                 }
 
@@ -104,20 +106,20 @@ public class DataSource {
     }
 
     public List<MorningVerse> getMorningVerses() {
-        if(mVerses == null)
+        if (mVerses == null)
             mVerses = new ArrayList<>();
         return mVerses;
     }
 
 
     private List<Event> getEventList() {
-        if(mEvents == null)
+        if (mEvents == null)
             mEvents = new ArrayList<>();
         return mEvents;
     }
 
     private List<MotivationalSticker> getStickerList() {
-        if(mStickers == null)
+        if (mStickers == null)
             mStickers = new ArrayList<>();
         return mStickers;
     }

@@ -39,7 +39,7 @@ public class HomeListItemFragment extends BaseFragment {
         FragmentHomeListItemBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home_list_item, container, false);
         View view = binding.getRoot();
 
-        rvHomeListItems = (RecyclerView) view.findViewById(R.id.rvHomeListItems);
+        rvHomeListItems = view.findViewById(R.id.rvHomeListItems);
 
         mSlider = Utils.General.deserializeFromJson(getArguments().getString(ARGS_KEY), HomeFragment.Slider.class);
 

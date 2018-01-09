@@ -60,18 +60,15 @@ public abstract class BaseFragment extends Fragment{
 
         view.setFocusableInTouchMode(true);
         view.requestFocus();
-        view.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if( keyCode == KeyEvent.KEYCODE_BACK)
-                {
-                    if(event.getAction() == KeyEvent.ACTION_DOWN && getHomePresenter() != null) {
-                        getHomePresenter().onBackPressed();
-                    }
-                    return true;
+        view.setOnKeyListener((v, keyCode, event) -> {
+            if( keyCode == KeyEvent.KEYCODE_BACK)
+            {
+                if(event.getAction() == KeyEvent.ACTION_DOWN && getHomePresenter() != null) {
+                    getHomePresenter().onBackPressed();
                 }
-                return false;
+                return true;
             }
+            return false;
         });
 
         return view;
