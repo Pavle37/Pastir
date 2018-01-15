@@ -5,7 +5,7 @@
 
         <variable
             name="lesson"
-            type="com.pastir.model.Lesson" />
+            type="com.pastir.model.Sublesson" />
     </data>
 
     <ScrollView
@@ -51,7 +51,7 @@
                 android:textStyle="bold"
                 android:gravity="center_horizontal"
                 android:textSize="@dimen/text_medium"
-                android:text="@{lesson.description}"
+                android:text="@{lesson.title}"
                 />
 
             <TextView

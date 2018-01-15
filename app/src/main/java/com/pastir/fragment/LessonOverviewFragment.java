@@ -18,7 +18,7 @@ import com.pastir.databinding.FragmentLessonOverviewBinding;
 import com.pastir.databinding.FragmentPlaceholderLessonBinding;
 import com.pastir.model.ActionBar;
 import com.pastir.model.Lesson;
-import com.pastir.model.MorningVerse;
+import com.pastir.model.Sublesson;
 import com.pastir.presenter.ActionBarPresenter;
 import com.pastir.presenter.LessonsPresenter;
 import com.pastir.storage.DataSource;
@@ -51,10 +51,11 @@ public class LessonOverviewFragment extends BaseFragment {
         binding.setPresenter(mPresenter);
 
         List<Lesson> lessons = DataSource.getInstance().getLessons();
-        int position = Lesson.getPositionForId(currentDate);
+        int position = Sublesson.getPositionForId(currentDate);
         Lesson currentLesson = lessons.get(position);
-        binding.setLesson(currentLesson);
-        mPresenter.loadVerseAudio(currentLesson);
+        Sublesson sublesson = currentLesson.getSublessons().get(0);
+        binding.setLesson(sublesson);
+        mPresenter.loadVerseAudio(sublesson);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = binding.getRoot().findViewById(R.id.vpLessons);
@@ -70,9 +71,9 @@ public class LessonOverviewFragment extends BaseFragment {
             @Override
             public void onPageSelected(int position) {
                 mPresenter.onDestroy();//Clear the MediaPlayer
-                Lesson lesson = DataSource.getInstance().getLessons().get(position);
-                binding.setLesson(lesson);
-                mPresenter.loadVerseAudio(lesson);//Reinitialize it
+                Sublesson sublesson1 = currentLesson.getSublessons().get(position);
+                binding.setLesson(sublesson1);
+                mPresenter.loadVerseAudio(sublesson1);//Reinitialize it
             }
 
             @Override
@@ -116,8 +117,8 @@ public class LessonOverviewFragment extends BaseFragment {
         return mPresenter;
     }
 
-    public void setViewPagerItem(Lesson lesson) {
-        mViewPager.setCurrentItem(Lesson.getPositionForId(lesson.getDate()));
+    public void setViewPagerItem(Sublesson lesson) {
+        mViewPager.setCurrentItem(Sublesson.getPositionForId(lesson.getDate()));
     }
 
     public Handler getHandler() {
@@ -165,7 +166,7 @@ public class LessonOverviewFragment extends BaseFragment {
                     R.layout.fragment_placeholder_lesson, container, false);
 
             int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
-            binding.setLesson(DataSource.getInstance().getLessons().get(sectionNumber));
+            binding.setLesson(DataSource.getInstance().getLessons().get(0).getSublessons().get(sectionNumber));
 
             return binding.getRoot();
         }

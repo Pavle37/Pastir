@@ -5,28 +5,48 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.pastir.storage.DataSource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Creitive 31 on 25-Dec-17.
+ * Created by Uros on 1/15/2018.
  */
 
 public class Lesson implements ListItem {
+    @SerializedName("from_date")
+    @Expose
+    private String fromDate;
+    @SerializedName("to_date")
+    @Expose
+    private String toDate;
     @SerializedName("title")
     @Expose
     private String title;
-    @SerializedName("date")
+    @SerializedName("verse")
     @Expose
-    private String date;
-    @SerializedName("description")
-    @Expose
-    private String description;
-    @SerializedName("text")
-    @Expose
-    private String text;
-    @SerializedName("audio_path")
-    @Expose
-    private String audioPath;
+    private String verse;
+
+    private List<Sublesson> sublessons;
+
+    public Lesson() {
+        this.sublessons = new ArrayList<>();
+    }
+
+    public String getFromDate() {
+        return fromDate;
+    }
+
+    public void setFromDate(String fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public String getToDate() {
+        return toDate;
+    }
+
+    public void setToDate(String toDate) {
+        this.toDate = toDate;
+    }
 
     public String getTitle() {
         return title;
@@ -36,59 +56,34 @@ public class Lesson implements ListItem {
         this.title = title;
     }
 
-    public String getDate() {
-        return date;
+    public String getVerse() {
+        return verse;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setVerse(String verse) {
+        this.verse = verse;
     }
 
-    public String getDescription() {
-        return description;
+    public List<Sublesson> getSublessons() {
+        return sublessons;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public String getAudioPath() {
-        return audioPath;
-    }
-
-    public void setAudioPath(String audioPath) {
-        this.audioPath = audioPath;
+    public void setSublessons(List<Sublesson> sublessons) {
+        this.sublessons = sublessons;
     }
 
     public static Lesson parse(DataSnapshot snapshot) {
         Lesson verse = new Lesson();
         verse.setTitle(snapshot.child("title").getValue(String.class));
-        verse.setText(snapshot.child("text").getValue(String.class));
-        verse.setDate(snapshot.child("date").getValue(String.class));
-        verse.setAudioPath(snapshot.child("audio_path").getValue(String.class));
-        verse.setDescription(snapshot.child("verse").getValue(String.class));
+        verse.setFromDate(snapshot.child("from_date").getValue(String.class));
+        verse.setToDate(snapshot.child("to_date").getValue(String.class));
+        verse.setVerse(snapshot.child("verse").getValue(String.class));
+        for (DataSnapshot child :snapshot.getChildren()){
+            verse.getSublessons().add(Sublesson.parse(child));
+        }
         return verse;
     }
 
-    /**
-     * Returns position of the item in the list
-     * @param currentDate date for the lesson
-     * @return
-     */
-    public static int getPositionForId(String currentDate) {
-        List<Lesson> lessons = DataSource.getInstance().getLessons();
-        for(int i = 0 ; i < lessons.size(); i++){
-            if(lessons.get(i).getDate().equals(currentDate))
-                return i;
-        }
-        return -1;
-    }
+
+
 }

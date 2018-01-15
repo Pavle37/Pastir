@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:text="@{rvItem.date}"
+                android:text="@{rvItem.fromDate}"
                 android:textAllCaps="true"
                 android:layout_alignBottom="@+id/tvTitle"
                 tools:text="01.02.2017"
@@ -66,7 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/default_padding"
-            android:text="@{rvItem.description}"
+            android:text="@{rvItem.title}"
             android:textSize="@dimen/text_medium" />
 
         <View

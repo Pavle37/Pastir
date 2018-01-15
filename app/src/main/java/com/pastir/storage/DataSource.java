@@ -8,6 +8,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.pastir.model.ActionBar;
 import com.pastir.model.Event;
 import com.pastir.model.Lesson;
+import com.pastir.model.Sublesson;
 import com.pastir.model.ListItem;
 import com.pastir.model.MorningVerse;
 import com.pastir.model.MotivationalSticker;
@@ -67,7 +68,7 @@ public class DataSource {
 
     public void getLessons(OnListItemsLoadedListener listener) {
         //TODO: Because morning verses and lessons have almost the same structure(change when firebase database is updated)
-        getItemsFromFirebase(listener, mLessons, "morning_verse", Lesson.class);
+        getItemsFromFirebase(listener, mLessons, "lesson", Lesson.class);
     }
 
     private <T extends ListItem> void getItemsFromFirebase(final OnListItemsLoadedListener listener, List<T> items, String path, final Class aClass) {

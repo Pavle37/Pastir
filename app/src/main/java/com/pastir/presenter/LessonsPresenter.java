@@ -20,11 +20,9 @@ import com.pastir.fragment.BaseFragment;
 import com.pastir.fragment.CloudDialog;
 import com.pastir.fragment.LessonOverviewFragment;
 import com.pastir.fragment.LessonsFragment;
-import com.pastir.fragment.MorningVerseOverviewFragment;
-import com.pastir.fragment.MorningVersesFragment;
 import com.pastir.model.Lesson;
+import com.pastir.model.Sublesson;
 import com.pastir.model.ListItem;
-import com.pastir.model.MorningVerse;
 import com.pastir.model.OnCloudClickListener;
 import com.pastir.model.OnListItemClickListener;
 import com.pastir.model.OnListItemsLoadedListener;
@@ -58,7 +56,7 @@ public class LessonsPresenter extends ActionBarPresenter<BaseFragment> implement
 
     @Override
     public void onItemClicked(ListItem item) {
-        getView().loadFragment(LessonOverviewFragment.getInstance(((Lesson) item).getDate()));
+        getView().loadFragment(LessonOverviewFragment.getInstance(((Lesson) item).getFromDate()));
 
     }
 
@@ -108,12 +106,14 @@ public class LessonsPresenter extends ActionBarPresenter<BaseFragment> implement
         month++;
         String date = (dayOfMonth < 10 ? "0" + dayOfMonth : "" + dayOfMonth) + "." + (month < 10 ? "0" + month : "" + month) + "." + year + ".";
         for (Lesson lesson : DataSource.getInstance().getLessons()) {
-            if (lesson.getDate().equals(date)) {
-                if (!isInOverViewMode())
-                    getView().loadFragment(LessonOverviewFragment.getInstance(lesson.getDate()));
-                else
-                    ((LessonOverviewFragment) getView()).setViewPagerItem(lesson);
-                return;
+            for (Sublesson sublesson : lesson.getSublessons()) {
+                if (sublesson.getDate().equals(date)) {
+                    if (!isInOverViewMode())
+                        getView().loadFragment(LessonOverviewFragment.getInstance(sublesson.getDate()));
+                    else
+                        ((LessonOverviewFragment) getView()).setViewPagerItem(sublesson);
+                    return;
+                }
             }
         }
         Utils.SingleToast.show(getContext(), R.string.no_lesson);
@@ -243,8 +243,9 @@ public class LessonsPresenter extends ActionBarPresenter<BaseFragment> implement
         fragment.show(getView().getFragmentManager(), TAG_CLOUD);
     }
 
-    public void loadVerseAudio(Lesson currentLesson) {
-        initializeMediaPlayer(currentLesson.getAudioPath());
+    public void loadVerseAudio(Sublesson currentLesson) {
+        //TODO: Currently there is no correct audio path in database for subLessons
+       // initializeMediaPlayer(currentLesson.getAudioPath());
     }
 
     public enum Player {
