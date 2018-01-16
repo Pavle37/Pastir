@@ -133,7 +133,7 @@ public class LessonsPresenter extends ActionBarPresenter<BaseFragment> implement
 
 
     public void onPlayClicked() {
-        startPlaying();
+            startPlaying();
     }
 
     public void onLeftArrowClicked() {
@@ -244,8 +244,12 @@ public class LessonsPresenter extends ActionBarPresenter<BaseFragment> implement
     }
 
     public void loadSubLessonAudio(SubLesson currentLesson) {
-        //TODO: Currently there is no correct audio path in database for subLessons
-       // initializeMediaPlayer(currentLesson.getAudioPath());
+        try {
+            initializeMediaPlayer(currentLesson.getAudioPath());
+        }catch (IllegalStateException e){
+            e.printStackTrace();
+        }
+
     }
 
     public enum Player {

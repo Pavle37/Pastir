@@ -242,7 +242,12 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
     }
 
     public void loadVerseAudio(MorningVerse currentVerse) {
-        initializeMediaPlayer(currentVerse.getAudioPath());
+        try {
+            initializeMediaPlayer(currentVerse.getAudioPath());
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public enum Player {

@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,7 @@ public class LessonOverviewFragment extends BaseFragment {
 
     private ViewPager mViewPager;
     private LessonsPresenter mPresenter;
+    private FragmentLessonOverviewBinding mBinding;
 
     public LessonOverviewFragment() {
         // Required empty public constructor
@@ -41,7 +43,7 @@ public class LessonOverviewFragment extends BaseFragment {
     @Override
     protected View init(LayoutInflater inflater, ViewGroup container) {
         // Inflate the layout for this fragment
-        final FragmentLessonOverviewBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_lesson_overview, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_lesson_overview, container, false);
 
         String fromDate = getArguments().getString(ARGS_KEY);
         int position = Lesson.getPositionForId(fromDate);
@@ -50,18 +52,20 @@ public class LessonOverviewFragment extends BaseFragment {
 
         mPresenter = new LessonsPresenter();
         mPresenter.bindView(this);
-        binding.setPresenter(mPresenter);
+        mBinding.setPresenter(mPresenter);
         List<Lesson> lessons = DataSource.getInstance().getLessons();
-
+        
         Lesson currentLesson = lessons.get(position);
+        //Load first subLesson from lesson
         SubLesson firstSubLessonInLesson = currentLesson.getSubLessons().get(0);
-        binding.setLesson(firstSubLessonInLesson);
+        mBinding.setLesson(firstSubLessonInLesson);
         mPresenter.loadSubLessonAudio(firstSubLessonInLesson);
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = binding.getRoot().findViewById(R.id.vpLessons);
+        mViewPager = mBinding.getRoot().findViewById(R.id.vpLessons);
         mViewPager.setAdapter(sectionsPagerAdapter);
-        mViewPager.setCurrentItem(position);
+        //When lesson is opened first subLesson is shown
+        mViewPager.setCurrentItem(0);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -75,7 +79,7 @@ public class LessonOverviewFragment extends BaseFragment {
                 Lesson viewPagerLesson = DataSource.getInstance().getLessons()
                         .get(((LessonOverviewFragment.SectionsPagerAdapter) mViewPager.getAdapter()).getLessonPosition());
                 SubLesson subLesson = viewPagerLesson.getSubLessons().get(position);
-                binding.setLesson(subLesson);
+                mBinding.setLesson(subLesson);
                 mPresenter.loadSubLessonAudio(subLesson);//Reinitialize it
             }
 
@@ -85,7 +89,7 @@ public class LessonOverviewFragment extends BaseFragment {
             }
         });
 
-        return binding.getRoot();
+        return mBinding.getRoot();
     }
 
 
@@ -124,6 +128,8 @@ public class LessonOverviewFragment extends BaseFragment {
         ((LessonOverviewFragment.SectionsPagerAdapter) mViewPager.getAdapter())
                 .setLessonPosition(Lesson.getPositionForId(lesson.getFromDate()));
         mViewPager.setCurrentItem(SubLesson.getPositionForId(lesson, subLesson.getDate()));
+        mBinding.setLesson(subLesson);
+        mPresenter.loadSubLessonAudio(subLesson);//Reinitialize it
 
     }
 
@@ -197,7 +203,7 @@ public class LessonOverviewFragment extends BaseFragment {
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         private int lessonPosition;
 
@@ -227,8 +233,10 @@ public class LessonOverviewFragment extends BaseFragment {
             // Show 3 total pages.
             return DataSource.getInstance().getLessons().get(lessonPosition).getSubLessons().size();
         }
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
+        }
 
     }
-
-
 }

@@ -44,6 +44,8 @@
     <string name="donation_message_1">Sva vaša pitanja ili sugestije mozete nam poslati na sledeću email adresu:</string>
     <string name="donation_message_2">ili nas kontaktirati na broj telefona:</string>
     <string name="telepfony_not_enabled">Pozivi nisu mogući na uređaju.</string>
+    <string name="error_lesson_audio">Za izabranu pouku ne postoji audio snimak.</string>
+    <string name="error_morning_verse_audio">Za izabrani jutarnji stih ne postoji audio snimak.</string>
 
 
 </resources>
