@@ -20,14 +20,11 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash_screen);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
-                startActivity(i);
-                SplashScreenActivity.this.finish();
-            }
+        new Handler().postDelayed(() -> {
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
+            Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
+            startActivity(i);
+            SplashScreenActivity.this.finish();
         }, SPLASH_TIME);
     }
 }

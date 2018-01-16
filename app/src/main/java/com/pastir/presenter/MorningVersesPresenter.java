@@ -190,8 +190,8 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
         //When the playing is done
         mPlayer.setOnCompletionListener(mp -> {
             setPlayingMode(Player.STOPPED);
-            mPlayingMode = Player.FINISHED;
-            ((MorningVerseOverviewFragment) getView()).scrollViewPagerRight();
+
+
         });
     }
 
