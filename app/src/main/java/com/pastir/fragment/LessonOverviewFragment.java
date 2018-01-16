@@ -18,7 +18,7 @@ import com.pastir.databinding.FragmentLessonOverviewBinding;
 import com.pastir.databinding.FragmentPlaceholderLessonBinding;
 import com.pastir.model.ActionBar;
 import com.pastir.model.Lesson;
-import com.pastir.model.Sublesson;
+import com.pastir.model.SubLesson;
 import com.pastir.presenter.ActionBarPresenter;
 import com.pastir.presenter.LessonsPresenter;
 import com.pastir.storage.DataSource;
@@ -43,19 +43,20 @@ public class LessonOverviewFragment extends BaseFragment {
         // Inflate the layout for this fragment
         final FragmentLessonOverviewBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_lesson_overview, container, false);
 
-        String currentDate = getArguments().getString(ARGS_KEY);
-        LessonOverviewFragment.SectionsPagerAdapter sectionsPagerAdapter = new LessonOverviewFragment.SectionsPagerAdapter(getChildFragmentManager());
+        String fromDate = getArguments().getString(ARGS_KEY);
+        int position = Lesson.getPositionForId(fromDate);
+
+        LessonOverviewFragment.SectionsPagerAdapter sectionsPagerAdapter = new LessonOverviewFragment.SectionsPagerAdapter(getChildFragmentManager(), position);
 
         mPresenter = new LessonsPresenter();
         mPresenter.bindView(this);
         binding.setPresenter(mPresenter);
-
         List<Lesson> lessons = DataSource.getInstance().getLessons();
-        int position = Sublesson.getPositionForId(currentDate);
+
         Lesson currentLesson = lessons.get(position);
-        Sublesson sublesson = currentLesson.getSublessons().get(0);
-        binding.setLesson(sublesson);
-        mPresenter.loadVerseAudio(sublesson);
+        SubLesson firstSubLessonInLesson = currentLesson.getSubLessons().get(0);
+        binding.setLesson(firstSubLessonInLesson);
+        mPresenter.loadSubLessonAudio(firstSubLessonInLesson);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = binding.getRoot().findViewById(R.id.vpLessons);
@@ -71,9 +72,11 @@ public class LessonOverviewFragment extends BaseFragment {
             @Override
             public void onPageSelected(int position) {
                 mPresenter.onDestroy();//Clear the MediaPlayer
-                Sublesson sublesson1 = currentLesson.getSublessons().get(position);
-                binding.setLesson(sublesson1);
-                mPresenter.loadVerseAudio(sublesson1);//Reinitialize it
+                Lesson viewPagerLesson = DataSource.getInstance().getLessons()
+                        .get(((LessonOverviewFragment.SectionsPagerAdapter) mViewPager.getAdapter()).getLessonPosition());
+                SubLesson subLesson = viewPagerLesson.getSubLessons().get(position);
+                binding.setLesson(subLesson);
+                mPresenter.loadSubLessonAudio(subLesson);//Reinitialize it
             }
 
             @Override
@@ -92,7 +95,7 @@ public class LessonOverviewFragment extends BaseFragment {
         ab.setTitle(getString(R.string.lesson));
         ab.setLeftImage(0);
         ab.setBackButton(true);
-        ab.setMorningVersesActionBar(true);
+        ab.setCalendarBarVisible(true);
         return ab;
     }
 
@@ -117,8 +120,11 @@ public class LessonOverviewFragment extends BaseFragment {
         return mPresenter;
     }
 
-    public void setViewPagerItem(Sublesson lesson) {
-        mViewPager.setCurrentItem(Sublesson.getPositionForId(lesson.getDate()));
+    public void setViewPagerItem(Lesson lesson, SubLesson subLesson) {
+        ((LessonOverviewFragment.SectionsPagerAdapter) mViewPager.getAdapter())
+                .setLessonPosition(Lesson.getPositionForId(lesson.getFromDate()));
+        mViewPager.setCurrentItem(SubLesson.getPositionForId(lesson, subLesson.getDate()));
+
     }
 
     public Handler getHandler() {
@@ -143,6 +149,7 @@ public class LessonOverviewFragment extends BaseFragment {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        private static final String ARG_LESSON_POSITION = "lesson_position";
 
         public PlaceholderFragment() {
         }
@@ -151,10 +158,11 @@ public class LessonOverviewFragment extends BaseFragment {
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static LessonOverviewFragment.PlaceholderFragment newInstance(int sectionNumber) {
+        public static LessonOverviewFragment.PlaceholderFragment newInstance(int lessonPosition, int sectionNumber) {
             LessonOverviewFragment.PlaceholderFragment fragment = new LessonOverviewFragment.PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            args.putInt(ARG_LESSON_POSITION, lessonPosition);
             fragment.setArguments(args);
             return fragment;
         }
@@ -165,8 +173,9 @@ public class LessonOverviewFragment extends BaseFragment {
             FragmentPlaceholderLessonBinding binding = DataBindingUtil.inflate(inflater,
                     R.layout.fragment_placeholder_lesson, container, false);
 
+            int lessonPosition = getArguments().getInt(ARG_LESSON_POSITION);
             int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
-            binding.setLesson(DataSource.getInstance().getLessons().get(0).getSublessons().get(sectionNumber));
+            binding.setLesson(DataSource.getInstance().getLessons().get(lessonPosition).getSubLessons().get(sectionNumber));
 
             return binding.getRoot();
         }
@@ -190,21 +199,33 @@ public class LessonOverviewFragment extends BaseFragment {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        private int lessonPosition;
+
+        public SectionsPagerAdapter(FragmentManager fm, int lessonPosition) {
             super(fm);
+            this.lessonPosition = lessonPosition;
+        }
+
+        public void setLessonPosition(int lessonPosition) {
+            this.lessonPosition = lessonPosition;
+            notifyDataSetChanged();
+        }
+
+        public int getLessonPosition() {
+            return lessonPosition;
         }
 
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return LessonOverviewFragment.PlaceholderFragment.newInstance(position);
+            return LessonOverviewFragment.PlaceholderFragment.newInstance(lessonPosition, position);
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return DataSource.getInstance().getLessons().size();
+            return DataSource.getInstance().getLessons().get(lessonPosition).getSubLessons().size();
         }
 
     }

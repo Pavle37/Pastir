@@ -1,7 +1,9 @@
 package com.pastir.util;
 
 import android.databinding.BindingAdapter;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.pastir.R;
@@ -25,5 +27,10 @@ public class BindingAdapters {
     @BindingAdapter("android:src")
     public static void setImageResource(ImageView iv, int resId){
         iv.setImageResource(resId);
+    }
+
+    @BindingAdapter("bind:html")
+    public static void bindHtml(View view, String text) {
+        Utils.View.setHtmlToView((TextView) view, text);
     }
 }

@@ -73,7 +73,7 @@ public class HomeListItemFragment extends BaseFragment {
         else ab.setTitle(getString(R.string.motivational_messages));
         ab.setLeftImage(0);
         ab.setBackButton(true);
-        ab.setMorningVersesActionBar(false);
+        ab.setCalendarBarVisible(false);
         return ab;
     }
 

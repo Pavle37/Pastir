@@ -18,7 +18,6 @@ import com.pastir.model.OnListItemClickListener;
 import com.pastir.presenter.ActionBarPresenter;
 import com.pastir.presenter.MorningVersesPresenter;
 
-import java.security.Permission;
 import java.util.List;
 
 /**
@@ -63,7 +62,7 @@ public class MorningVersesFragment extends BaseFragment {
         ActionBar ab = super.setActionBar();
         ab.setTitle(getString(R.string.morning_verses));
         ab.setBackButton(false);
-        ab.setMorningVersesActionBar(true);
+        ab.setCalendarBarVisible(true);
         return ab;
     }
 

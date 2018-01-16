@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import com.pastir.R;
 import com.pastir.databinding.ActivityMainBinding;
 import com.pastir.fragment.BaseFragment;
+import com.pastir.fragment.DonationFragment;
 import com.pastir.fragment.HomeFragment;
 import com.pastir.fragment.LessonsFragment;
 import com.pastir.fragment.MorningVersesFragment;
@@ -87,6 +88,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             loadFragment(new MorningVersesFragment());
         } else if (id == R.id.nav_lesson) {
             loadFragment(new LessonsFragment());
+        } else if (id == R.id.nav_donate) {
+            loadFragment(new DonationFragment());
         } else {
             Utils.SingleToast.show(this, getString(R.string.not_implemented));
         }

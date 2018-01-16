@@ -12,13 +12,11 @@ import android.view.ViewGroup;
 import com.pastir.R;
 import com.pastir.adapter.ListItemAdapter;
 import com.pastir.databinding.FragmentLessonsBinding;
-import com.pastir.databinding.FragmentMorningVersesBinding;
 import com.pastir.model.ActionBar;
 import com.pastir.model.ListItem;
 import com.pastir.model.OnListItemClickListener;
 import com.pastir.presenter.ActionBarPresenter;
 import com.pastir.presenter.LessonsPresenter;
-import com.pastir.presenter.MorningVersesPresenter;
 
 import java.util.List;
 
@@ -65,7 +63,7 @@ public class LessonsFragment extends BaseFragment {
         ActionBar ab = super.setActionBar();
         ab.setTitle(getString(R.string.lesson));
         ab.setBackButton(false);
-        ab.setMorningVersesActionBar(true);
+        ab.setCalendarBarVisible(true);
         return ab;
     }
 

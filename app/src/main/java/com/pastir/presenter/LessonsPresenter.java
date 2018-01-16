@@ -21,7 +21,7 @@ import com.pastir.fragment.CloudDialog;
 import com.pastir.fragment.LessonOverviewFragment;
 import com.pastir.fragment.LessonsFragment;
 import com.pastir.model.Lesson;
-import com.pastir.model.Sublesson;
+import com.pastir.model.SubLesson;
 import com.pastir.model.ListItem;
 import com.pastir.model.OnCloudClickListener;
 import com.pastir.model.OnListItemClickListener;
@@ -106,12 +106,12 @@ public class LessonsPresenter extends ActionBarPresenter<BaseFragment> implement
         month++;
         String date = (dayOfMonth < 10 ? "0" + dayOfMonth : "" + dayOfMonth) + "." + (month < 10 ? "0" + month : "" + month) + "." + year + ".";
         for (Lesson lesson : DataSource.getInstance().getLessons()) {
-            for (Sublesson sublesson : lesson.getSublessons()) {
-                if (sublesson.getDate().equals(date)) {
+            for (SubLesson subLesson : lesson.getSubLessons()) {
+                if (subLesson.getDate().equals(date)) {
                     if (!isInOverViewMode())
-                        getView().loadFragment(LessonOverviewFragment.getInstance(sublesson.getDate()));
+                        getView().loadFragment(LessonOverviewFragment.getInstance(lesson.getFromDate()));
                     else
-                        ((LessonOverviewFragment) getView()).setViewPagerItem(sublesson);
+                        ((LessonOverviewFragment) getView()).setViewPagerItem(lesson,subLesson);
                     return;
                 }
             }
@@ -243,7 +243,7 @@ public class LessonsPresenter extends ActionBarPresenter<BaseFragment> implement
         fragment.show(getView().getFragmentManager(), TAG_CLOUD);
     }
 
-    public void loadVerseAudio(Sublesson currentLesson) {
+    public void loadSubLessonAudio(SubLesson currentLesson) {
         //TODO: Currently there is no correct audio path in database for subLessons
        // initializeMediaPlayer(currentLesson.getAudioPath());
     }

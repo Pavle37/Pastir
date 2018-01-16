@@ -2,8 +2,6 @@ package com.pastir.model;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.databinding.BindingAdapter;
-import android.widget.ImageView;
 
 import com.pastir.BR;
 
@@ -16,7 +14,7 @@ public class ActionBar extends BaseObservable {
     private String mTitle;
     private int mLeftImage;
     private boolean backButtonVisible;
-    private boolean morningVersesActionBar;
+    private boolean calendarBarVisible;
 
 
     @Bindable
@@ -50,12 +48,12 @@ public class ActionBar extends BaseObservable {
     }
 
     @Bindable
-    public boolean isMorningVersesActionBar() {
-        return morningVersesActionBar;
+    public boolean isCalendarBarVisible() {
+        return calendarBarVisible;
     }
 
-    public void setMorningVersesActionBar(boolean morningVersesActionBar) {
-        this.morningVersesActionBar = morningVersesActionBar;
-        notifyPropertyChanged(BR.morningVersesActionBar);
+    public void setCalendarBarVisible(boolean calendarBarVisible) {
+        this.calendarBarVisible = calendarBarVisible;
+        notifyPropertyChanged(BR.calendarBarVisible);
     }
 }

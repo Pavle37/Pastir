@@ -9,7 +9,7 @@
 
         <variable
             name="lesson"
-            type="com.pastir.model.Sublesson"/>
+            type="com.pastir.model.SubLesson"/>
     </data>
 
     <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"

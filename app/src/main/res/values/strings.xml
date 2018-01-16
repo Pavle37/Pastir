@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Pastir</string>
+    <string name="donation_email">nnuspahic@yahoo.com</string>
+    <string name="donation_phone_number">+381 60 4422 357</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -39,5 +41,9 @@
     <string name="no_internet_connection">No Internet connection detected</string>
     <string name="error_cannot_parse">Error while parsing server\'s results</string>
     <string name="no_location">Nije moguce dobiti vašu lokaciju.</string>
+    <string name="donation_message_1">Sva vaša pitanja ili sugestije mozete nam poslati na sledeću email adresu:</string>
+    <string name="donation_message_2">ili nas kontaktirati na broj telefona:</string>
+    <string name="telepfony_not_enabled">Pozivi nisu mogući na uređaju.</string>
+
 
 </resources>

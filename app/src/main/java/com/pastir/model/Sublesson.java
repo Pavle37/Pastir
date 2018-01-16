@@ -7,11 +7,7 @@ import com.pastir.storage.DataSource;
 
 import java.util.List;
 
-/**
- * Created by Creitive 31 on 25-Dec-17.
- */
-
-public class Sublesson implements ListItem {
+public class SubLesson implements ListItem {
     @SerializedName("title")
     @Expose
     private String title;
@@ -57,8 +53,8 @@ public class Sublesson implements ListItem {
         this.audioPath = audioPath;
     }
 
-    public static Sublesson parse(DataSnapshot snapshot) {
-        Sublesson verse = new Sublesson();
+    public static SubLesson parse(DataSnapshot snapshot) {
+        SubLesson verse = new SubLesson();
         verse.setTitle(snapshot.child("title").getValue(String.class));
         verse.setText(snapshot.child("text").getValue(String.class));
         verse.setDate(snapshot.child("date").getValue(String.class));
@@ -68,13 +64,24 @@ public class Sublesson implements ListItem {
 
     /**
      * Returns position of the item in the list
-     * @param currentDate date for the lesson
+     *
+     * @param currentDate date for the morning verse
      * @return
      */
-    public static int getPositionForId(String currentDate) {
+    public static int getPositionForId(Lesson lesson, String currentDate) {
+        List<SubLesson> subLessons = lesson.getSubLessons();
+        for (int i = 0; i < subLessons.size(); i++) {
+            if (subLessons.get(i).getDate().equals(currentDate))
+                return i;
+        }
+        return -1;
+    }
+
+
+    public static int getPositionForId(String fromDate) {
         List<Lesson> lessons = DataSource.getInstance().getLessons();
-        for(int i = 0 ; i < lessons.size(); i++){
-            if(lessons.get(i).getFromDate().equals(currentDate))
+        for (int i = 0; i < lessons.size(); i++) {
+            if (lessons.get(i).getFromDate().equals(fromDate))
                 return i;
         }
         return -1;

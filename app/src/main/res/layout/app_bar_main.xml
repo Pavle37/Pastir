@@ -86,7 +86,7 @@
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/default_padding"
                 android:paddingTop="@dimen/default_padding"
-                android:visibility="@{actionBar.morningVersesActionBar ? View.VISIBLE : View.GONE}"
+                android:visibility="@{actionBar.calendarBarVisible ? View.VISIBLE : View.GONE}"
                 android:weightSum="2">
 
                 <RelativeLayout

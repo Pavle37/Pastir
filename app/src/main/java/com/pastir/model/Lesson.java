@@ -8,10 +8,6 @@ import com.pastir.storage.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Uros on 1/15/2018.
- */
-
 public class Lesson implements ListItem {
     @SerializedName("from_date")
     @Expose
@@ -26,10 +22,10 @@ public class Lesson implements ListItem {
     @Expose
     private String verse;
 
-    private List<Sublesson> sublessons;
+    private List<SubLesson> subLessons;
 
     public Lesson() {
-        this.sublessons = new ArrayList<>();
+        this.subLessons = new ArrayList<>();
     }
 
     public String getFromDate() {
@@ -64,12 +60,12 @@ public class Lesson implements ListItem {
         this.verse = verse;
     }
 
-    public List<Sublesson> getSublessons() {
-        return sublessons;
+    public List<SubLesson> getSubLessons() {
+        return subLessons;
     }
 
-    public void setSublessons(List<Sublesson> sublessons) {
-        this.sublessons = sublessons;
+    public void setSubLessons(List<SubLesson> subLessons) {
+        this.subLessons = subLessons;
     }
 
     public static Lesson parse(DataSnapshot snapshot) {
@@ -78,12 +74,24 @@ public class Lesson implements ListItem {
         verse.setFromDate(snapshot.child("from_date").getValue(String.class));
         verse.setToDate(snapshot.child("to_date").getValue(String.class));
         verse.setVerse(snapshot.child("verse").getValue(String.class));
-        for (DataSnapshot child :snapshot.getChildren()){
-            verse.getSublessons().add(Sublesson.parse(child));
+        for (DataSnapshot child :snapshot.child("sublessons").getChildren()){
+            verse.getSubLessons().add(SubLesson.parse(child));
         }
         return verse;
     }
 
-
+    /**
+     * Returns position of the item in the list
+     * @param fromDate date when lesson starts
+     * @return
+     */
+    public static int getPositionForId(String fromDate) {
+        List<Lesson> lessons = DataSource.getInstance().getLessons();
+        for(int i = 0 ; i < lessons.size(); i++){
+            if(lessons.get(i).getFromDate().equals(fromDate))
+                return i;
+        }
+        return -1;
+    }
 
 }

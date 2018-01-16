@@ -75,7 +75,7 @@ public class HomeFragment extends BaseFragment {
         ActionBar ab = super.setActionBar();
         ab.setTitle(getString(R.string.home));
         ab.setBackButton(false);
-        ab.setMorningVersesActionBar(false);
+        ab.setCalendarBarVisible(false);
         return ab;
     }
 

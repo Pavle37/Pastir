@@ -3,11 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Pastir.iml" filepath="$PROJECT_DIR$/Pastir.iml" />
-      <module fileurl="file://C:\Pastir\Pastir\Pastir.iml" filepath="C:\Pastir\Pastir\Pastir.iml" />
+      <module fileurl="file://C:\pastir\Pastir\Pastir.iml" filepath="C:\pastir\Pastir\Pastir.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Pastir\Pastir\app\app.iml" filepath="C:\Pastir\Pastir\app\app.iml" />
+      <module fileurl="file://C:\pastir\Pastir\app\app.iml" filepath="C:\pastir\Pastir\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
-      <module fileurl="file://C:\Pastir\Pastir\library\library.iml" filepath="C:\Pastir\Pastir\library\library.iml" />
+      <module fileurl="file://C:\pastir\Pastir\library\library.iml" filepath="C:\pastir\Pastir\library\library.iml" />
     </modules>
   </component>
 </project>

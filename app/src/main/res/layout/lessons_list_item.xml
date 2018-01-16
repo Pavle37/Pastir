@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -19,55 +18,47 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="@{()->listener.onItemClicked(rvItem)}"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginLeft="@dimen/default_margin"
         android:layout_marginRight="@dimen/default_margin"
         android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginEnd="@dimen/default_margin"
-        android:layout_marginLeft="@dimen/default_margin">
+        android:onClick="@{()->listener.onItemClicked(rvItem)}"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/default_margin">
 
-        <RelativeLayout
+
+        <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="bottom"
-            android:paddingBottom="@dimen/default_margin">
+            android:ellipsize="end"
+            android:lines="1"
+            android:paddingBottom="@dimen/default_margin"
+            android:text="@{rvItem.title}"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_medium_large"
+            android:textStyle="bold"
+            tools:text="Some title of the content " />
 
-            <TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:text="@{rvItem.title}"
-                android:layout_toLeftOf="@+id/tvDate"
-                android:layout_toStartOf="@+id/tvDate"
-                android:textColor="@color/colorBlack"
-                tools:text="Some title of the content "
-                android:lines="1"
-                android:ellipsize="end"
-                android:textSize="@dimen/text_medium_large"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/tvDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:text="@{rvItem.fromDate}"
-                android:textAllCaps="true"
-                android:layout_alignBottom="@+id/tvTitle"
-                tools:text="01.02.2017"
-                android:textSize="@dimen/text_small" />
-        </RelativeLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/default_padding"
-            android:text="@{rvItem.title}"
-            android:textSize="@dimen/text_medium" />
+            android:paddingBottom="@dimen/small_padding"
+            android:text="@{rvItem.verse}"
+            android:textSize="@dimen/text_medium"
+            tools:text="Lesson description" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:paddingBottom="@dimen/small_padding"
+            android:text="@{rvItem.fromDate + ` - ` +rvItem.toDate}"
+            android:textAllCaps="true"
+            android:textSize="@dimen/text_small"
+            tools:text="01.01.2018. - 08.01.2018." />
 
         <View
             android:layout_width="match_parent"
