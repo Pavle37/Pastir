@@ -11,9 +11,11 @@ import android.view.ViewGroup;
 
 import com.pastir.R;
 import com.pastir.adapter.ListItemAdapter;
+import com.pastir.util.DateUtils;
 import com.pastir.databinding.FragmentMorningVersesBinding;
 import com.pastir.model.ActionBar;
 import com.pastir.model.ListItem;
+import com.pastir.model.MorningVerse;
 import com.pastir.model.OnListItemClickListener;
 import com.pastir.presenter.ActionBarPresenter;
 import com.pastir.presenter.MorningVersesPresenter;
@@ -27,6 +29,7 @@ public class MorningVersesFragment extends BaseFragment {
 
     private MorningVersesPresenter mPresenter;
     private RecyclerView rvMorningVerses;
+    private LinearLayoutManager mLinearLayoutManager;
 
     public MorningVersesFragment() {
         // Required empty public constructor
@@ -40,8 +43,8 @@ public class MorningVersesFragment extends BaseFragment {
 
         rvMorningVerses = view.findViewById(R.id.rvMorningVerses);
 
-        LinearLayoutManager lm = new LinearLayoutManager(getContext());
-        rvMorningVerses.setLayoutManager(lm);
+        mLinearLayoutManager = new LinearLayoutManager(getContext());
+        rvMorningVerses.setLayoutManager(mLinearLayoutManager);
 
         mPresenter = new MorningVersesPresenter();
         mPresenter.bindView(this);
@@ -55,7 +58,14 @@ public class MorningVersesFragment extends BaseFragment {
     public void setAdapter(List<? extends ListItem> morningVerses, OnListItemClickListener listener) {
         ListItemAdapter adapter = new ListItemAdapter(R.layout.morning_verses_list_item, morningVerses, listener);
         rvMorningVerses.setAdapter(adapter);
+
+        int nearestDatePosition = DateUtils.getMorningVersePositionClosestToToday((List<MorningVerse>)morningVerses);
+
+        /*Give it a little more offset so user can see the previous item*/
+        mLinearLayoutManager.scrollToPositionWithOffset(nearestDatePosition,200);
+
     }
+
 
     @Override
     protected ActionBar setActionBar() {
