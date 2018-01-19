@@ -18,6 +18,7 @@ import com.pastir.fragment.DonationFragment;
 import com.pastir.fragment.HomeFragment;
 import com.pastir.fragment.LessonsFragment;
 import com.pastir.fragment.MorningVersesFragment;
+import com.pastir.fragment.NoInternetConnectionDialog;
 import com.pastir.storage.DataSource;
 import com.pastir.util.Utils;
 
@@ -40,6 +41,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
 
+        if(Utils.General.hasInternetConnection(this)) {
+            loadStartingFragment();
+        }
+        else{
+            NoInternetConnectionDialog dialog = new NoInternetConnectionDialog();
+            dialog.show(getSupportFragmentManager(),NoInternetConnectionDialog.class.getSimpleName());
+        }
+    }
+
+    public void loadStartingFragment() {
         loadFragment(new HomeFragment());
     }
 
@@ -173,5 +184,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-
 }
