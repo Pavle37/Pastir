@@ -1,5 +1,7 @@
 package com.pastir.model;
 
+import android.databinding.Bindable;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -8,6 +10,8 @@ import com.pastir.storage.DataSource;
 import java.util.List;
 
 public class SubLesson implements ListItem {
+
+    private int subLessonListId;
     @SerializedName("title")
     @Expose
     private String title;
@@ -53,8 +57,17 @@ public class SubLesson implements ListItem {
         this.audioPath = audioPath;
     }
 
-    public static SubLesson parse(DataSnapshot snapshot) {
+    public void setSubLessonListId(int subLessonListId) {
+        this.subLessonListId = subLessonListId;
+    }
+
+    public int getSubLessonListId() {
+        return subLessonListId;
+    }
+
+    public static SubLesson parse(DataSnapshot snapshot, int subLessonId) {
         SubLesson verse = new SubLesson();
+        verse.setSubLessonListId(subLessonId);
         verse.setTitle(snapshot.child("title").getValue(String.class));
         verse.setText(snapshot.child("text").getValue(String.class));
         verse.setDate(snapshot.child("date").getValue(String.class));
@@ -77,13 +90,4 @@ public class SubLesson implements ListItem {
         return -1;
     }
 
-
-    public static int getPositionForId(String fromDate) {
-        List<Lesson> lessons = DataSource.getInstance().getLessons();
-        for (int i = 0; i < lessons.size(); i++) {
-            if (lessons.get(i).getFromDate().equals(fromDate))
-                return i;
-        }
-        return -1;
-    }
 }

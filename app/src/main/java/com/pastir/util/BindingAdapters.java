@@ -25,12 +25,41 @@ public class BindingAdapters {
     }
 
     @BindingAdapter("android:src")
-    public static void setImageResource(ImageView iv, int resId){
+    public static void setImageResource(ImageView iv, int resId) {
         iv.setImageResource(resId);
     }
 
     @BindingAdapter("bind:html")
     public static void bindHtml(View view, String text) {
         Utils.View.setHtmlToView((TextView) view, text);
+    }
+
+    @BindingAdapter("bind:dayInWeek")
+    public static void setDayInWeek(TextView view, int subLessonListId) {
+        switch (subLessonListId) {
+            case 0:
+                view.setText("SUBOTA");
+                break;
+            case 1:
+                view.setText("NEDELJA");
+                break;
+            case 2:
+                view.setText("PONEDELJAK");
+                break;
+            case 3:
+                view.setText("UTORAK");
+                break;
+            case 4:
+                view.setText("SREDA");
+                break;
+            case 5:
+                view.setText("ČETVRTAK");
+                break;
+            case 6:
+                view.setText("PETAK");
+                break;
+            default:
+                view.setText("NEPOZNATO");
+        }
     }
 }

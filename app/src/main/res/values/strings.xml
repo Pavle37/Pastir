@@ -26,7 +26,7 @@
     <string name="back">Back</string>
     <string name="close">Zatvori</string>
     <string name="no_morning_verse">Za izabrani datum ne postoji jutarnji stih.</string>
-    <string name="no_lesson">Za izabrani datum ne postoji pouka.</string>
+    <string name="no_lesson">Za izabrani datum ne postoje podaci.</string>
     <string name="sunrise_sunset">Svitanje / Zalazak</string>
     <string name="sunrise">Svitanje:</string>
     <string name="sunset">Zalazak:</string>
@@ -46,9 +46,9 @@
     <string name="telepfony_not_enabled">Pozivi nisu mogući na uređaju.</string>
     <string name="error_lesson_audio">Za izabranu pouku ne postoji audio snimak.</string>
     <string name="error_morning_verse_audio">Za izabrani jutarnji stih ne postoji audio snimak.</string>
-    <string name="no_internet_connection_message">Za korišćenje ove aplikacije potrebna je Internet konekcija. Molimo vas da ukljucite Internet i vratite se u aplikaciju.\nHvala!</string>
+    <string name="no_internet_connection_message">Za korišćenje ove aplikacije potrebna je Internet konekcija. Molimo vas da ukljucite Internet i pokušate ponovo.\nHvala!</string>
     <string name="check_again">Probaj ponovo</string>
-    <string name="exit">Izdaji</string>
+    <string name="exit">Izadji</string>
 
 
 </resources>

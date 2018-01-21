@@ -75,7 +75,7 @@ public class Lesson implements ListItem {
         verse.setToDate(snapshot.child("to_date").getValue(String.class));
         verse.setVerse(snapshot.child("verse").getValue(String.class));
         for (DataSnapshot child :snapshot.child("sublessons").getChildren()){
-            verse.getSubLessons().add(SubLesson.parse(child));
+            verse.getSubLessons().add(SubLesson.parse(child, verse.getSubLessons().size()));
         }
         return verse;
     }
