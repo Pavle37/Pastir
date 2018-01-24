@@ -31,7 +31,8 @@ public class BindingAdapters {
 
     @BindingAdapter("bind:html")
     public static void bindHtml(View view, String text) {
-        Utils.View.setHtmlToView((TextView) view, text);
+        if(text != null)
+            Utils.View.setHtmlToView((TextView) view, text);
     }
 
     @BindingAdapter("bind:dayInWeek")
