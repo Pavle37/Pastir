@@ -16,6 +16,7 @@
         android:fillViewport="true">
 
         <LinearLayout
+            android:id="@+id/llSubLessonOverview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -64,6 +65,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tvSubLessonText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingBottom="@dimen/default_margin"

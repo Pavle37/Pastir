@@ -1,5 +1,6 @@
 package com.pastir.fragment;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.pastir.R;
 import com.pastir.databinding.FragmentMorningVerseOverviewBinding;
@@ -162,10 +165,27 @@ public class MorningVerseOverviewFragment extends BaseFragment {
             FragmentPlaceholderMorningVerseBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_placeholder_morning_verse, container, false);
             int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
 
-            binding.setMorningVerse(DataSource.getInstance().getMorningVerses().get(sectionNumber));
+            MorningVerse morningVerse = DataSource.getInstance().getMorningVerses().get(sectionNumber);
+            binding.setMorningVerse(morningVerse);
 
+            setOnLongViewPressListener(binding.getRoot(), morningVerse);
 
             return binding.getRoot();
+        }
+
+        private void setOnLongViewPressListener(View root, MorningVerse morningVerse) {
+            LinearLayout llMorningVerseOverview = root.findViewById(R.id.llMorningVerseOverview);
+            TextView tvMorningVerseText = root.findViewById(R.id.tvMorningVerse);
+            llMorningVerseOverview.setOnLongClickListener(view -> {
+
+                String shareBody = tvMorningVerseText.getText().toString();
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, morningVerse.getTitle());
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share Text"));
+                return true;
+            });
         }
     }
 

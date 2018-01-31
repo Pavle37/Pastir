@@ -1,5 +1,6 @@
 package com.pastir.fragment;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -13,6 +14,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.pastir.R;
 import com.pastir.databinding.FragmentLessonOverviewBinding;
@@ -54,7 +57,7 @@ public class LessonOverviewFragment extends BaseFragment {
         mPresenter.bindView(this);
         mBinding.setPresenter(mPresenter);
         List<Lesson> lessons = DataSource.getInstance().getLessons();
-        
+
         Lesson currentLesson = lessons.get(position);
         //Load first subLesson from lesson
         SubLesson firstSubLessonInLesson = currentLesson.getSubLessons().get(0);
@@ -181,9 +184,27 @@ public class LessonOverviewFragment extends BaseFragment {
 
             int lessonPosition = getArguments().getInt(ARG_LESSON_POSITION);
             int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
-            binding.setLesson(DataSource.getInstance().getLessons().get(lessonPosition).getSubLessons().get(sectionNumber));
+            SubLesson subLesson = DataSource.getInstance().getLessons().get(lessonPosition).getSubLessons().get(sectionNumber);
+            binding.setLesson(subLesson);
 
+
+            setOnLongViewPressListener(binding.getRoot(), subLesson);
             return binding.getRoot();
+        }
+
+        private void setOnLongViewPressListener(View root, SubLesson subLesson) {
+            LinearLayout llSubLessonOverview = root.findViewById(R.id.llSubLessonOverview);
+            TextView tvSubLessonText = root.findViewById(R.id.tvSubLessonText);
+            llSubLessonOverview.setOnLongClickListener(view -> {
+
+                String shareBody = tvSubLessonText.getText().toString();
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subLesson.getTitle());
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share Text"));
+                return true;
+            });
         }
     }
 
@@ -233,6 +254,7 @@ public class LessonOverviewFragment extends BaseFragment {
             // Show 3 total pages.
             return DataSource.getInstance().getLessons().get(lessonPosition).getSubLessons().size();
         }
+
         @Override
         public int getItemPosition(Object object) {
             return POSITION_NONE;
