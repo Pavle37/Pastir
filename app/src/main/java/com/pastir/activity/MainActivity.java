@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -20,7 +22,9 @@ import com.pastir.fragment.LessonsFragment;
 import com.pastir.fragment.MorningVersesFragment;
 import com.pastir.fragment.NoInternetConnectionDialog;
 import com.pastir.storage.DataSource;
+import com.pastir.util.EventDispatcher;
 import com.pastir.util.Utils;
+import com.testfairy.TestFairy;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -29,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActivityMainBinding mBinding;
     private NavigationView mNavigationView;
     private boolean loadingFromMenu = false;
+    private EventDispatcher mDispatcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +46,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
 
-        if(Utils.General.hasInternetConnection(this)) {
+        /*For test purposes*/
+//        TestFairy.begin(this, "3e46fde5a8540c1fc1dfd74c431fc33366ea22ac");
+
+        /*Create this here so we can have control of it when lifecycle events occur*/
+        mDispatcher = new EventDispatcher(this);
+        mDispatcher.registerPhoneCallListener();
+
+        if (Utils.General.hasInternetConnection(this)) {
             loadStartingFragment();
-        }
-        else{
+        } else {
             NoInternetConnectionDialog dialog = new NoInternetConnectionDialog();
-            dialog.show(getSupportFragmentManager(),NoInternetConnectionDialog.class.getSimpleName());
+            dialog.show(getSupportFragmentManager(), NoInternetConnectionDialog.class.getSimpleName());
         }
     }
 
@@ -183,5 +194,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onDestroy() {
+        mDispatcher.unregisterPhoneCallListener(); /*Don't forget to unregister*/
+        super.onDestroy();
     }
 }

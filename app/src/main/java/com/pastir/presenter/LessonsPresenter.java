@@ -10,6 +10,7 @@ import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.res.ResourcesCompat;
+import android.telephony.TelephonyManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ViewSwitcher;
@@ -21,20 +22,24 @@ import com.pastir.fragment.CloudDialog;
 import com.pastir.fragment.LessonOverviewFragment;
 import com.pastir.fragment.LessonsFragment;
 import com.pastir.model.Lesson;
-import com.pastir.model.SubLesson;
 import com.pastir.model.ListItem;
 import com.pastir.model.OnCloudClickListener;
 import com.pastir.model.OnListItemClickListener;
 import com.pastir.model.OnListItemsLoadedListener;
 import com.pastir.model.Results;
+import com.pastir.model.SubLesson;
 import com.pastir.network.WebController;
 import com.pastir.storage.DataSource;
+import com.pastir.util.EventDispatcher;
 import com.pastir.util.Utils;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Used to handle interaction with the fragments related to lessons
@@ -49,6 +54,8 @@ public class LessonsPresenter extends ActionBarPresenter<BaseFragment> implement
 
     private LessonsPresenter.Player mPlayingMode = LessonsPresenter.Player.STOPPED;
     private boolean isReady = false;
+    private boolean isPaused = false;
+    private boolean hasCompleted = false;
 
     public void loadData() {
         mDataSource.getLessons(this);
@@ -111,7 +118,7 @@ public class LessonsPresenter extends ActionBarPresenter<BaseFragment> implement
                     if (!isInOverViewMode())
                         getView().loadFragment(LessonOverviewFragment.getInstance(lesson.getFromDate()));
                     else
-                        ((LessonOverviewFragment) getView()).setViewPagerItem(lesson,subLesson);
+                        ((LessonOverviewFragment) getView()).setViewPagerItem(lesson, subLesson);
                     return;
                 }
             }
@@ -133,7 +140,7 @@ public class LessonsPresenter extends ActionBarPresenter<BaseFragment> implement
 
 
     public void onPlayClicked() {
-            startPlaying();
+        startPlaying();
     }
 
     public void onLeftArrowClicked() {
@@ -166,12 +173,13 @@ public class LessonsPresenter extends ActionBarPresenter<BaseFragment> implement
     }
 
     public void onPause() {
-        if (mPlayer != null && mPlayer.isPlaying()) {
-            pausePlaying();
-        }
+        isPaused = true;
     }
 
     public void onDestroy() {
+        if (mPlayer != null && mPlayer.isPlaying()) {
+            pausePlaying();
+        }
         if (mPlayer != null) {
             mPlayer.stop();
             mPlayer.release();
@@ -199,8 +207,20 @@ public class LessonsPresenter extends ActionBarPresenter<BaseFragment> implement
         mPlayer.setOnCompletionListener(mp -> {
             setPlayingMode(LessonsPresenter.Player.STOPPED);
             mPlayingMode = LessonsPresenter.Player.FINISHED;
-            ((LessonOverviewFragment) getView()).scrollViewPagerRight();
+            hasCompleted = true;
+            scrollNextIfResumed();
         });
+    }
+
+    /**
+     * Depending on params hasCompleted and isPaused either scrolls or waits for onResume to scroll to
+     * next element in the adapter
+     */
+    private void scrollNextIfResumed() {
+        if (!isPaused && hasCompleted) {
+            ((LessonOverviewFragment) getView()).scrollViewPagerRight();
+            hasCompleted = false;
+        }
     }
 
     private void playerReady() {
@@ -246,10 +266,34 @@ public class LessonsPresenter extends ActionBarPresenter<BaseFragment> implement
     public void loadSubLessonAudio(SubLesson currentLesson) {
         try {
             initializeMediaPlayer(currentLesson.getAudioPath());
-        }catch (IllegalStateException e){
+            addPhoneCallEventHandler();
+        } catch (IllegalStateException e) {
             e.printStackTrace();
         }
 
+    }
+
+    private void addPhoneCallEventHandler() {
+        EventDispatcher.sPhoneCallListener.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        state -> {
+                            if (state == TelephonyManager.CALL_STATE_RINGING || state == TelephonyManager.CALL_STATE_OFFHOOK) {
+                                //Incoming call or dialing, active or on hold: Pause music
+                                if (mPlayingMode == Player.PLAYING)
+                                    mPlayer.pause();
+                            } else if (state == TelephonyManager.CALL_STATE_IDLE) {
+                                //Not in call: Play music
+                                if (mPlayingMode == Player.PLAYING)
+                                    mPlayer.start();
+                            }
+                        }
+                );
+    }
+
+    public void onResume() {
+        isPaused = false;
+        scrollNextIfResumed();
     }
 
     public enum Player {

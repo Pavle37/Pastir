@@ -215,6 +215,12 @@ public class LessonOverviewFragment extends BaseFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.onResume();
+    }
+
+    @Override
     public void onDestroy() {
         mPresenter.onDestroy();
         super.onDestroy();

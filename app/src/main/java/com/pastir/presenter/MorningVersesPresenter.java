@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.res.ResourcesCompat;
+import android.telephony.TelephonyManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ViewSwitcher;
@@ -20,6 +21,7 @@ import com.pastir.R;
 import com.pastir.fragment.BaseFragment;
 import com.pastir.fragment.CloudDialog;
 import com.pastir.fragment.HomeFragment;
+import com.pastir.fragment.LessonOverviewFragment;
 import com.pastir.fragment.MorningVerseOverviewFragment;
 import com.pastir.fragment.MorningVersesFragment;
 import com.pastir.model.Event;
@@ -31,12 +33,16 @@ import com.pastir.model.OnListItemsLoadedListener;
 import com.pastir.model.Results;
 import com.pastir.network.WebController;
 import com.pastir.storage.DataSource;
+import com.pastir.util.EventDispatcher;
 import com.pastir.util.Utils;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Used to handle interaction with the morning verses fragment
@@ -50,6 +56,8 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
 
     private Player mPlayingMode = Player.STOPPED;
     private boolean isReady = false;
+    private boolean isPaused = false;
+    private boolean hasCompleted = false;
 
 
     @Override
@@ -158,12 +166,13 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
     }
 
     public void onPause() {
-        if (mPlayer != null && mPlayer.isPlaying()) {
-            pausePlaying();
-        }
+        isPaused = true;
     }
 
     public void onDestroy() {
+        if (mPlayer != null && mPlayer.isPlaying()) {
+            pausePlaying();
+        }
         if (mPlayer != null) {
             mPlayer.stop();
             mPlayer.release();
@@ -190,9 +199,21 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
         //When the playing is done
         mPlayer.setOnCompletionListener(mp -> {
             setPlayingMode(Player.STOPPED);
-
-
+            mPlayingMode = Player.FINISHED;
+            hasCompleted = true;
+            scrollNextIfResumed();
         });
+    }
+
+    /**
+     * Depending on params hasCompleted and isPaused either scrolls or waits for onResume to scroll to
+     * next element in the adapter
+     */
+    private void scrollNextIfResumed() {
+        if (!isPaused && hasCompleted) {
+            ((MorningVerseOverviewFragment) getView()).scrollViewPagerRight();
+            hasCompleted = false;
+        }
     }
 
     private void playerReady() {
@@ -244,10 +265,34 @@ public class MorningVersesPresenter extends ActionBarPresenter<BaseFragment> imp
     public void loadVerseAudio(MorningVerse currentVerse) {
         try {
             initializeMediaPlayer(currentVerse.getAudioPath());
+            addPhoneCallEventHandler();
         } catch (IllegalStateException e) {
             e.printStackTrace();
         }
 
+    }
+
+    private void addPhoneCallEventHandler() {
+        EventDispatcher.sPhoneCallListener.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        state -> {
+                            if (state == TelephonyManager.CALL_STATE_RINGING || state == TelephonyManager.CALL_STATE_OFFHOOK) {
+                                //Incoming call or dialing, active or on hold: Pause music
+                                if (mPlayingMode == Player.PLAYING)
+                                    mPlayer.pause();
+                            } else if (state == TelephonyManager.CALL_STATE_IDLE) {
+                                //Not in call: Play music
+                                if (mPlayingMode == Player.PLAYING)
+                                    mPlayer.start();
+                            }
+                        }
+                );
+    }
+
+    public void onResume() {
+        isPaused = false;
+        scrollNextIfResumed();
     }
 
     public enum Player {

@@ -18,18 +18,18 @@
             android:id="@+id/nav_bible"
             android:icon="@drawable/ic_bible"
             android:title="@string/bible"/>
-        <item
-            android:id="@+id/nav_songbook"
-            android:icon="@drawable/ic_songbook"
-            android:title="@string/songbook"/>
-        <item
-            android:id="@+id/nav_ellen_white"
-            android:icon="@drawable/ic_ellen_white"
-            android:title="@string/ellen_white"/>
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_settings"
-            android:title="@string/settings"/>
+        <!--<item-->
+            <!--android:id="@+id/nav_songbook"-->
+            <!--android:icon="@drawable/ic_songbook"-->
+            <!--android:title="@string/songbook"/>-->
+        <!--<item-->
+            <!--android:id="@+id/nav_ellen_white"-->
+            <!--android:icon="@drawable/ic_ellen_white"-->
+            <!--android:title="@string/ellen_white"/>-->
+        <!--<item-->
+            <!--android:id="@+id/nav_settings"-->
+            <!--android:icon="@drawable/ic_settings"-->
+            <!--android:title="@string/settings"/>-->
         <item
             android:id="@+id/nav_donate"
             android:icon="@drawable/ic_donate"
