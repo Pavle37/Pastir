@@ -15,8 +15,8 @@ repositories {
 }
 
 //app versioning
-def appVersionCode = 1
-def appVersionName = "1.0.0"
+def appVersionCode = 2
+def appVersionName = "1.0.1"
 
 
 android {
