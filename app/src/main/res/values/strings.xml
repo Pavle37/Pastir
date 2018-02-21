@@ -49,6 +49,10 @@
     <string name="no_internet_connection_message">Za korišćenje ove aplikacije potrebna je Internet konekcija. Molimo vas da ukljucite Internet i pokušate ponovo.\nHvala!</string>
     <string name="check_again">Probaj ponovo</string>
     <string name="exit">Izadji</string>
+    <string name="books">Knjige</string>
+    <string name="chapters">Poglavlja</string>
+    <string name="verse">Stih</string>
+    <string name="verses">Stihovi</string>
 
 
 </resources>

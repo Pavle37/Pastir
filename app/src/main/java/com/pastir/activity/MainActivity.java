@@ -8,14 +8,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.telephony.PhoneStateListener;
-import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.pastir.R;
 import com.pastir.databinding.ActivityMainBinding;
 import com.pastir.fragment.BaseFragment;
+import com.pastir.fragment.BibleFragment;
 import com.pastir.fragment.DonationFragment;
 import com.pastir.fragment.HomeFragment;
 import com.pastir.fragment.LessonsFragment;
@@ -24,7 +23,6 @@ import com.pastir.fragment.NoInternetConnectionDialog;
 import com.pastir.storage.DataSource;
 import com.pastir.util.EventDispatcher;
 import com.pastir.util.Utils;
-import com.testfairy.TestFairy;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -112,6 +110,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             loadFragment(new LessonsFragment());
         } else if (id == R.id.nav_donate) {
             loadFragment(new DonationFragment());
+        } else if (id == R.id.nav_bible) {
+            loadFragment(new BibleFragment());
         } else {
             Utils.SingleToast.show(this, getString(R.string.not_implemented));
         }
