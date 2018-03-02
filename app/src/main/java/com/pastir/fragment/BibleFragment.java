@@ -1,9 +1,6 @@
 package com.pastir.fragment;
 
-import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -11,7 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.pastir.R;
 import com.pastir.databinding.FragmentBibleBinding;
@@ -24,7 +20,6 @@ import com.pastir.presenter.BiblePresenter;
  */
 
 public class BibleFragment extends BaseFragment {
-
 
     private BiblePresenter mPresenter;
 
@@ -82,9 +77,9 @@ public class BibleFragment extends BaseFragment {
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return BooksFragment.newInstance(getString(R.string.books));
+                return new BooksFragment();
             } else {
-                return BooksFragment.newInstance(getString(R.string.chapters));
+                return new ChaptersFragment();
             }
         }
 
@@ -107,31 +102,4 @@ public class BibleFragment extends BaseFragment {
         }
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class BooksFragment extends Fragment {
-
-        private static final String ARG_SECTION_NAME = "section_name";
-
-        public BooksFragment() {
-        }
-
-        public static BooksFragment newInstance(String sectionName) {
-            BooksFragment fragment = new BooksFragment();
-            Bundle args = new Bundle();
-            args.putString(ARG_SECTION_NAME, sectionName);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_books, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getArguments().getString(ARG_SECTION_NAME));
-            return rootView;
-        }
-    }
 }
