@@ -6,10 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 
 import com.pastir.R;
+import com.pastir.adapter.ChapterItemAdapter;
 import com.pastir.adapter.ListItemAdapter;
 import com.pastir.databinding.FragmentChaptersBinding;
+import com.pastir.model.Chapter;
 import com.pastir.model.ListItem;
 import com.pastir.model.OnListItemClickListener;
 import com.pastir.presenter.ChaptersPresenter;
@@ -23,7 +26,7 @@ public class ChaptersFragment extends BaseFragment {
 
 
     private ChaptersPresenter mPresenter;
-    private RecyclerView rvChapters;
+    private GridView gvChapters;
 
     public ChaptersFragment() {
         // Required empty public constructor
@@ -34,20 +37,18 @@ public class ChaptersFragment extends BaseFragment {
         FragmentChaptersBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chapters, container, false);
         View view = binding.getRoot();
 
-        rvChapters = view.findViewById(R.id.rvChapters);
-
-        LinearLayoutManager lm = new LinearLayoutManager(getContext());
-        rvChapters.setLayoutManager(lm);
+        gvChapters = view.findViewById(R.id.gvChapters);
 
         mPresenter = new ChaptersPresenter();
         mPresenter.bindView(this);
         binding.setPresenter(mPresenter);
 
-        return binding.getRoot();
+        setAdapter(Chapter.getMocked(), null);
+        return view;
     }
 
-    public void setAdapter(List<? extends ListItem> morningVerses, OnListItemClickListener listener) {
-        ListItemAdapter adapter = new ListItemAdapter(R.layout.lessons_list_item, morningVerses, listener);
-        rvChapters.setAdapter(adapter);
+    public void setAdapter(List<Chapter> chapters, OnListItemClickListener listener) {
+        ChapterItemAdapter adapter = new ChapterItemAdapter(getContext(), chapters, listener);
+        gvChapters.setAdapter(adapter);
     }
 }

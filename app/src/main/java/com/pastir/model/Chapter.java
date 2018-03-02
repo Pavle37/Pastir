@@ -27,6 +27,12 @@ public class Chapter {
         list.add(new Chapter(1));
         list.add(new Chapter(2));
         list.add(new Chapter(3));
+        list.add(new Chapter(4));
+        list.add(new Chapter(5));
+        list.add(new Chapter(6));
+        list.add(new Chapter(7));
+        list.add(new Chapter(8));
+        list.add(new Chapter(9));
         return list;
     }
 }
