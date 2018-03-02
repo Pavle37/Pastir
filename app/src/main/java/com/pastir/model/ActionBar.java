@@ -11,10 +11,12 @@ import com.pastir.BR;
 
 public class ActionBar extends BaseObservable {
 
+
     private String mTitle;
     private int mLeftImage;
     private boolean backButtonVisible;
     private boolean calendarBarVisible;
+    private boolean tabLayoutVisible;
 
 
     @Bindable
@@ -55,5 +57,16 @@ public class ActionBar extends BaseObservable {
     public void setCalendarBarVisible(boolean calendarBarVisible) {
         this.calendarBarVisible = calendarBarVisible;
         notifyPropertyChanged(BR.calendarBarVisible);
+    }
+
+    @Bindable
+    public boolean isTabLayoutVisible() {
+        return tabLayoutVisible;
+    }
+
+    public void setTabLayoutVisible(boolean tabLayoutVisible) {
+        this.tabLayoutVisible = tabLayoutVisible;
+        notifyPropertyChanged(BR.tabLayoutVisible);
+
     }
 }

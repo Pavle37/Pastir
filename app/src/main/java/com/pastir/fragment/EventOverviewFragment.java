@@ -64,6 +64,7 @@ public class EventOverviewFragment extends BaseFragment {
         ab.setTitle(mEvent.getTitle());
         ab.setLeftImage(0);
         ab.setBackButton(true);
+        ab.setTabLayoutVisible(false);
         return ab;
     }
 

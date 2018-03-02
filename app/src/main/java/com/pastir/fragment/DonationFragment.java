@@ -36,6 +36,7 @@ public class DonationFragment extends BaseFragment {
         ab.setTitle(getString(R.string.donate));
         ab.setBackButton(false);
         ab.setCalendarBarVisible(false);
+        ab.setTabLayoutVisible(false);
         return ab;
     }
 

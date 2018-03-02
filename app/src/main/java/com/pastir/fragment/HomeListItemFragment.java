@@ -74,6 +74,7 @@ public class HomeListItemFragment extends BaseFragment {
         ab.setLeftImage(0);
         ab.setBackButton(true);
         ab.setCalendarBarVisible(false);
+        ab.setTabLayoutVisible(false);
         return ab;
     }
 

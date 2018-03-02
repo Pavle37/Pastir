@@ -76,6 +76,7 @@ public class HomeFragment extends BaseFragment {
         ab.setTitle(getString(R.string.home));
         ab.setBackButton(false);
         ab.setCalendarBarVisible(false);
+        ab.setTabLayoutVisible(false);
         return ab;
     }
 

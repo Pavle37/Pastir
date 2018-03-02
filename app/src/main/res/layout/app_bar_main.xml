@@ -150,6 +150,20 @@
                 </RelativeLayout>
 
             </LinearLayout>
+            <android.support.design.widget.TabLayout
+                android:id="@+id/slidingTabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:textSize="@dimen/text_small"
+                app:tabGravity="fill"
+                android:visibility="@{actionBar.tabLayoutVisible ? View.VISIBLE : View.GONE}"
+                app:tabIndicatorColor="@color/tabIndicatorColor"
+                app:tabIndicatorHeight="3dp"
+                app:tabMaxWidth="0dp"
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="@color/colorWhite"
+                app:tabTextColor="@color/colorWhite" />
         </android.support.design.widget.AppBarLayout>
 
         <FrameLayout

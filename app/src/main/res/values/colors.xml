@@ -7,4 +7,5 @@
     <color name="colorBlack">#000</color>
     <color name="colorGrey">#807f7f</color>
     <color name="colorLightGrey">#dcdcdc</color>
+    <color name="tabIndicatorColor">#d69900</color>
 </resources>

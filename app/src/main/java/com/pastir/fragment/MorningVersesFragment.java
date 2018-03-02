@@ -73,6 +73,7 @@ public class MorningVersesFragment extends BaseFragment {
         ab.setTitle(getString(R.string.morning_verses));
         ab.setBackButton(false);
         ab.setCalendarBarVisible(true);
+        ab.setTabLayoutVisible(false);
         return ab;
     }
 

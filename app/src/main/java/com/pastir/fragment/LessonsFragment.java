@@ -64,6 +64,7 @@ public class LessonsFragment extends BaseFragment {
         ab.setTitle(getString(R.string.lesson));
         ab.setBackButton(false);
         ab.setCalendarBarVisible(true);
+        ab.setTabLayoutVisible(false);
         return ab;
     }
 

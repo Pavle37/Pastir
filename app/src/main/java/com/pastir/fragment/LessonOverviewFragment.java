@@ -103,6 +103,7 @@ public class LessonOverviewFragment extends BaseFragment {
         ab.setLeftImage(0);
         ab.setBackButton(true);
         ab.setCalendarBarVisible(true);
+        ab.setTabLayoutVisible(false);
         return ab;
     }
 

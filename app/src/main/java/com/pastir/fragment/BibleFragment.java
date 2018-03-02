@@ -25,6 +25,7 @@ import com.pastir.presenter.BiblePresenter;
 
 public class BibleFragment extends BaseFragment {
 
+
     private BiblePresenter mPresenter;
 
     public BibleFragment() {
@@ -40,16 +41,9 @@ public class BibleFragment extends BaseFragment {
         binding.setPresenter(mPresenter);
 
         ViewPager viewPager = view.findViewById(R.id.vp_bible);
-
-        // Create an adapter that knows which fragment should be shown on each page
         BibleFragmentPagerAdapter adapter = new BibleFragmentPagerAdapter(getFragmentManager());
-
-        // Set the adapter onto the view pager
         viewPager.setAdapter(adapter);
-
-        // Give the TabLayout the ViewPager
-        TabLayout tabLayout = view.findViewById(R.id.sliding_tabs);
-        tabLayout.setupWithViewPager(viewPager);
+        mActivity.setupTabLayoutWithViewPager(viewPager);
 
         return binding.getRoot();
     }
@@ -60,6 +54,7 @@ public class BibleFragment extends BaseFragment {
         ab.setTitle(getString(R.string.bible));
         ab.setBackButton(false);
         ab.setCalendarBarVisible(false);
+        ab.setTabLayoutVisible(true);
         return ab;
     }
 
@@ -88,18 +83,14 @@ public class BibleFragment extends BaseFragment {
         public Fragment getItem(int position) {
             if (position == 0) {
                 return BooksFragment.newInstance(getString(R.string.books));
-            } else if (position == 1) {
-                return BooksFragment.newInstance(getString(R.string.chapters));
-            } else if (position == 2) {
-                return BooksFragment.newInstance(getString(R.string.verses));
             } else {
-                return BooksFragment.newInstance(getString(R.string.verse));
+                return BooksFragment.newInstance(getString(R.string.chapters));
             }
         }
 
         @Override
         public int getCount() {
-            return 4;
+            return 2;
         }
 
         @Override
@@ -110,10 +101,6 @@ public class BibleFragment extends BaseFragment {
                     return getString(R.string.books);
                 case 1:
                     return getString(R.string.chapters);
-                case 2:
-                    return getString(R.string.verses);
-                case 3:
-                    return getString(R.string.verse);
                 default:
                     return null;
             }
