@@ -27,6 +27,7 @@ public class ChaptersFragment extends BaseFragment {
 
     private ChaptersPresenter mPresenter;
     private GridView gvChapters;
+    private Book mSelectedBook;
 
     public ChaptersFragment() {
         // Required empty public constructor
@@ -37,7 +38,7 @@ public class ChaptersFragment extends BaseFragment {
         FragmentChaptersBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chapters, container, false);
         View view = binding.getRoot();
 
-        Book book = Utils.General.deserializeFromJson(getArguments().getString(ARGS_KEY), Book.class);
+        mSelectedBook = Utils.General.deserializeFromJson(getArguments().getString(ARGS_KEY), Book.class);
 
         gvChapters = view.findViewById(R.id.gvChapters);
 
@@ -45,11 +46,21 @@ public class ChaptersFragment extends BaseFragment {
         mPresenter.bindView(this);
         binding.setPresenter(mPresenter);
 
-        setAdapter(book.getChapters(), null);
+        setAdapter(mSelectedBook.getChapters(), null);
 
 
         return view;
     }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        if (isVisibleToUser){
+            setAdapter(mSelectedBook.getChapters(), null);
+        }
+    }
+
+
 
     public void setAdapter(List<Chapter> chapters, OnListItemClickListener listener) {
         ChapterItemAdapter adapter = new ChapterItemAdapter(getContext(), chapters, listener);
@@ -71,5 +82,9 @@ public class ChaptersFragment extends BaseFragment {
         args.putString(ARGS_KEY, Utils.General.serializeToJson(book));
         instance.setArguments(args);
         return instance;
+    }
+
+    public void setSelectedBook(Book selectedBook) {
+        mSelectedBook = selectedBook;
     }
 }

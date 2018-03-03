@@ -1,6 +1,8 @@
 package com.pastir.fragment;
 
 import android.databinding.DataBindingUtil;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -39,7 +41,6 @@ public class BibleFragment extends BaseFragment implements OnBookSelectedListene
         binding.setPresenter(mPresenter);
 
         viewPager = view.findViewById(R.id.vp_bible);
-        //TODO: Set first book from real list of books
         BibleFragmentPagerAdapter adapter = new BibleFragmentPagerAdapter(getFragmentManager(),
                 Book.getMocked().get(0));
         viewPager.setAdapter(adapter);
@@ -80,6 +81,7 @@ public class BibleFragment extends BaseFragment implements OnBookSelectedListene
      */
     public class BibleFragmentPagerAdapter extends FragmentPagerAdapter {
 
+        ChaptersFragment chaptersFragment;
         private Book mSelectedBook;
 
         public BibleFragmentPagerAdapter(FragmentManager fm, Book firstBook) {
@@ -95,7 +97,8 @@ public class BibleFragment extends BaseFragment implements OnBookSelectedListene
                 booksFragment.setOnBooksSelectedListener(BibleFragment.this);
                 return booksFragment;
             } else {
-                return ChaptersFragment.getInstance(mSelectedBook);
+                chaptersFragment = (ChaptersFragment) ChaptersFragment.getInstance(mSelectedBook);
+                return chaptersFragment;
             }
         }
 
@@ -119,7 +122,7 @@ public class BibleFragment extends BaseFragment implements OnBookSelectedListene
 
         public void setCurrentBook(Book book) {
             mSelectedBook = book;
-            notifyDataSetChanged();
+            chaptersFragment.setSelectedBook(mSelectedBook);
         }
     }
 
