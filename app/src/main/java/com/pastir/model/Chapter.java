@@ -45,4 +45,38 @@ public class Chapter {
         list.add(new Chapter(9));
         return list;
     }
+
+    public static List<Chapter> getMockedSecond() {
+        List<Chapter> list = new ArrayList<>();
+        list.add(new Chapter(1));
+        list.add(new Chapter(2));
+        list.add(new Chapter(3));
+        list.add(new Chapter(4));
+        list.add(new Chapter(5));
+        list.add(new Chapter(6));
+        return list;
+    }
+
+    public static List<Chapter> getMockedThird() {
+        List<Chapter> list = new ArrayList<>();
+        list.add(new Chapter(1));
+        list.add(new Chapter(2));
+        list.add(new Chapter(3));
+        list.add(new Chapter(4));
+        list.add(new Chapter(5));
+        list.add(new Chapter(6));
+        list.add(new Chapter(7));
+        list.add(new Chapter(8));
+        list.add(new Chapter(9));
+        list.add(new Chapter(10));
+        list.add(new Chapter(11));
+        list.add(new Chapter(12));
+        list.add(new Chapter(13));
+        list.add(new Chapter(14));
+        list.add(new Chapter(15));
+        list.add(new Chapter(16));
+        list.add(new Chapter(17));
+        list.add(new Chapter(18));
+        return list;
+    }
 }

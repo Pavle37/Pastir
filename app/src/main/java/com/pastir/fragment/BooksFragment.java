@@ -15,6 +15,7 @@ import com.pastir.R;
 import com.pastir.adapter.ListItemAdapter;
 import com.pastir.databinding.FragmentBooksBinding;
 import com.pastir.model.ListItem;
+import com.pastir.model.OnBookSelectedListener;
 import com.pastir.model.OnListItemClickListener;
 import com.pastir.presenter.BooksPresenter;
 
@@ -27,6 +28,7 @@ public class BooksFragment extends BaseFragment {
 
     private BooksPresenter mPresenter;
     private RecyclerView rvBooks;
+    private OnBookSelectedListener mListener;
 
     public BooksFragment() {
         // Required empty public constructor
@@ -51,5 +53,13 @@ public class BooksFragment extends BaseFragment {
     public void setAdapter(List<? extends ListItem> morningVerses, OnListItemClickListener listener) {
         ListItemAdapter adapter = new ListItemAdapter(R.layout.book_list_item, morningVerses, listener);
         rvBooks.setAdapter(adapter);
+    }
+
+    public void setOnBooksSelectedListener(OnBookSelectedListener listener) {
+        mListener = listener;
+    }
+
+    public OnBookSelectedListener getListener() {
+        return mListener;
     }
 }

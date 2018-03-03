@@ -37,8 +37,8 @@ public class Book implements ListItem {
     public static List<Book> getMocked() {
         List<Book> list = new ArrayList<>();
         list.add(new Book("Evandjelje po Mateji", Chapter.getMocked()));
-        list.add(new Book("Evandjelje po Marku", Chapter.getMocked()));
-        list.add(new Book("Poslanica Rimljanima", Chapter.getMocked()));
+        list.add(new Book("Evandjelje po Marku", Chapter.getMockedSecond()));
+        list.add(new Book("Poslanica Rimljanima", Chapter.getMockedThird()));
         return list;
     }
 }

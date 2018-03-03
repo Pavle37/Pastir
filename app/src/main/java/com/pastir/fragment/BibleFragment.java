@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import com.pastir.R;
 import com.pastir.databinding.FragmentBibleBinding;
 import com.pastir.model.ActionBar;
+import com.pastir.model.Book;
+import com.pastir.model.OnBookSelectedListener;
 import com.pastir.presenter.ActionBarPresenter;
 import com.pastir.presenter.BiblePresenter;
 
@@ -19,9 +21,10 @@ import com.pastir.presenter.BiblePresenter;
  * Fragment used for bible reading
  */
 
-public class BibleFragment extends BaseFragment {
+public class BibleFragment extends BaseFragment implements OnBookSelectedListener {
 
     private BiblePresenter mPresenter;
+    private ViewPager viewPager;
 
     public BibleFragment() {
         // Required empty public constructor
@@ -35,8 +38,10 @@ public class BibleFragment extends BaseFragment {
         mPresenter.bindView(this);
         binding.setPresenter(mPresenter);
 
-        ViewPager viewPager = view.findViewById(R.id.vp_bible);
-        BibleFragmentPagerAdapter adapter = new BibleFragmentPagerAdapter(getFragmentManager());
+        viewPager = view.findViewById(R.id.vp_bible);
+        //TODO: Set first book from real list of books
+        BibleFragmentPagerAdapter adapter = new BibleFragmentPagerAdapter(getFragmentManager(),
+                Book.getMocked().get(0));
         viewPager.setAdapter(adapter);
         mActivity.setupTabLayoutWithViewPager(viewPager);
 
@@ -63,23 +68,34 @@ public class BibleFragment extends BaseFragment {
         return R.id.nav_bible;
     }
 
+    @Override
+    public void onBookSelected(Book book) {
+        ((BibleFragmentPagerAdapter) viewPager.getAdapter()).setCurrentBook(book);
+        viewPager.setCurrentItem(1);
+    }
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
     public class BibleFragmentPagerAdapter extends FragmentPagerAdapter {
 
-        public BibleFragmentPagerAdapter(FragmentManager fm) {
+        private Book mSelectedBook;
+
+        public BibleFragmentPagerAdapter(FragmentManager fm, Book firstBook) {
             super(fm);
+            mSelectedBook = firstBook;
         }
 
         // This determines the fragment for each tab
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return new BooksFragment();
+                BooksFragment booksFragment = new BooksFragment();
+                booksFragment.setOnBooksSelectedListener(BibleFragment.this);
+                return booksFragment;
             } else {
-                return new ChaptersFragment();
+                return ChaptersFragment.getInstance(mSelectedBook);
             }
         }
 
@@ -100,6 +116,12 @@ public class BibleFragment extends BaseFragment {
                     return null;
             }
         }
+
+        public void setCurrentBook(Book book) {
+            mSelectedBook = book;
+            notifyDataSetChanged();
+        }
     }
+
 
 }
