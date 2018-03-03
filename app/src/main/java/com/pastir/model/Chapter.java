@@ -10,6 +10,8 @@ import java.util.List;
 public class Chapter {
     private int number;
 
+    private String text = "Chapter text";
+
     public Chapter(int number) {
         this.number = number;
     }
@@ -20,6 +22,14 @@ public class Chapter {
 
     public void setNumber(int number) {
         this.number = number;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public static List<Chapter> getMocked() {
