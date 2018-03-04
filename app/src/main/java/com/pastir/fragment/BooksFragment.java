@@ -5,6 +5,8 @@ package com.pastir.fragment;
  */
 
 import android.databinding.DataBindingUtil;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,6 +36,11 @@ public class BooksFragment extends BaseFragment {
         // Required empty public constructor
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return init(inflater,container);
+    }
     @Override
     protected View init(LayoutInflater inflater, ViewGroup container) {
         FragmentBooksBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_books, container, false);

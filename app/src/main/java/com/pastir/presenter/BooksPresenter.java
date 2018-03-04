@@ -21,4 +21,5 @@ public class BooksPresenter extends BasePresenter<BooksFragment> implements OnLi
         OnBookSelectedListener listener = getView().getListener();
         listener.onBookSelected((Book) item);
     }
+
 }

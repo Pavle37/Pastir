@@ -2,6 +2,7 @@ package com.pastir.fragment;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,12 @@ public class ChaptersFragment extends BaseFragment {
         // Required empty public constructor
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return init(inflater,container);
+    }
+    
     @Override
     protected View init(LayoutInflater inflater, ViewGroup container) {
         FragmentChaptersBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chapters, container, false);
@@ -71,7 +78,7 @@ public class ChaptersFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
 
-                loadFragment(ChapterOverviewFragment.getInstance(Chapter.getMocked().get(position)));
+                loadFragment(ChapterOverviewFragment.getInstance(mSelectedBook.getChapters().get(position)));
             }
         });
     }

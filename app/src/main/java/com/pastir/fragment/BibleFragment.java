@@ -23,7 +23,7 @@ import com.pastir.presenter.BiblePresenter;
  * Fragment used for bible reading
  */
 
-public class BibleFragment extends BaseFragment implements OnBookSelectedListener {
+public class BibleFragment extends BaseFragment  {
 
     private BiblePresenter mPresenter;
     private ViewPager viewPager;
@@ -41,7 +41,7 @@ public class BibleFragment extends BaseFragment implements OnBookSelectedListene
         binding.setPresenter(mPresenter);
 
         viewPager = view.findViewById(R.id.vp_bible);
-        BibleFragmentPagerAdapter adapter = new BibleFragmentPagerAdapter(getFragmentManager(),
+        BibleFragmentPagerAdapter adapter = new BibleFragmentPagerAdapter(getChildFragmentManager(),
                 Book.getMocked().get(0));
         viewPager.setAdapter(adapter);
         mActivity.setupTabLayoutWithViewPager(viewPager);
@@ -69,17 +69,13 @@ public class BibleFragment extends BaseFragment implements OnBookSelectedListene
         return R.id.nav_bible;
     }
 
-    @Override
-    public void onBookSelected(Book book) {
-        ((BibleFragmentPagerAdapter) viewPager.getAdapter()).setCurrentBook(book);
-        viewPager.setCurrentItem(1);
-    }
+
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class BibleFragmentPagerAdapter extends FragmentPagerAdapter {
+    public class BibleFragmentPagerAdapter extends FragmentPagerAdapter implements OnBookSelectedListener{
 
         ChaptersFragment chaptersFragment;
         private Book mSelectedBook;
@@ -94,7 +90,7 @@ public class BibleFragment extends BaseFragment implements OnBookSelectedListene
         public Fragment getItem(int position) {
             if (position == 0) {
                 BooksFragment booksFragment = new BooksFragment();
-                booksFragment.setOnBooksSelectedListener(BibleFragment.this);
+                booksFragment.setOnBooksSelectedListener(this);
                 return booksFragment;
             } else {
                 chaptersFragment = (ChaptersFragment) ChaptersFragment.getInstance(mSelectedBook);
@@ -123,6 +119,11 @@ public class BibleFragment extends BaseFragment implements OnBookSelectedListene
         public void setCurrentBook(Book book) {
             mSelectedBook = book;
             chaptersFragment.setSelectedBook(mSelectedBook);
+        }
+        @Override
+        public void onBookSelected(Book book) {
+           setCurrentBook(book);
+            viewPager.setCurrentItem(1);
         }
     }
 
