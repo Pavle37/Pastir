@@ -50,6 +50,12 @@ public class BibleFragment extends BaseFragment  {
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        viewPager.setCurrentItem(0);
+    }
+
+    @Override
     protected ActionBar setActionBar() {
         ActionBar ab = super.setActionBar();
         ab.setTitle(getString(R.string.bible));
