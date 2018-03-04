@@ -29,6 +29,7 @@ public class ChaptersFragment extends BaseFragment {
     private ChaptersPresenter mPresenter;
     private GridView gvChapters;
     private Book mSelectedBook;
+    private FragmentChaptersBinding mBinding;
 
     public ChaptersFragment() {
         // Required empty public constructor
@@ -39,11 +40,11 @@ public class ChaptersFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return init(inflater,container);
     }
-    
+
     @Override
     protected View init(LayoutInflater inflater, ViewGroup container) {
-        FragmentChaptersBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chapters, container, false);
-        View view = binding.getRoot();
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_chapters, container, false);
+        View view = mBinding.getRoot();
 
         mSelectedBook = Utils.General.deserializeFromJson(getArguments().getString(ARGS_KEY), Book.class);
 
@@ -51,7 +52,8 @@ public class ChaptersFragment extends BaseFragment {
 
         mPresenter = new ChaptersPresenter();
         mPresenter.bindView(this);
-        binding.setPresenter(mPresenter);
+        mBinding.setPresenter(mPresenter);
+
 
         setAdapter(mSelectedBook.getChapters(), null);
 
@@ -64,6 +66,7 @@ public class ChaptersFragment extends BaseFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         if (isVisibleToUser){
             setAdapter(mSelectedBook.getChapters(), null);
+            mBinding.setBook(mSelectedBook);
         }
     }
 

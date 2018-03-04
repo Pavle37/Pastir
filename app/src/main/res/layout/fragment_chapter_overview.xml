@@ -20,7 +20,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@{chapter.text + ` `+ chapter.number}" />
+            android:textIsSelectable="true"
+            android:text="@{`Chapter `+ chapter.number+`: `+chapter.text}" />
 
 
     </LinearLayout>

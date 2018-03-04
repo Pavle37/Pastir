@@ -1,17 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="presenter"
             type="com.pastir.presenter.ChaptersPresenter" />
+        <variable
+            name="book"
+            type="com.pastir.model.Book" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        <TextView
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginRight="@dimen/default_margin"
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="@{book.name + ` -`}"
+            android:textSize="@dimen/text_medium_large"
+            tools:text="Some title of the content -" />
+        <View
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginBottom="@dimen/small_padding"
+            android:layout_marginTop="@dimen/default_margin"
+            android:background="@color/colorGrey" />
 
         <GridView
             android:id="@+id/gvChapters"

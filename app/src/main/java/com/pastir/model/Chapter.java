@@ -10,7 +10,7 @@ import java.util.List;
 public class Chapter {
     private int number;
 
-    private String text = "Chapter text";
+    private String text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus lacinia commodo. Quisque ultrices nulla fermentum est lacinia convallis. Cras lobortis dolor risus, ut vehicula nunc sollicitudin at. Sed imperdiet fermentum eros eu laoreet. Nullam eu nisi et odio luctus egestas a a nunc. Nullam ut egestas leo. Cras volutpat mauris mi, a venenatis neque posuere nec. Donec leo purus, ullamcorper ac lorem eu, sagittis tempor augue.";
 
     public Chapter(int number) {
         this.number = number;
