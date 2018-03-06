@@ -3,20 +3,25 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
+    android:layout_height="@dimen/grid_item_size"
     android:orientation="vertical"
-    android:background="@drawable/grid_item_bg"
     android:gravity="center"
+    android:clickable="false"
+    android:focusable="false"
+    android:background="@drawable/ic_white_rect"
     android:paddingLeft="@dimen/default_margin"
     android:paddingRight="@dimen/default_margin"
     >
 
+
     <TextView
+        android:gravity="center"
+        android:background="@drawable/grid_item_bg"
         android:id="@+id/tvItemLabel"
         android:textAlignment="center"
         android:textSize="22sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/grid_item_size"
+        android:layout_height="@dimen/grid_item_size"
         tools:text="1"
         />
 </LinearLayout>

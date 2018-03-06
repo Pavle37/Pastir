@@ -6,6 +6,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.pastir.model.ActionBar;
+import com.pastir.model.Book;
 import com.pastir.model.Event;
 import com.pastir.model.Lesson;
 import com.pastir.model.ListItem;
@@ -31,6 +32,7 @@ public class DataSource {
     private List<MotivationalSticker> mStickers;
     private List<MorningVerse> mVerses;
     private List<Lesson> mLessons;
+    private List<Book> mBible;
 
     /**
      * @return Current action bar that's linked with the Activity's toolbar or initializes one if
@@ -69,6 +71,9 @@ public class DataSource {
         //TODO: Because morning verses and lessons have almost the same structure(change when firebase database is updated)
         getItemsFromFirebase(listener, mLessons, "lesson", Lesson.class);
     }
+    public void getBible(OnListItemsLoadedListener listener) {
+        getItemsFromFirebase(listener, mLessons, "Bible", Book.class);
+    }
 
     private <T extends ListItem> void getItemsFromFirebase(final OnListItemsLoadedListener listener, List<T> items, String path, final Class aClass) {
         if (items != null && items.size() > 0) { //Exit case
@@ -89,6 +94,8 @@ public class DataSource {
                         getMorningVerses().add(MorningVerse.parse(snapshot));
                     } else if (aClass == Lesson.class) {
                         getLessons().add(Lesson.parse(snapshot));
+                    } else if (aClass == Book.class) {
+                        getBible().add(Book.parse(snapshot));
                     }
                 }
                 if (aClass == Event.class) {
@@ -99,6 +106,8 @@ public class DataSource {
                     listener.onListItemsLoaded(mVerses);
                 }else if (aClass == Lesson.class) {
                     listener.onListItemsLoaded(mLessons);
+                }else if (aClass == Book.class) {
+                    listener.onListItemsLoaded(mBible);
                 }
 
             }
@@ -122,6 +131,11 @@ public class DataSource {
         return mLessons;
     }
 
+    public List<Book> getBible() {
+        if (mBible == null)
+            mBible = new ArrayList<>();
+        return mBible;
+    }
 
     private List<Event> getEventList() {
         if (mEvents == null)

@@ -16,7 +16,7 @@ import com.pastir.model.Book;
 import com.pastir.model.Chapter;
 import com.pastir.model.OnListItemClickListener;
 import com.pastir.presenter.ChaptersPresenter;
-import com.pastir.util.Utils;
+import com.pastir.storage.DataSource;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class ChaptersFragment extends BaseFragment {
 
     private ChaptersPresenter mPresenter;
     private GridView gvChapters;
-    private Book mSelectedBook;
+    private int mSelectedBook;
     private FragmentChaptersBinding mBinding;
 
     public ChaptersFragment() {
@@ -38,7 +38,7 @@ public class ChaptersFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return init(inflater,container);
+        return init(inflater, container);
     }
 
     @Override
@@ -46,8 +46,7 @@ public class ChaptersFragment extends BaseFragment {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_chapters, container, false);
         View view = mBinding.getRoot();
 
-        mSelectedBook = Utils.General.deserializeFromJson(getArguments().getString(ARGS_KEY), Book.class);
-
+        mSelectedBook = getArguments().getInt(ARGS_KEY);
         gvChapters = view.findViewById(R.id.gvChapters);
 
         mPresenter = new ChaptersPresenter();
@@ -55,7 +54,6 @@ public class ChaptersFragment extends BaseFragment {
         mBinding.setPresenter(mPresenter);
 
 
-        setAdapter(mSelectedBook.getChapters(), null);
 
 
         return view;
@@ -64,12 +62,14 @@ public class ChaptersFragment extends BaseFragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
-        if (isVisibleToUser){
-            setAdapter(mSelectedBook.getChapters(), null);
-            mBinding.setBook(mSelectedBook);
+        if (isVisibleToUser) {
+            setAdapter(DataSource.getInstance().getBible().get(mSelectedBook).getChapters(), null);
+
+            Book selected = DataSource.getInstance().getBible().get(mSelectedBook);
+            setAdapter(selected.getChapters(), null);
+            mBinding.setBook(selected);
         }
     }
-
 
 
     public void setAdapter(List<Chapter> chapters, OnListItemClickListener listener) {
@@ -81,20 +81,20 @@ public class ChaptersFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
 
-                loadFragment(ChapterOverviewFragment.getInstance(mSelectedBook.getChapters().get(position)));
+                loadFragment(ChapterOverviewFragment.getInstance(mSelectedBook, position));
             }
         });
     }
 
-    public static BaseFragment getInstance(Book book) {
+    public static BaseFragment getInstance(int selectedBook) {
         BaseFragment instance = new ChaptersFragment();
         Bundle args = new Bundle();
-        args.putString(ARGS_KEY, Utils.General.serializeToJson(book));
+        args.putInt(ARGS_KEY, selectedBook);
         instance.setArguments(args);
         return instance;
     }
 
-    public void setSelectedBook(Book selectedBook) {
+    public void setSelectedBook(int selectedBook) {
         mSelectedBook = selectedBook;
     }
 }

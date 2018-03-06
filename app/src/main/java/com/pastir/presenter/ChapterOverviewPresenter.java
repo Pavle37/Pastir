@@ -8,4 +8,14 @@ public class ChapterOverviewPresenter extends ActionBarPresenter<ChapterOverview
     public void onBackPressed() {
         getView().mActivity.onBackPressed();
     }
+
+    public void onLeftArrowClicked() {
+        //setPlayingMode(LessonsPresenter.Player.STOPPED);
+        getView().scrollViewPagerLeft();
+    }
+
+    public void onRightArrowClicked() {
+        //setPlayingMode(LessonsPresenter.Player.STOPPED);
+        getView().scrollViewPagerRight();
+    }
 }

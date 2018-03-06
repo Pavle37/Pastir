@@ -42,7 +42,7 @@ public class BibleFragment extends BaseFragment  {
 
         viewPager = view.findViewById(R.id.vp_bible);
         BibleFragmentPagerAdapter adapter = new BibleFragmentPagerAdapter(getChildFragmentManager(),
-                Book.getMocked().get(0));
+                0);
         viewPager.setAdapter(adapter);
         mActivity.setupTabLayoutWithViewPager(viewPager);
 
@@ -84,9 +84,9 @@ public class BibleFragment extends BaseFragment  {
     public class BibleFragmentPagerAdapter extends FragmentPagerAdapter implements OnBookSelectedListener{
 
         ChaptersFragment chaptersFragment;
-        private Book mSelectedBook;
+        private int mSelectedBook;
 
-        public BibleFragmentPagerAdapter(FragmentManager fm, Book firstBook) {
+        public BibleFragmentPagerAdapter(FragmentManager fm, int firstBook) {
             super(fm);
             mSelectedBook = firstBook;
         }
@@ -122,13 +122,13 @@ public class BibleFragment extends BaseFragment  {
             }
         }
 
-        public void setCurrentBook(Book book) {
+        public void setCurrentBook(int book) {
             mSelectedBook = book;
             chaptersFragment.setSelectedBook(mSelectedBook);
         }
         @Override
-        public void onBookSelected(Book book) {
-           setCurrentBook(book);
+        public void onBookSelected(int bookPosition) {
+           setCurrentBook(bookPosition);
             viewPager.setCurrentItem(1);
         }
     }

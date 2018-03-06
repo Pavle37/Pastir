@@ -57,8 +57,8 @@ public class BooksFragment extends BaseFragment {
         return binding.getRoot();
     }
 
-    public void setAdapter(List<? extends ListItem> morningVerses, OnListItemClickListener listener) {
-        ListItemAdapter adapter = new ListItemAdapter(R.layout.book_list_item, morningVerses, listener);
+    public void setAdapter(List<? extends ListItem> books, OnListItemClickListener listener) {
+        ListItemAdapter adapter = new ListItemAdapter(R.layout.book_list_item, books, listener);
         rvBooks.setAdapter(adapter);
     }
 

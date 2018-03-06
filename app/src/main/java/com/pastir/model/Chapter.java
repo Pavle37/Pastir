@@ -1,5 +1,7 @@
 package com.pastir.model;
 
+import com.google.firebase.database.DataSnapshot;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +12,11 @@ import java.util.List;
 public class Chapter {
     private int number;
 
+    private String subtitle;
     private String text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus lacinia commodo. Quisque ultrices nulla fermentum est lacinia convallis. Cras lobortis dolor risus, ut vehicula nunc sollicitudin at. Sed imperdiet fermentum eros eu laoreet. Nullam eu nisi et odio luctus egestas a a nunc. Nullam ut egestas leo. Cras volutpat mauris mi, a venenatis neque posuere nec. Donec leo purus, ullamcorper ac lorem eu, sagittis tempor augue.";
+
+    public Chapter() {
+    }
 
     public Chapter(int number) {
         this.number = number;
@@ -30,6 +36,22 @@ public class Chapter {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+    }
+
+    public static Chapter parse(DataSnapshot snapshot, int chapterId) {
+        Chapter chapter = new Chapter();
+        chapter.setText(snapshot.child("verses").getValue(String.class));
+        chapter.setSubtitle(snapshot.child("subtitle").getValue(String.class));
+        chapter.setNumber(chapterId);
+        return chapter;
     }
 
     public static List<Chapter> getMocked() {

@@ -1,6 +1,8 @@
 package com.pastir.model;
 
 
+import com.google.firebase.database.DataSnapshot;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,10 @@ public class Book implements ListItem {
 
     private String name;
     private List<Chapter> chapters;
+
+    public Book() {
+        this.chapters = new ArrayList<>();
+    }
 
     public Book(String name, List<Chapter> chapters) {
         this.name = name;
@@ -32,6 +38,16 @@ public class Book implements ListItem {
 
     public void setChapters(List<Chapter> chapters) {
         this.chapters = chapters;
+    }
+
+
+    public static Book parse(DataSnapshot snapshot) {
+        Book book = new Book();
+        book.setName(snapshot.child("name").getValue(String.class));
+        for (DataSnapshot child :snapshot.child("chapters").getChildren()){
+            book.getChapters().add(Chapter.parse(child, book.getChapters().size()));
+        }
+        return book;
     }
 
     public static List<Book> getMocked() {

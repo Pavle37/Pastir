@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -12,17 +14,101 @@
             type="com.pastir.model.Chapter" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        tools:context="com.pastir.fragment.ChapterOverviewFragment">
 
-        <TextView
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vpChapters"
+            android:saveEnabled="false"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textIsSelectable="true"
-            android:text="@{`Chapter `+ chapter.number+`: `+chapter.text}" />
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/llChapterBottom"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+        <RelativeLayout
+            android:id="@+id/llChapterBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/default_padding"
+            android:weightSum="12">
 
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/player_background_width"
+                android:layout_marginLeft="@dimen/player_background_margin"
+                android:layout_marginRight="@dimen/player_background_margin"
+                android:layout_marginTop="@dimen/extra_large_small_padding"
+                android:background="@color/colorLightGrey"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_small"
+                    android:text="@{`Chapter `+ chapter.number}"/>
+
+                <ViewSwitcher
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        >
+                        <ImageView
+                            android:layout_width="@dimen/player_arrow_size"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_pause"
+                            />
+                        <ImageView
+                            android:layout_width="@dimen/player_arrow_size"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_stop"
+                            />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/player_arrow_size"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_play"
+                        android:layout_gravity="center_horizontal"
+                        />
+                </ViewSwitcher>
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="@dimen/player_arrow_size"
+                    android:layout_height="@dimen/player_arrow_size"
+                    android:background="@drawable/ic_ellipse_selector"
+                    android:onClick="@{()->presenter.onLeftArrowClicked()}"
+
+                    android:src="@drawable/ic_left_arrow_circular"/>
+
+                <ImageView
+                    android:layout_width="@dimen/player_arrow_size"
+                    android:layout_height="@dimen/player_arrow_size"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/ic_ellipse_selector"
+                    android:onClick="@{()->presenter.onRightArrowClicked()}"
+                    android:src="@drawable/ic_right_arrow_circular"/>
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 </layout>
