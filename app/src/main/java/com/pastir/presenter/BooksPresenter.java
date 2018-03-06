@@ -13,8 +13,7 @@ public class BooksPresenter extends BasePresenter<BooksFragment> implements OnLi
     @Override
     public void bindView(BooksFragment view) {
         super.bindView(view);
-        if (mDataSource.getBible() == null)
-            mDataSource.getBible(this);
+        mDataSource.getBible(this);
     }
 
     @Override
@@ -26,6 +25,7 @@ public class BooksPresenter extends BasePresenter<BooksFragment> implements OnLi
 
     @Override
     public void onListItemsLoaded(List<? extends ListItem> bible) {
-        getView().setAdapter(bible, this);
+        if (bible != null && bible.size() > 0)
+            getView().setAdapter(bible, this);
     }
 }

@@ -50,7 +50,7 @@ public class ChapterItemAdapter extends android.widget.BaseAdapter {
 
         tvItemLabel = view.findViewById(R.id.tvItemLabel);
 
-        tvItemLabel.setText(mList.get(i).getNumber() + "");
+        tvItemLabel.setText(String.valueOf(mList.get(i).getNumber() +1));
 
         return view;
     }

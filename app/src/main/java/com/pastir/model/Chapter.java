@@ -13,6 +13,7 @@ public class Chapter {
     private int number;
 
     private String subtitle;
+    private Integer numberOfVerses;
     private String text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus rhoncus lacinia commodo. Quisque ultrices nulla fermentum est lacinia convallis. Cras lobortis dolor risus, ut vehicula nunc sollicitudin at. Sed imperdiet fermentum eros eu laoreet. Nullam eu nisi et odio luctus egestas a a nunc. Nullam ut egestas leo. Cras volutpat mauris mi, a venenatis neque posuere nec. Donec leo purus, ullamcorper ac lorem eu, sagittis tempor augue.";
 
     public Chapter() {
@@ -46,10 +47,19 @@ public class Chapter {
         this.subtitle = subtitle;
     }
 
+    public int getNumberOfVerses() {
+        return numberOfVerses;
+    }
+
+    public void setNumberOfVerses(Integer numberOfVerses) {
+        this.numberOfVerses = numberOfVerses;
+    }
+
     public static Chapter parse(DataSnapshot snapshot, int chapterId) {
         Chapter chapter = new Chapter();
         chapter.setText(snapshot.child("verses").getValue(String.class));
         chapter.setSubtitle(snapshot.child("subtitle").getValue(String.class));
+        chapter.setNumberOfVerses(snapshot.child("number_of_verses").getValue(Integer.class));
         chapter.setNumber(chapterId);
         return chapter;
     }

@@ -7,41 +7,48 @@
         <variable
             name="presenter"
             type="com.pastir.presenter.ChaptersPresenter" />
+
         <variable
             name="book"
             type="com.pastir.model.Book" />
     </data>
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TextView
-            android:layout_marginTop="@dimen/default_margin"
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_marginRight="@dimen/default_margin"
-            android:id="@+id/tvTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:lines="1"
-            android:text="@{book.name + ` -`}"
-            android:textSize="@dimen/text_medium_large"
-            tools:text="Some title of the content -" />
-        <View
-            android:layout_marginLeft="@dimen/default_margin"
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginBottom="@dimen/small_padding"
-            android:layout_marginTop="@dimen/default_margin"
-            android:background="@color/colorGrey" />
+        android:layout_height="match_parent">
 
-        <GridView
-            android:id="@+id/gvChapters"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:numColumns="5" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginRight="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:text="@{book.name + ` -`}"
+                android:textSize="@dimen/text_medium_large"
+                tools:text="Some title of the content -" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginBottom="@dimen/small_padding"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:background="@color/colorGrey" />
+
+            <GridView
+                android:id="@+id/gvChapters"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numColumns="5" />
 
 
-    </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 </layout>

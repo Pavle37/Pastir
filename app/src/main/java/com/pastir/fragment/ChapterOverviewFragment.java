@@ -1,5 +1,6 @@
 package com.pastir.fragment;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,12 +11,13 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.pastir.R;
 import com.pastir.databinding.FragmentChapterOverviewBinding;
 import com.pastir.databinding.FragmentPlaceholderChapterBinding;
 import com.pastir.model.ActionBar;
-import com.pastir.model.Book;
 import com.pastir.model.Chapter;
 import com.pastir.presenter.ActionBarPresenter;
 import com.pastir.presenter.ChapterOverviewPresenter;
@@ -27,11 +29,12 @@ public class ChapterOverviewFragment extends BaseFragment {
     public static final String ARGS_KEY_SELECTED_CHAPTER = "com.pastir.bundle_selected_chapter";
 
     private ChapterOverviewPresenter mPresenter;
+    private FragmentChapterOverviewBinding mBinding;
     private ViewPager mViewPager;
 
     @Override
     protected View init(LayoutInflater inflater, ViewGroup container) {
-        FragmentChapterOverviewBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chapter_overview, container, false);
+         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_chapter_overview, container, false);
 
         int selectedBook = getArguments().getInt(ARGS_KEY_BOOK);
         int selectedChapter = getArguments().getInt(ARGS_KEY_SELECTED_CHAPTER);
@@ -41,14 +44,34 @@ public class ChapterOverviewFragment extends BaseFragment {
         mPresenter = new ChapterOverviewPresenter();
         mPresenter.bindView(this);
 
-        binding.setPresenter(mPresenter);
-        binding.setChapter(DataSource.getInstance().getBible().get(selectedBook).getChapters().get(selectedChapter));
+        mBinding.setPresenter(mPresenter);
+        mBinding.setChapter(DataSource.getInstance().getBible().get(selectedBook).getChapters().get(selectedChapter));
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = binding.getRoot().findViewById(R.id.vpChapters);
+        mViewPager = mBinding.getRoot().findViewById(R.id.vpChapters);
         mViewPager.setAdapter(sectionsPagerAdapter);
+        mViewPager.setCurrentItem(selectedChapter);
 
-        return binding.getRoot();
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Chapter chapter = DataSource.getInstance().getBible().get(selectedBook)
+                        .getChapters().get(position);
+                mBinding.setChapter(chapter);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        return mBinding.getRoot();
     }
 
     @Override
@@ -122,24 +145,24 @@ public class ChapterOverviewFragment extends BaseFragment {
             Chapter chapter = DataSource.getInstance().getBible().get(bookPosition).getChapters().get(chapterPosition);
             binding.setChapter(chapter);
 
-            //setOnLongViewPressListener(binding.getRoot(), subLesson);
+            setOnLongViewPressListener(binding.getRoot(), chapter);
             return binding.getRoot();
         }
 
-        /*private void setOnLongViewPressListener(View root, SubLesson subLesson) {
-            LinearLayout llSubLessonOverview = root.findViewById(R.id.llSubLessonOverview);
-            TextView tvSubLessonText = root.findViewById(R.id.tvSubLessonText);
-            llSubLessonOverview.setOnLongClickListener(view -> {
+        private void setOnLongViewPressListener(View root, Chapter chapter) {
+            LinearLayout llChapterOverview = root.findViewById(R.id.llChapterOverview);
+            TextView tvChapterText = root.findViewById(R.id.tvChapterText);
+            llChapterOverview.setOnLongClickListener(view -> {
 
-                String shareBody = tvSubLessonText.getText().toString();
+                String shareBody = tvChapterText.getText().toString();
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subLesson.getTitle());
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, chapter.getText());
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-                startActivity(Intent.createChooser(sharingIntent, "Share Text"));
+                startActivity(Intent.createChooser(sharingIntent, "Share Chapter"));
                 return true;
             });
-        }*/
+        }
     }
 
     /**

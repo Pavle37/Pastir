@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -21,11 +21,11 @@
 
         <android.support.v4.view.ViewPager
             android:id="@+id/vpChapters"
-            android:saveEnabled="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/llChapterBottom"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            android:saveEnabled="false"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <RelativeLayout
             android:id="@+id/llChapterBottom"
@@ -44,43 +44,40 @@
                 android:layout_marginTop="@dimen/extra_large_small_padding"
                 android:background="@color/colorLightGrey"
                 android:gravity="center"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_small"
-                    android:text="@{`Chapter `+ chapter.number}"/>
+                    android:text="@{chapter.subtitle + `-` + (chapter.number + 1) + `-` + chapter.numberOfVerses}"
+                    android:textSize="@dimen/text_small" />
 
                 <ViewSwitcher
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    >
+                    android:visibility="invisible"
+                    android:layout_height="match_parent">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        >
+                        android:orientation="horizontal">
+
                         <ImageView
                             android:layout_width="@dimen/player_arrow_size"
                             android:layout_height="match_parent"
-                            android:src="@drawable/ic_pause"
-                            />
+                            android:src="@drawable/ic_pause" />
+
                         <ImageView
                             android:layout_width="@dimen/player_arrow_size"
                             android:layout_height="match_parent"
-                            android:src="@drawable/ic_stop"
-                            />
+                            android:src="@drawable/ic_stop" />
                     </LinearLayout>
 
                     <ImageView
                         android:layout_width="@dimen/player_arrow_size"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ic_play"
                         android:layout_gravity="center_horizontal"
-                        />
+                        android:src="@drawable/ic_play" />
                 </ViewSwitcher>
             </LinearLayout>
 
@@ -95,7 +92,7 @@
                     android:background="@drawable/ic_ellipse_selector"
                     android:onClick="@{()->presenter.onLeftArrowClicked()}"
 
-                    android:src="@drawable/ic_left_arrow_circular"/>
+                    android:src="@drawable/ic_left_arrow_circular" />
 
                 <ImageView
                     android:layout_width="@dimen/player_arrow_size"
@@ -104,7 +101,7 @@
                     android:layout_alignParentRight="true"
                     android:background="@drawable/ic_ellipse_selector"
                     android:onClick="@{()->presenter.onRightArrowClicked()}"
-                    android:src="@drawable/ic_right_arrow_circular"/>
+                    android:src="@drawable/ic_right_arrow_circular" />
             </RelativeLayout>
 
 

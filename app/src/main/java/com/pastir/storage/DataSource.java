@@ -72,7 +72,7 @@ public class DataSource {
         getItemsFromFirebase(listener, mLessons, "lesson", Lesson.class);
     }
     public void getBible(OnListItemsLoadedListener listener) {
-        getItemsFromFirebase(listener, mLessons, "Bible", Book.class);
+        getItemsFromFirebase(listener, mBible, "Bible", Book.class);
     }
 
     private <T extends ListItem> void getItemsFromFirebase(final OnListItemsLoadedListener listener, List<T> items, String path, final Class aClass) {
