@@ -1,6 +1,7 @@
 package com.pastir.presenter;
 
 import com.pastir.fragment.BooksFragment;
+import com.pastir.model.Book;
 import com.pastir.model.ListItem;
 import com.pastir.model.OnBookSelectedListener;
 import com.pastir.model.OnListItemClickListener;
@@ -26,6 +27,6 @@ public class BooksPresenter extends BasePresenter<BooksFragment> implements OnLi
     @Override
     public void onListItemsLoaded(List<? extends ListItem> bible) {
         if (bible != null && bible.size() > 0)
-            getView().setAdapter(bible, this);
+            getView().setAdapter((List<Book>) bible, this);
     }
 }

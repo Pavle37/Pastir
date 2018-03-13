@@ -1,8 +1,6 @@
 package com.pastir.fragment;
 
 import android.databinding.DataBindingUtil;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -11,10 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.pastir.R;
 import com.pastir.databinding.FragmentBibleBinding;
 import com.pastir.model.ActionBar;
-import com.pastir.model.Book;
 import com.pastir.model.OnBookSelectedListener;
 import com.pastir.presenter.ActionBarPresenter;
 import com.pastir.presenter.BiblePresenter;
@@ -23,7 +21,7 @@ import com.pastir.presenter.BiblePresenter;
  * Fragment used for bible reading
  */
 
-public class BibleFragment extends BaseFragment  {
+public class BibleFragment extends BaseFragment {
 
     private BiblePresenter mPresenter;
     private ViewPager viewPager;
@@ -75,13 +73,11 @@ public class BibleFragment extends BaseFragment  {
         return R.id.nav_bible;
     }
 
-
-
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class BibleFragmentPagerAdapter extends FragmentPagerAdapter implements OnBookSelectedListener{
+    public class BibleFragmentPagerAdapter extends FragmentPagerAdapter implements OnBookSelectedListener {
 
         ChaptersFragment chaptersFragment;
         private int mSelectedBook;
@@ -126,9 +122,10 @@ public class BibleFragment extends BaseFragment  {
             mSelectedBook = book;
             chaptersFragment.setSelectedBook(mSelectedBook);
         }
+
         @Override
         public void onBookSelected(int bookPosition) {
-           setCurrentBook(bookPosition);
+            setCurrentBook(bookPosition);
             viewPager.setCurrentItem(1);
         }
     }

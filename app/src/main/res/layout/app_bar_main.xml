@@ -75,6 +75,10 @@
                     android:padding="@dimen/small_padding"
                     android:src="@drawable/ic_menu"
                     />
+                <com.miguelcatalan.materialsearchview.MaterialSearchView
+                    android:id="@+id/search_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
             </RelativeLayout>
 

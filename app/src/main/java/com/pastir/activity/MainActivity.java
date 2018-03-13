@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.pastir.R;
 import com.pastir.databinding.ActivityMainBinding;
 import com.pastir.fragment.BaseFragment;
@@ -67,8 +68,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.END)) {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        MaterialSearchView searchView = findViewById(R.id.search_view);
+        if (searchView.isSearchOpen()){
+            searchView.closeSearch();
+        }else if (drawer.isDrawerOpen(GravityCompat.END)) {
             drawer.closeDrawer(GravityCompat.END);
         } else {
             super.onBackPressed();
@@ -208,4 +212,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDispatcher.unregisterPhoneCallListener(); /*Don't forget to unregister*/
         super.onDestroy();
     }
+
+
 }
