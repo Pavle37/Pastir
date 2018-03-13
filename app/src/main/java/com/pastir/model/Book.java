@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Creitive 31 on 02-Mar-18.
+ * Representation of book
  */
 
 public class Book implements ListItem {
@@ -17,11 +17,6 @@ public class Book implements ListItem {
 
     public Book() {
         this.chapters = new ArrayList<>();
-    }
-
-    public Book(String name, List<Chapter> chapters) {
-        this.name = name;
-        this.chapters = chapters;
     }
 
     public String getName() {
@@ -50,11 +45,4 @@ public class Book implements ListItem {
         return book;
     }
 
-    public static List<Book> getMocked() {
-        List<Book> list = new ArrayList<>();
-        list.add(new Book("Evandjelje po Mateji", Chapter.getMocked()));
-        list.add(new Book("Evandjelje po Marku", Chapter.getMockedSecond()));
-        list.add(new Book("Poslanica Rimljanima", Chapter.getMockedThird()));
-        return list;
-    }
 }

@@ -49,7 +49,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{chapter.subtitle + `-` + (chapter.number + 1) + `-` + chapter.numberOfVerses}"
+                    android:text="@{chapter.subtitle + `-` + (chapter.number + 1)}"
                     android:textSize="@dimen/text_small" />
 
                 <ViewSwitcher

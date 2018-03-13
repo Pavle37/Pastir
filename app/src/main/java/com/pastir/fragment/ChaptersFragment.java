@@ -24,8 +24,6 @@ import java.util.List;
  * A fragment containing a list of chapters from chosen book.
  */
 public class ChaptersFragment extends BaseFragment {
-
-
     private ChaptersPresenter mPresenter;
     private GridView gvChapters;
     private int mSelectedBook;
@@ -53,9 +51,6 @@ public class ChaptersFragment extends BaseFragment {
         mPresenter.bindView(this);
         mBinding.setPresenter(mPresenter);
 
-
-
-
         return view;
     }
 
@@ -64,7 +59,6 @@ public class ChaptersFragment extends BaseFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         if (isVisibleToUser) {
             setAdapter(DataSource.getInstance().getBible().get(mSelectedBook).getChapters(), null);
-
             Book selected = DataSource.getInstance().getBible().get(mSelectedBook);
             setAdapter(selected.getChapters(), null);
             mBinding.setBook(selected);
@@ -76,14 +70,8 @@ public class ChaptersFragment extends BaseFragment {
         ChapterItemAdapter adapter = new ChapterItemAdapter(getContext(), chapters, listener);
         gvChapters.setAdapter(adapter);
 
-        gvChapters.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-
-                loadFragment(ChapterOverviewFragment.getInstance(mSelectedBook, position));
-            }
-        });
+        gvChapters.setOnItemClickListener((parent, v, position, id) ->
+                loadFragment(ChapterOverviewFragment.getInstance(mSelectedBook, position)));
     }
 
     public static BaseFragment getInstance(int selectedBook) {

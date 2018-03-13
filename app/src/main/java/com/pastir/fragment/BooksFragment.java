@@ -1,9 +1,5 @@
 package com.pastir.fragment;
 
-/**
- * Created by Creitive 31 on 02-Mar-18.
- */
-
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -60,8 +56,8 @@ public class BooksFragment extends BaseFragment {
 
         mPresenter = new BooksPresenter();
         mPresenter.bindView(this);
-
         binding.setPresenter(mPresenter);
+
         initSearch(view);
 
         return binding.getRoot();
