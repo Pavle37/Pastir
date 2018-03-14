@@ -12,6 +12,8 @@
         <variable
             name="chapter"
             type="com.pastir.model.Chapter" />
+
+        <import type="android.view.View" />
     </data>
 
     <RelativeLayout
@@ -50,12 +52,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{chapter.subtitle + `-` + (chapter.number + 1)}"
-                    android:textSize="@dimen/text_small" />
+                    android:textSize="@dimen/text_small"
+                    android:visibility="@{chapter.subtitle != null ? View.VISIBLE: View.INVISIBLE}" />
 
                 <ViewSwitcher
                     android:layout_width="wrap_content"
-                    android:visibility="invisible"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:play="@{presenter.playingMode}">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -65,11 +68,13 @@
                         <ImageView
                             android:layout_width="@dimen/player_arrow_size"
                             android:layout_height="match_parent"
+                            android:onClick="@{()->presenter.pausePlaying()}"
                             android:src="@drawable/ic_pause" />
 
                         <ImageView
                             android:layout_width="@dimen/player_arrow_size"
                             android:layout_height="match_parent"
+                            android:onClick="@{()->presenter.stopPlaying()}"
                             android:src="@drawable/ic_stop" />
                     </LinearLayout>
 
@@ -77,6 +82,7 @@
                         android:layout_width="@dimen/player_arrow_size"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_horizontal"
+                        android:onClick="@{()->presenter.onPlayClicked()}"
                         android:src="@drawable/ic_play" />
                 </ViewSwitcher>
             </LinearLayout>

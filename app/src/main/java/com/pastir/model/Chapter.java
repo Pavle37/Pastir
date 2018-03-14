@@ -14,6 +14,7 @@ public class Chapter {
 
     private String subtitle;
     private String text;
+    private String audioPath;
 
     public int getNumber() {
         return number;
@@ -39,10 +40,19 @@ public class Chapter {
         this.subtitle = subtitle;
     }
 
+    public String getAudioPath() {
+        return audioPath;
+    }
+
+    public void setAudioPath(String audioPath) {
+        this.audioPath = audioPath;
+    }
+
     public static Chapter parse(DataSnapshot snapshot, int chapterId) {
         Chapter chapter = new Chapter();
         chapter.setText(snapshot.child("verses").getValue(String.class));
         chapter.setSubtitle(snapshot.child("subtitle").getValue(String.class));
+        chapter.setAudioPath(snapshot.child("audio_path").getValue(String.class));
         chapter.setNumber(chapterId);
         return chapter;
     }

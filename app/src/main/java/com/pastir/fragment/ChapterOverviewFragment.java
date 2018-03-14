@@ -43,9 +43,10 @@ public class ChapterOverviewFragment extends BaseFragment {
 
         mPresenter = new ChapterOverviewPresenter();
         mPresenter.bindView(this);
-
         mBinding.setPresenter(mPresenter);
-        mBinding.setChapter(DataSource.getInstance().getBible().get(selectedBook).getChapters().get(selectedChapter));
+        Chapter chapter = DataSource.getInstance().getBible().get(selectedBook).getChapters().get(selectedChapter);
+        mBinding.setChapter(chapter);
+        mPresenter.loadChapterAudio(chapter);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = mBinding.getRoot().findViewById(R.id.vpChapters);
@@ -60,9 +61,12 @@ public class ChapterOverviewFragment extends BaseFragment {
 
             @Override
             public void onPageSelected(int position) {
+                mPresenter.onDestroy();//Clear the MediaPlayer
                 Chapter chapter = DataSource.getInstance().getBible().get(selectedBook)
                         .getChapters().get(position);
                 mBinding.setChapter(chapter);
+                mPresenter.loadChapterAudio(chapter);//Reinitialize it
+
             }
 
             @Override
@@ -72,6 +76,24 @@ public class ChapterOverviewFragment extends BaseFragment {
         });
 
         return mBinding.getRoot();
+    }
+
+    @Override
+    public void onPause() {
+        mPresenter.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        mPresenter.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.onResume();
     }
 
     @Override
